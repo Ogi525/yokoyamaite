@@ -1,0 +1,24 @@
+<insert id=id>
+
+	INSERT INTO users(
+
+	name,
+	email,
+	postalCode
+	address,
+	password
+
+	)
+	values
+	(
+	#{postalCode},
+	#{name},
+	#{email}
+	#{address},
+	#{password}
+
+
+	)
+
+</insert>
+
