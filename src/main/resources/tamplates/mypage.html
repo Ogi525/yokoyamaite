@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>マイページ</title>
+
+<style>
+
+body{
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container{
+    width: 1200px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+}
+
+.profile-section{
+    flex: 0 0 300px;
+    margin-right: 30px;
+    text-align: center;
+}
+
+.profile-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.content-section{
+    flex: 1;
+}
+
+h1{
+    color: #333;
+}
+
+.section{
+    margin-bottom: 30px;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th{
+    background-color: #4CAF50;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: blue;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="profile-section">
+        <h2>プロフィール画像</h2>
+        <img th:src="${user.profileImage != null ? user.profileImage : '/images/default-profile.png'}" alt="プロフィール画像" class="profile-image">
+        <form action="/upload-profile-image" method="post" enctype="multipart/form-data">
+            <input type="file" name="profileImage" accept="image/*">
+            <button type="submit">変更</button>
+        </form>
+    </div>
+
+    <div class="content-section">
+
+        <h1>マイページ</h1>
+
+        <!-- 会員情報 -->
+        <div class="section">
+
+            <h2>会員情報</h2>
+
+            <p>
+                名前：
+                <span th:text="${user.name}">
+                    名前
+                </span>
+            </p>
+
+            <p>
+                メールアドレス：
+                <span th:text="${user.email}">
+                    メール
+                </span>
+            </p>
+
+            <p>
+                住所：
+                <span th:text="${user.address}">
+                    住所
+                </span>
+            </p>
+
+        </div>
+
+        <!-- クーポン -->
+        <div class="section">
+
+            <h2>クーポン</h2>
+
+            <ul>
+
+                <li th:each="coupon : ${coupons}">
+
+                    <span th:text="${coupon.name}">
+                        クーポン名
+                    </span>
+
+                    :
+
+                    <span th:text="${coupon.discount}">
+                        1000
+                    </span>
+
+                    円OFF
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- 購入履歴 -->
+        <div class="section">
+
+            <h2>購入履歴</h2>
+
+            <table>
+
+                <tr>
+                    <th>商品名</th>
+                    <th>購入日</th>
+                    <th>金額</th>
+                </tr>
+
+                <tr th:each="history : ${histories}">
+
+                    <td th:text="${history.productName}">
+                        商品名
+                    </td>
+
+                    <td th:text="${history.purchaseDate}">
+                        日付
+                    </td>
+
+                    <td>
+
+                        ¥
+
+                        <span th:text="${history.price}">
+                            5000
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <!-- メニュー -->
+        <div>
+
+            <a th:href="@{/register/re:register}">
+                プロフィール変更
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
