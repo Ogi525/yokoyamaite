@@ -14,6 +14,7 @@ public class SerchService {
 	}
 
 	public List<Item> search(
+			String keyword,
 			String area,
 			String category,
 			Integer minPrice,
@@ -21,6 +22,7 @@ public class SerchService {
 			String sort) {
 
 		return itemMapper.search(
+				keyword,
 				area,
 				category,
 				minPrice,

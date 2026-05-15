@@ -5,6 +5,33 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>検索結果</h2>
+
+	<table border="1">
+
+	    <tr>
+	        <th>ID</th>
+	        <th>商品名</th>
+	        <th>カテゴリ</th>
+	        <th>エリア</th>
+	        <th>価格</th>
+	    </tr>
+
+	    <tr th:each="product : ${products}">
+
+	        <td th:text="${product.id}"></td>
+
+	        <td th:text="${product.name}"></td>
+
+	        <td th:text="${product.category}"></td>
+			
+	        <td th:text="${product.erea}"></td>
+
+	        <td th:text="${product.price}"></td>
+
+	    </tr>
+
+	</table>
 
 </body>
 </html>

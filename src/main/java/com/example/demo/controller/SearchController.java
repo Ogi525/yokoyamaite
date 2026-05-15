@@ -23,6 +23,8 @@ public class SearchController {
 	@GetMapping
 	public String search(
 
+			@RequestParam(required = false) String keyword,
+
 			@RequestParam(required = false) String area,
 
 			@RequestParam(required = false) String category,
@@ -36,6 +38,7 @@ public class SearchController {
 			Model model) {
 
 		List<Item> items = itemService.search(
+				keyword,
 				area,
 				category,
 				minPrice,

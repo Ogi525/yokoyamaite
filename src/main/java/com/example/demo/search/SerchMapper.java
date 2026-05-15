@@ -10,6 +10,8 @@ public interface SerchMapper {
 
 	List<Item> search(
 
+			@Param("keyword") String keyword,
+
 			@Param("area") String area,
 
 			@Param("category") String category,

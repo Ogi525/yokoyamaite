@@ -5,6 +5,10 @@
     FROM items
 
     <where>
+    <!-- キーワード検索 -->
+        <if test="keyword != null and keyword != ''">
+            AND name LIKE CONCAT('%', #{keyword}, '%')
+        </if>
 
         <!-- エリア -->
         <if test="area != null and area != ''">
