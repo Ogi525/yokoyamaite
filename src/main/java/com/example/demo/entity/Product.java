@@ -8,6 +8,16 @@ public class Product {
 
 	private String name;
 	private Integer price;
+	private Integer stock;
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
 	private String origin;
 	private String imageUrl;
 	private String description;
