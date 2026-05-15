@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS users_coupons (
 );
 
 -- GAME_RESULTS
-CREATE TABLE game_results (
+CREATE TABLE IF NOT EXISTS game_results (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     result VARCHAR(10) NOT NULL,

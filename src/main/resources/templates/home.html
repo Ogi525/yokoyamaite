@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>横山蒸留所</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    font-family:sans-serif;
+    background-color:#f5f5f5;
+}
+
+/* 全体 */
+.container{
+    width:900px;
+    margin:30px auto;
+    background-color:white;
+    border:2px solid green;
+}
+
+/* ヘッダー */
+header{
+    padding:10px 20px;
+    border-bottom:1px solid #ccc;
+}
+
+/* 上部メニュー */
+.top-menu{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.nav{
+    display:flex;
+    gap:20px;
+}
+
+.nav a{
+    text-decoration:none;
+    color:black;
+}
+
+/* 検索 */
+.search-box input{
+    padding:5px;
+}
+
+/* バナー */
+.banner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px;
+    border-bottom:1px solid #ccc;
+}
+
+.banner-message{
+    text-align:center;
+    flex:1;
+}
+
+.banner img{
+    width:120px;
+}
+
+/* 商品エリア */
+.section{
+    padding:20px;
+    text-align:center;
+}
+
+.section-title{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+/* 商品一覧 */
+.product-list{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+/* 商品カード */
+.product-card{
+    width:120px;
+}
+
+.product-image{
+    width:100px;
+    height:100px;
+    border:2px solid green;
+    border-radius:50%;
+    margin:0 auto 10px;
+    overflow:hidden;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.product-name{
+    font-size:14px;
+}
+
+/* フッター */
+footer{
+    border-top:1px solid #ccc;
+    padding:20px;
+    text-align:center;
+    font-size:14px;
+}
+
+footer a{
+    text-decoration:none;
+    color:black;
+    margin:0 10px;
+}
+/* =========================
+   回転寿司レーン
+========================= */
+
+.sushi-lane{
+    width:100%;
+    background:#eeeeee;
+    padding:30px 0;
+    overflow:hidden;
+    position:relative;
+}
+
+.lane-title{
+    text-align:center;
+    font-size:42px;
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+.lane-wrapper{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+
+/* 流れる本体 */
+.lane-track{
+    display:flex;
+    align-items:center;
+    gap:40px;
+
+    width:max-content;
+
+    animation:sushiLoop 25s linear infinite;
+}
+
+/* ホバーで止まる */
+.lane-track:hover{
+    animation-play-state:paused;
+}
+
+/* =========================
+   回転寿司の皿
+========================= */
+
+.lane-item{
+    width:180px;
+    flex-shrink:0;
+
+    text-align:center;
+
+    position:relative;
+
+    padding-bottom:40px;
+}
+
+/* 皿本体 */
+.lane-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:45px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:160px;
+    height:40px;
+
+    background:linear-gradient(
+        to bottom,
+        #ffffff,
+        #dddddd
+    );
+
+    border-radius:50%;
+
+    border:6px solid #0a8f08;
+
+    z-index:1;
+
+    box-shadow:
+        0 6px 10px rgba(0,0,0,0.2);
+}
+
+/* 皿の内側 */
+.lane-item::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:55px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:120px;
+    height:20px;
+
+    border-radius:50%;
+
+    border:4px solid #0a8f08;
+
+    z-index:1;
+}
+/* 商品画像 */
+.lane-item img{
+    width:120px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:5px solid green;
+
+    background:white;
+
+    position:relative;
+    z-index:2;
+
+    transition:0.3s;
+}
+
+/* ホバー */
+.lane-item img:hover{
+    transform:scale(1.1);
+}
+
+/* 商品名 */
+.lane-item p{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* 金ぴか魚 */
+.gold-fish img{
+    border:5px solid gold;
+
+    box-shadow:
+        0 0 10px gold,
+        0 0 20px gold,
+        0 0 40px gold;
+
+    animation:goldGlow 1s infinite alternate;
+}
+.gold-fish::before{
+    border:6px solid gold;
+
+    box-shadow:
+        0 0 10px gold,
+        0 0 20px gold;
+}
+
+.gold-fish::after{
+    border:4px solid gold;
+}
+
+/* 金ぴか点滅 */
+@keyframes goldGlow{
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.08);
+    }
+}
+
+/* 無限ループ */
+@keyframes sushiLoop{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+
+/* レスポンシブ */
+@media screen and (max-width:768px){
+
+    .container{
+        width:95%;
+    }
+
+    .top-menu{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .banner{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .product-list{
+        gap:15px;
+    }
+}
+
+</style>
+</head>
+
+<script>
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const track = document.getElementById("laneTrack");
+
+    // 1/50でSSR金ぴか魚
+    const random = Math.floor(Math.random() * 2);
+
+    if(random === 0){
+
+        const goldFish = document.createElement("div");
+
+        goldFish.classList.add("lane-item");
+        goldFish.classList.add("gold-fish");
+
+        goldFish.innerHTML = `
+            <img src="/images/gold-fish.png" alt="金ぴか魚">
+            <p>SSR金ぴか魚</p>
+        `;
+
+        track.appendChild(goldFish);
+
+        // 無限ループ用にもう1匹
+        const goldFish2 = goldFish.cloneNode(true);
+
+        track.appendChild(goldFish2);
+    }
+
+});
+
+</script>
+
+</script>
+<body>
+
+<div class="container">
+
+    <!-- ヘッダー -->
+    <header>
+
+        <div class="top-menu">
+
+            <div class="logo">
+                横山蒸留所
+            </div>
+
+            <nav class="nav">
+                <a href="#">カテゴリー</a>
+                <a href="#">絞り込み</a>
+                <a href="#">ミニゲーム</a>
+                <a href="#">所持クーポン</a>
+            </nav>
+
+            <div class="search-box">
+                <input type="text" placeholder="検索">
+            </div>
+
+        </div>
+
+    </header>
+
+	<!-- 回転寿司レーン -->
+	<div class="sushi-lane">
+
+	    <div class="lane-title">
+	        おすすめ商品
+	    </div>
+
+	    <div class="lane-wrapper">
+
+	        <div class="lane-track" id="laneTrack">
+
+	            <!-- 1周目 -->
+	            <div class="lane-item"
+	                 th:each="product : ${recommendProducts}">
+
+	                <img th:src="${product.imageUrl}"
+	                     th:alt="${product.name}">
+
+	                <p th:text="${product.name}"></p>
+
+	            </div>
+
+	            <!-- 2周目（無限ループ用） -->
+	            <div class="lane-item"
+	                 th:each="product : ${recommendProducts}">
+
+	                <img th:src="${product.imageUrl}"
+	                     th:alt="${product.name}">
+
+	                <p th:text="${product.name}"></p>
+
+	            </div>
+
+	        </div>
+
+	    </div>
+
+	</div>
+    <!-- 新着商品 -->
+    <section class="section">
+
+        <h2 class="section-title">新着商品</h2>
+
+        <div class="product-list">
+
+            <!-- 商品繰り返し -->
+            <div class="product-card"
+                 th:each="product : ${newProducts}">
+
+                <div class="product-image">
+                    <img th:src="${product.imageUrl}" alt="商品画像">
+                </div>
+
+                <div class="product-name"
+                     th:text="${product.name}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ランキング -->
+    <section class="section">
+
+        <h2 class="section-title">
+            ランキング商品
+        </h2>
+
+        <div class="product-list">
+
+            <div class="product-card"
+                 th:each="product : ${rankingProducts}">
+
+                <div class="product-image">
+                    <img th:src="${product.imageUrl}" alt="商品画像">
+                </div>
+
+                <div class="product-name"
+                     th:text="${product.name}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- フッター -->
+    <footer>
+
+        <a href="#">お問い合わせ</a> |
+        <a href="#">利用規約</a> |
+        <a href="#">プライバシーポリシー</a> |
+        <a href="#">配送について</a> |
+        <a href="#">FAQ</a>
+
+    </footer>
+
+</div>
+
+</body>
+</html>
