@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/items}" method="get">
+
+	    <!-- エリア -->
+	    <select name="area">
+
+	        <option value="">
+	            すべてのエリア
+	        </option>
+
+	        <option value="tokyo">
+	            道東
+	        </option>
+
+	        <option value="osaka">
+	            道央
+	        </option>
+
+	        <option value="fukuoka">
+	            道南
+	        </option>
+			
+	        <option value="fukuoka">
+	            道北
+	        </option>
+
+	    </select>
+
+	    <!-- カテゴリー -->
+	    <select name="category">
+
+	        <option value="">
+	            すべてのカテゴリー
+	        </option>
+
+	        <option value="restaurant">
+	            肉
+	        </option>
+
+	        <option value="hotel">
+	            魚
+	        </option>
+
+	        <option value="shopping">
+	            野菜
+	        </option>
+			
+	        <option value="shopping">
+	            飲料
+	        </option>
+			
+	        <option value="shopping">
+	            酒
+	        </option>
+			
+	        <option value="shopping">
+	            菓子類
+	        </option>
+
+
+	    </select>
+
+	    <!-- 最低価格 -->
+	    <input type="number"
+	           name="minPrice"
+	           placeholder="最低価格">
+
+	    <!-- 最高価格 -->
+	    <input type="number"
+	           name="maxPrice"
+	           placeholder="最高価格">
+
+	    <!-- 並び替え -->
+	    <select name="sort">
+
+	        <option value="">
+	            標準
+	        </option>
+
+	        <option value="priceAsc">
+	            価格が安い順
+	        </option>
+
+	        <option value="priceDesc">
+	            価格が高い順
+	        </option>
+
+	        <option value="popular">
+	            人気順
+	        </option>
+
+	        <option value="newest">
+	            更新日順
+	        </option>
+
+	    </select>
+
+	    <button type="submit">
+	        検索
+	    </button>
+
+	</form>
+</body>
+</html>

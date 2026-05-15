@@ -1,0 +1,79 @@
+<select id="search"
+        resultType="com.example.demo.entity.Item">
+
+    SELECT *
+    FROM items
+
+    <where>
+
+        <!-- エリア -->
+        <if test="area != null and area != ''">
+
+            AND area = #{area}
+
+        </if>
+
+        <!-- カテゴリー -->
+        <if test="category != null and category != ''">
+
+            AND category = #{category}
+
+        </if>
+
+        <!-- 最低価格 -->
+        <if test="minPrice != null">
+
+            AND price &gt;= #{minPrice}
+
+        </if>
+
+        <!-- 最高価格 -->
+        <if test="maxPrice != null">
+
+            AND price &lt;= #{maxPrice}
+
+        </if>
+
+    </where>
+
+    <!-- 並び替え -->
+    <choose>
+
+        <!-- 人気順 -->
+        <when test="sort == 'popular'">
+
+            ORDER BY favorite_count DESC
+
+        </when>
+
+        <!-- 安い順 -->
+        <when test="sort == 'priceAsc'">
+
+            ORDER BY price ASC
+
+        </when>
+
+        <!-- 高い順 -->
+        <when test="sort == 'priceDesc'">
+
+            ORDER BY price DESC
+
+        </when>
+
+        <!-- 更新日順 -->
+        <when test="sort == 'newest'">
+
+            ORDER BY updated_at DESC
+
+        </when>
+
+        <!-- デフォルト -->
+        <otherwise>
+
+            ORDER BY id DESC
+
+        </otherwise>
+
+    </choose>
+
+</select>
