@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
 
 		return userMapper.findById(id);
 	}
+
+	@Override
+	public User login(String email) {
+
+		return userMapper.login(email);
+	}
 }

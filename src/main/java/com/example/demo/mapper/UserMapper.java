@@ -19,4 +19,6 @@ public interface UserMapper {
 	//**ユーザーIDと照合する。
 	User findById(int id);
 
+	User login(String email);
+
 }

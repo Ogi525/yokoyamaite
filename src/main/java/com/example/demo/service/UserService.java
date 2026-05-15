@@ -21,4 +21,6 @@ public interface UserService {
 	 */
 	User findById(int id);
 
+	User login(String email);
+
 }
