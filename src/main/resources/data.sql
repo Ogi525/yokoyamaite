@@ -104,10 +104,11 @@ ON CONFLICT DO NOTHING;
 
 INSERT INTO game_results (user_id, result, played_at)
 SELECT
-    gs,  -- user_id（1〜20）
+    gs,
     CASE 
         WHEN RANDOM() > 0.7 THEN '当たり'
         ELSE 'はずれ'
     END,
-    CURRENT_DATE - (RANDOM()*10)::INT  -- 過去10日以内でランダム
-FROM generate_series(1,20) gs;
+    CURRENT_DATE - gs
+FROM generate_series(1,20) gs
+ON CONFLICT DO NOTHING;

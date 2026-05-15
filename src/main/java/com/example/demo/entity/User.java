@@ -9,14 +9,14 @@ public class User {
 
 	private String address;
 
-	private String postalcode;
+	private String postal_code;
 
 	public String getPostalCode() {
-		return postalcode;
+		return postal_code;
 	}
 
-	public void setPostalCode(String postalcode) {
-		this.postalcode = postalcode;
+	public void setPostalCode(String postal_code) {
+		this.postal_code = postal_code;
 	}
 
 	private String password;

@@ -13,6 +13,6 @@ public interface UserMapper {
 	User findByEmail(String email);
 
 	/** ユーザを登録する */
-	@Insert("INSERT INTO users (name, email, password,postalcode,adress) VALUES (#{name}, #{email}, #{password},#{postalcode},#{adress})")
+	@Insert("INSERT INTO users (name, email, password,postal_code,address) VALUES (#{name}, #{email}, #{password},#{postal_code},#{address})")
 	void insert(User user);
 }
