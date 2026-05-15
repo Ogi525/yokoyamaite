@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.UserForm;
+import com.example.demo.service.UserService;
 
 @Controller
 public class UserController {
+
+	private final UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/register")
 	public String showForm(Model model) {
@@ -19,12 +26,8 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String submitForm(@ModelAttribute UserForm form, Model model) {
-		// まとめて受け取れているか確認
-		System.out.println("name = " + form.getName());
-		System.out.println("email = " + form.getEmail());
-		System.out.println("password = " + form.getPassword());
-		System.out.println("password = " + form.getPostalCode());
-		System.out.println("password = " + form.getAddress());
+		// ビジネスロジックを Service に委譲する
+		userService.register(form);
 
 		model.addAttribute("form", form);
 		return "user/result";

@@ -4,7 +4,7 @@ public class UserForm {
 	private String name;
 	private String email;
 	private String password;
-	private String postalCode;
+	private String postalcode;
 	private String address;
 
 	public String getName() {
@@ -32,11 +32,11 @@ public class UserForm {
 	}
 
 	public String getPostalCode() {
-		return postalCode;
+		return postalcode;
 	}
 
 	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+		this.postalcode = postalCode;
 	}
 
 	public String getAddress() {

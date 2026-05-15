@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>ログイン</title>
+</head>
+<body>
+  <header th:replace="layout/_header :: header"></header>
+
+  <main>
+  <h1>ログイン</h1>
+
+  <p th:if="${loginError}" style="color:red">[[${loginError}]]</p>
+
+  <form th:action="@{/login}" th:object="${form}" method="post">
+	<p>名前：<input type="text" th:field="*{name}" />
+	<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+	    </p>
+    <p>
+      メールアドレス：<input type="email" th:field="*{email}" />
+      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </p>
+    <p>
+      パスワード：<input type="password" th:field="*{password}" />
+      <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    </p>
+	<p>
+	      郵便番号：<input type= "text"  th:field="*{postalcode}"/>
+	      <span th:if="${#fields.hasErrors('postalcode')}" th:errors="*{postalcode}"></span>
+	    </p>
+		<p>
+		  住所：<input type= "text" th:field="*{address}"/>
+		      <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+		    </p>
+    <p><button type="submit">ログイン</button></p>
+  </form>
+
+  <p><a href="/register">▶ 新規会員登録はこちら</a></p>
+  </main>
+
+  <footer th:replace="layout/_footer :: footer"></footer>
+</body>
+</html>
