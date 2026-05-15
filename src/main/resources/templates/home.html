@@ -57,10 +57,40 @@ header{
     font-weight:bold;
 }
 
+/* 右側 */
+.right-area{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.search-box{
+    display:flex;
+    align-items:center;
+}
+
 .search-box input{
     padding:10px;
     border-radius:10px;
     border:1px solid #ccc;
+}
+
+.icon-box{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.icon-btn{
+    font-size:26px;
+    text-decoration:none;
+    color:#333;
+    transition:0.2s;
+}
+
+.icon-btn:hover{
+    transform:scale(1.2);
+    color:#005b96;
 }
 
 /* =========================
@@ -77,7 +107,7 @@ header{
 
 .lane-title{
     text-align:center;
-    font-size:56px;
+    font-size:35px;
     font-weight:bold;
     margin-bottom:40px;
 }
@@ -205,7 +235,7 @@ header{
 }
 
 /* =========================
-   金ぴか魚
+   SSR金ぴか魚
 ========================= */
 
 .gold-fish img{
@@ -247,6 +277,7 @@ header{
 
     color:#005b96;
 }
+
 .product-list{
 
     display:flex;
@@ -260,7 +291,7 @@ header{
 
 .product-card{
 
-    width:205px;   /* ← 少しだけ大きく */
+    width:205px;
 
     background:white;
 
@@ -287,7 +318,7 @@ header{
 .card-image{
 
     width:100%;
-    height:150px;   /* ← 少しだけ大きく */
+    height:150px;
 
     overflow:hidden;
 }
@@ -330,6 +361,7 @@ header{
 
     color:#777;
 }
+
 /* =========================
    フッター
 ========================= */
@@ -406,39 +438,6 @@ footer a{
 
 </style>
 
-<script>
-
-window.addEventListener("DOMContentLoaded", () => {
-
-    const track = document.getElementById("laneTrack");
-
-    // 1/50でSSR魚出現
-    const random = Math.floor(Math.random() * 50);
-
-    if(random === 0){
-
-        const goldFish = document.createElement("div");
-
-        goldFish.classList.add("lane-item");
-        goldFish.classList.add("gold-fish");
-
-        goldFish.innerHTML = `
-            <img src="/images/gold-fish.png" alt="金ぴか魚">
-            <p>SSR金ぴか魚</p>
-        `;
-
-        track.appendChild(goldFish);
-
-        // 無限ループ用
-        const clone = goldFish.cloneNode(true);
-
-        track.appendChild(clone);
-    }
-
-});
-
-</script>
-
 </head>
 
 <body>
@@ -461,8 +460,24 @@ window.addEventListener("DOMContentLoaded", () => {
                 <a href="#">所持クーポン</a>
             </nav>
 
-            <div class="search-box">
-                <input type="text" placeholder="検索">
+            <div class="right-area">
+
+                <div class="search-box">
+                    <input type="text" placeholder="検索">
+                </div>
+
+                <div class="icon-box">
+
+                    <a href="/cart" class="icon-btn">
+                        🛒
+                    </a>
+
+                    <a href="/mypage" class="icon-btn">
+                        👤
+                    </a>
+
+                </div>
+
             </div>
 
         </div>
@@ -478,7 +493,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         <div class="lane-wrapper">
 
-            <div class="lane-track" id="laneTrack">
+            <div class="lane-track">
 
                 <!-- 1周目 -->
                 <div class="lane-item"
@@ -491,6 +506,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 </div>
 
+                <!-- SSR金ぴか魚 -->
+                <div class="lane-item gold-fish">
+
+                    <img src="/images/gold-fish.png"
+                         alt="SSR金ぴか魚">
+
+                    <p>SSR金ぴか魚</p>
+
+                </div>
+
                 <!-- 2周目 -->
                 <div class="lane-item"
                      th:each="product : ${recommendProducts}">
@@ -499,6 +524,16 @@ window.addEventListener("DOMContentLoaded", () => {
                          th:alt="${product.name}">
 
                     <p th:text="${product.name}"></p>
+
+                </div>
+
+                <!-- SSR金ぴか魚（2周目用） -->
+                <div class="lane-item gold-fish">
+
+                    <img src="/images/gold-fish.png"
+                         alt="SSR金ぴか魚">
+
+                    <p>SSR金ぴか魚</p>
 
                 </div>
 

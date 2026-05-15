@@ -10,14 +10,6 @@ public class Product {
 	private Integer price;
 	private Integer stock;
 
-	public Integer getStock() {
-		return stock;
-	}
-
-	public void setStock(Integer stock) {
-		this.stock = stock;
-	}
-
 	private String origin;
 	private String imageUrl;
 	private String description;
@@ -62,6 +54,14 @@ public class Product {
 
 	public void setPrice(Integer price) {
 		this.price = price;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 
 	public String getOrigin() {
