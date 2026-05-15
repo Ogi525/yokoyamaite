@@ -5,8 +5,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form th:action="@{/items}" method="get">
-
+	<form th:action="@{/search}" method="get">
+		
+		<input type="text"
+		           name="keyword"
+		           th:value="${keyword}"
+		           placeholder="商品名検索">
+				   
 	    <!-- エリア -->
 	    <select name="area">
 
@@ -69,12 +74,14 @@
 	    <!-- 最低価格 -->
 	    <input type="number"
 	           name="minPrice"
-	           placeholder="最低価格">
+	           placeholder="最低価格"
+			   min="0">
 
 	    <!-- 最高価格 -->
 	    <input type="number"
 	           name="maxPrice"
-	           placeholder="最高価格">
+	           placeholder="最高価格"
+			   min="0">
 
 	    <!-- 並び替え -->
 	    <select name="sort">
