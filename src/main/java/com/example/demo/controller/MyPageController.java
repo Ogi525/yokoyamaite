@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
 
 @Controller
 public class MyPageController {
@@ -23,15 +22,16 @@ public class MyPageController {
 
 		User user = userService.findById(loginUser.getId());
 
-		List<Coupon> coupons = userService.getCoupons(user.getId());
-
-		List<userHistory> histories = userService.getHistory(user.getId());
+		//		List<Coupons> coupons = userService.getCoupons(user.getId());
 
 		model.addAttribute("User", user);
-		model.addAttribute("coupons", coupons);
-		model.addAttribute("histories", histories);
+		//		model.addAttribute("coupons", coupons);
 
 		return "/mypage";
+
+		//		 public List<OrderHistoryRow> findHistoryByUser(int id) {
+		//		        return orderMapper.findHistoryByUser(id);
+		//		    }
 
 	}
 

@@ -2,23 +2,36 @@
 
 	INSERT INTO users(
 
-	name,
-	email,
-	postalCode
-	address,
-	password
+	 id 
+     email
+     name
+     password
+     DATE created_at
+     postalcode
+     address
+     judge
 
 	)
 	values
 	(
-	#{postalCode},
-	#{name},
-	#{email}
-	#{address},
-	#{password}
+	 #{id}, 
+     #{email},
+     #{name},
+     #{password},
+     #{DATE created_at},
+     #{postalcode},
+     #{address},
+     #{judge}
 
 
 	)
 
 </insert>
 
+<select id="findById" resultType="com.example.demo.entity.User">
+
+    SELECT *
+    FROM users
+    WHERE id = #{id}
+
+</select>
