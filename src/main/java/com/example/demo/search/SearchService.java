@@ -4,27 +4,29 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Product;
+
 @Service
-public class SerchService {
+public class SearchService {
 
-	private final SerchMapper itemMapper;
+	private final SearchMapper searchMapper;
 
-	public SerchService(SerchMapper itemMapper) {
-		this.itemMapper = itemMapper;
+	public SearchService(SearchMapper searchMapper) {
+		this.searchMapper = searchMapper;
 	}
 
-	public List<Item> search(
+	public List<Product> search(
 			String keyword,
-			String area,
-			String category,
+			List<Integer> areas,
+			List<Integer> categories,
 			Integer minPrice,
 			Integer maxPrice,
 			String sort) {
 
-		return itemMapper.search(
+		return searchMapper.search(
 				keyword,
-				area,
-				category,
+				areas,
+				categories,
 				minPrice,
 				maxPrice,
 				sort);

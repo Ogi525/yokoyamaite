@@ -5,29 +5,34 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.search.SerchService;
+import com.example.demo.entity.Product;
+import com.example.demo.search.SearchService;
 
 @Controller
-@RequestMapping("/serch")
 public class SearchController {
 
-	private final SerchService itemService;
+	private final SearchService itemService;
 
-	public SearchController(SerchService itemService) {
+	public SearchController(SearchService itemService) {
 		this.itemService = itemService;
 	}
 
-	@GetMapping
+	// 検索画面表示
+	@GetMapping("/search")
+	public String searchPage() {
+		return "search/search";
+	}
+
+	// 検索実行
+	@GetMapping("/searchresult")
 	public String search(
 
 			@RequestParam(required = false) String keyword,
 
-			@RequestParam(required = false) String area,
-
-			@RequestParam(required = false) String category,
+			@RequestParam(required = false) List<Integer> areas,
+			@RequestParam(required = false) List<Integer> categories,
 
 			@RequestParam(required = false) Integer minPrice,
 
@@ -37,16 +42,25 @@ public class SearchController {
 
 			Model model) {
 
-		List<Item> items = itemService.search(
+		System.out.println(keyword);
+		System.out.println(areas);
+		System.out.println(categories);
+		System.out.println(minPrice);
+		System.out.println(maxPrice);
+		System.out.println(sort);
+
+		// 検索実行
+		List<Product> products = itemService.search(
 				keyword,
-				area,
-				category,
+				areas,
+				categories,
 				minPrice,
 				maxPrice,
 				sort);
 
-		model.addAttribute("items", items);
+		// HTMLへ渡す
+		model.addAttribute("products", products);
 
-		return "items";
+		return "search/searchresult";
 	}
 }

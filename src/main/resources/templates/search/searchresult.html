@@ -1,37 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>検索結果</title>
+
+<style>
+
+body{
+    font-family: sans-serif;
+    margin: 30px;
+}
+
+.product{
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.price{
+    color: red;
+    font-weight: bold;
+}
+
+.search-info{
+    margin-bottom: 20px;
+}
+
+</style>
+
 </head>
 <body>
-	<h2>検索結果</h2>
 
-	<table border="1">
+<h1>検索結果</h1>
 
-	    <tr>
-	        <th>ID</th>
-	        <th>商品名</th>
-	        <th>カテゴリ</th>
-	        <th>エリア</th>
-	        <th>価格</th>
-	    </tr>
+<div class="search-info">
 
-	    <tr th:each="product : ${products}">
+    <a th:href="@{/search}">
+        検索画面へ戻る
+    </a>
 
-	        <td th:text="${product.id}"></td>
+</div>
 
-	        <td th:text="${product.name}"></td>
+<!-- 商品が0件 -->
 
-	        <td th:text="${product.category}"></td>
-			
-	        <td th:text="${product.erea}"></td>
+<div th:if="${#lists.isEmpty(products)}">
 
-	        <td th:text="${product.price}"></td>
+    <p>該当する商品がありませんでした。</p>
 
-	    </tr>
+</div>
 
-	</table>
+<!-- 商品一覧 -->
+
+<div th:unless="${#lists.isEmpty(products)}">
+
+    <p>
+        検索結果：
+        <span th:text="${#lists.size(products)}"></span>
+        件
+    </p>
+
+    <div class="product" th:each="product : ${products}">
+
+        <h2 th:text="${product.name}"></h2>
+
+        <p>
+            エリア：
+            <span th:text="${product.areaId}"></span>
+        </p>
+
+        <p>
+            カテゴリー：
+            <span th:text="${product.categoryId}"></span>
+        </p>
+
+        <p class="price">
+            <span th:text="${product.price}"></span> 円
+        </p>
+
+    </div>
+
+</div>
 
 </body>
 </html>

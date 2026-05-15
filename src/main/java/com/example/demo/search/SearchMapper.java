@@ -5,20 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.example.demo.entity.Product;
+
 @Mapper
-public interface SerchMapper {
+public interface SearchMapper {
 
-	List<Item> search(
-
+	List<Product> search(
 			@Param("keyword") String keyword,
-
-			@Param("area") String area,
-
-			@Param("category") String category,
-
+			@Param("areas") List<Integer> areas,
+			@Param("categories") List<Integer> categories,
 			@Param("minPrice") Integer minPrice,
-
 			@Param("maxPrice") Integer maxPrice,
-
 			@Param("sort") String sort);
 }
