@@ -2,25 +2,24 @@ package com.example.demo.entity;
 
 public class Product {
 
-	private Integer productId;
+	private Integer id;
 	private Integer areaId;
 	private Integer categoryId;
 
-	private String productName;
+	private String name;
 	private Integer price;
 	private String origin;
 	private String imageUrl;
 	private String description;
-	private String sushiLaneName;
 
 	// getter setter
 
-	public Integer getProductId() {
-		return productId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getAreaId() {
@@ -39,12 +38,12 @@ public class Product {
 		this.categoryId = categoryId;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getPrice() {
@@ -77,13 +76,5 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getSushiLaneName() {
-		return sushiLaneName;
-	}
-
-	public void setSushiLaneName(String sushiLaneName) {
-		this.sushiLaneName = sushiLaneName;
 	}
 }

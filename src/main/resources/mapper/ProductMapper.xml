@@ -6,32 +6,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.example.demo.mapper.ProductMapper">
 
-    <select id="findRecommendProducts"
-            resultType="com.example.demo.entity.Product">
+	<select id="findRecommendProducts"
+		resultType="com.example.demo.entity.Product">
 
-        SELECT *
-        FROM products
-        LIMIT 5
+		SELECT *
+		FROM products
+		LIMIT 5
 
-    </select>
+	</select>
 
-    <select id="findNewProducts"
-            resultType="com.example.demo.entity.Product">
+	<select id="findNewProducts"
+		resultType="com.example.demo.entity.Product">
 
-        SELECT *
-        FROM products
-        ORDER BY product_id DESC
-        LIMIT 5
+		SELECT *
+		FROM products
+		ORDER BY id DESC
+		LIMIT 5
 
-    </select>
+	</select>
 
-    <select id="findRankingProducts"
-            resultType="com.example.demo.entity.Product">
+	<select id="findRankingProducts"
+		resultType="com.example.demo.entity.Product">
 
-        SELECT *
-        FROM products
-        LIMIT 5
+		SELECT *
+		FROM products
+		LIMIT 5
 
-    </select>
+	</select>
 
 </mapper>
