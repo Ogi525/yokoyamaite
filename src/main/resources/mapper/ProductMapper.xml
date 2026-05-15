@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.ProductMapper">
+
+    <select id="findRecommendProducts"
+            resultType="com.example.demo.entity.Product">
+
+        SELECT *
+        FROM products
+        LIMIT 5
+
+    </select>
+
+    <select id="findNewProducts"
+            resultType="com.example.demo.entity.Product">
+
+        SELECT *
+        FROM products
+        ORDER BY product_id DESC
+        LIMIT 5
+
+    </select>
+
+    <select id="findRankingProducts"
+            resultType="com.example.demo.entity.Product">
+
+        SELECT *
+        FROM products
+        LIMIT 5
+
+    </select>
+
+</mapper>
