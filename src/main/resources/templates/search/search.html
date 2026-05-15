@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>検索</title>
+
+<style>
+    body{
+        font-family: sans-serif;
+        margin: 30px;
+    }
+
+    .search-box{
+        border:1px solid #ccc;
+        padding:20px;
+        width:400px;
+        border-radius:10px;
+    }
+
+    .section{
+        margin-bottom:20px;
+    }
+
+    .section-title{
+        font-weight:bold;
+        margin-bottom:10px;
+    }
+
+    label{
+        display:block;
+        margin-bottom:5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select{
+        width:100%;
+        padding:8px;
+        box-sizing:border-box;
+    }
+
+    .price-area{
+        display:flex;
+        gap:10px;
+    }
+
+    button{
+        width:100%;
+        padding:10px;
+        background:#2d6a4f;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    button:hover{
+        opacity:0.9;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>検索</h1>
+
+<form th:action="@{/searchresult}" method="get">
+
+    <div class="search-box">
+
+        <!-- 通常検索 -->
+        <div class="section">
+            <div class="section-title">
+                キーワード検索
+            </div>
+
+            <input type="text"
+                   name="keyword"
+                   placeholder="商品名・説明文など">
+        </div>
+
+        <!-- エリア -->
+        <div class="section">
+
+            <div class="section-title">
+                エリア
+            </div>
+
+            <label>
+                <input type="checkbox"
+                       name="areas"
+                       value="1">
+                道東
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="areas"
+                       value="2">
+                道央
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="areas"
+                       value="3">
+                道南
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="areas"
+                       value="4">
+                道北
+            </label>
+
+        </div>
+
+        <!-- カテゴリー -->
+        <div class="section">
+
+            <div class="section-title">
+                カテゴリー
+            </div>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="1">
+                肉
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="2">
+                海鮮
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="3">
+                野菜
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="4">
+                飲料
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="5">
+                お酒
+            </label>
+
+            <label>
+                <input type="checkbox"
+                       name="categories"
+                       value="6">
+                菓子類
+            </label>
+
+        </div>
+
+        <!-- 価格帯 -->
+        <div class="section">
+
+            <div class="section-title">
+                価格帯
+            </div>
+
+            <div class="price-area">
+
+                <input type="number"
+                       name="minPrice"
+                       placeholder="最低価格"
+					   min="0"
+					   step="500">
+
+                <input type="number"
+                       name="maxPrice"
+                       placeholder="最高価格"
+					   min="0"
+					   step="500">
+
+            </div>
+
+        </div>
+
+        <!-- 人気順フィルタ -->
+       
+
+        <!-- 並べ替え -->
+        <div class="section">
+
+            <div class="section-title">
+                並べ替え
+            </div>
+
+            <select name="sort">
+
+                <option value="">
+                    標準
+                </option>
+
+                <option value="updatedDesc">
+                    更新順
+                </option>
+
+                <option value="priceDesc">
+                    金額が高い順
+                </option>
+
+                <option value="priceAsc">
+                    金額が低い順
+                </option>
+
+                <option value="popularDesc">
+                    人気順
+                </option>
+
+            </select>
+
+        </div>
+
+        <button type="submit">
+            検索する
+        </button>
+
+    </div>
+
+</form>
+
+</body>
+</html>
