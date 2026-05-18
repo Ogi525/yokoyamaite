@@ -346,18 +346,81 @@ footer a{
     <!-- 検索情報 -->
     <div class="search-info">
 
-        <a th:href="@{/search}">
-            ← 検索画面へ戻る
-        </a>
+		<div class="search-info">
 
-        <div class="result-count"
-             th:unless="${#lists.isEmpty(products)}">
+		    <div style="display:flex;
+		                justify-content:space-between;
+		                align-items:center;
+		                flex-wrap:wrap;
+		                gap:15px;">
 
-            検索結果：
-            <span th:text="${#lists.size(products)}"></span>
-            件
+		        <a th:href="@{/search}">
+		            ← 検索画面へ戻る
+		        </a>
 
-        </div>
+		        <!-- 並べ替え -->
+		        <form th:action="@{/searchresult}" method="get">
+
+		            <!-- 検索条件を保持 -->
+		            <input type="hidden" name="keyword" th:value="${param.keyword}">
+		            <input type="hidden" name="minPrice" th:value="${param.minPrice}">
+		            <input type="hidden" name="maxPrice" th:value="${param.maxPrice}">
+
+		            <!-- area -->
+		            <th:block th:each="a : ${param.areas}">
+		                <input type="hidden" name="areas" th:value="${a}">
+		            </th:block>
+
+		            <!-- category -->
+		            <th:block th:each="c : ${param.categories}">
+		                <input type="hidden" name="categories" th:value="${c}">
+		            </th:block>
+
+		            <select name="sort"
+		                    onchange="this.form.submit()"
+		                    style="
+		                        padding:10px 15px;
+		                        border-radius:10px;
+		                        border:1px solid #ccc;
+		                        font-size:15px;
+		                    ">
+
+		                <option value="">
+		                    並べ替え
+		                </option>
+
+		                <option value="priceAsc"
+		                        th:selected="${param.sort == 'priceAsc'}">
+		                    価格が安い順
+		                </option>
+
+		                <option value="priceDesc"
+		                        th:selected="${param.sort == 'priceDesc'}">
+		                    価格が高い順
+		                </option>
+
+		                <option value="new"
+		                        th:selected="${param.sort == 'new'}">
+		                    新着順
+		                </option>
+
+		            </select>
+
+		        </form>
+
+		    </div>
+
+		    <div class="result-count"
+		         th:unless="${#lists.isEmpty(products)}">
+
+		        検索結果：
+		        <span th:text="${#lists.size(products)}"></span>
+		        件
+
+		    </div>
+
+		</div>
+		
 
     </div>
 
