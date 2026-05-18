@@ -84,7 +84,8 @@
 			color: white;
 		}
 
-		.menu a {
+		.menu a,
+		.menu-button {
 			display: inline-block;
 			margin-right: 15px;
 			text-decoration: none;
@@ -92,9 +93,13 @@
 			background-color: #0078d4;
 			padding: 10px 15px;
 			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+			font-size: 14px;
 		}
 
-		.menu a:hover {
+		.menu a:hover,
+		.menu-button:hover {
 			background-color: #005ea2;
 		}
 	</style>
@@ -109,7 +114,6 @@
 
 			<h2>プロフィール</h2>
 
-			<!-- DB画像なし版 -->
 			<div class="avatar"
 			     th:text="${#strings.substring(user.name,0,1)}">
 				U
@@ -133,26 +137,9 @@
 
 				<div class="info-box">
 
-					<p>
-						<strong>名前：</strong>
-						<span th:text="${user.name}">
-							名前
-						</span>
-					</p>
-
-					<p>
-						<strong>メール：</strong>
-						<span th:text="${user.email}">
-							email
-						</span>
-					</p>
-
-					<p>
-						<strong>住所：</strong>
-						<span th:text="${user.address}">
-							address
-						</span>
-					</p>
+					<p><strong>名前：</strong> <span th:text="${user.name}">名前</span></p>
+					<p><strong>メール：</strong> <span th:text="${user.email}">email</span></p>
+					<p><strong>住所：</strong> <span th:text="${user.address}">address</span></p>
 
 				</div>
 
@@ -188,22 +175,9 @@
 					</tr>
 
 					<tr th:each="history : ${histories}">
-
-						<td th:text="${history.productName}">
-							商品
-						</td>
-
-						<td th:text="${history.purchaseDate}">
-							2026-01-01
-						</td>
-
-						<td>
-							¥
-							<span th:text="${history.price}">
-								5000
-							</span>
-						</td>
-
+						<td th:text="${history.productName}">商品</td>
+						<td th:text="${history.purchaseDate}">2026-01-01</td>
+						<td>¥ <span th:text="${history.price}">5000</span></td>
 					</tr>
 
 				</table>
@@ -217,9 +191,11 @@
 					プロフィール編集
 				</a>
 
-				<a th:href="@{/logout}">
-					ログアウト
-				</a>
+				<form th:action="@{/logout}" method="post" style="display:inline;">
+					<button type="submit" class="menu-button">
+						ログアウト
+					</button>
+				</form>
 
 			</div>
 
