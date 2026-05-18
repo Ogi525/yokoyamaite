@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.GameMapper">
+
+	<!-- 今日プレイしたか -->
+	<select id="countTodayPlay" resultType="int">
+		SELECT COUNT(*)
+		FROM game_results
+		WHERE user_id = #{userId}
+		AND played_at = CURRENT_DATE
+	</select>
+
+	<!-- 結果保存 -->
+	<insert id="insertGameResult">
+		INSERT INTO game_results (user_id, result)
+		VALUES (#{userId}, #{result})
+	</insert>
+
+	<!-- 割引額でクーポン取得（BIGWIN=1000 / WIN=500） -->
+	<select id="getCouponIdByDiscount" resultType="int">
+		SELECT id
+		FROM coupons
+		WHERE discount_value = #{discount}
+		ORDER BY RANDOM()
+		LIMIT 1
+	</select>
+
+	<!-- クーポン付与 -->
+	<insert id="insertUserCoupon">
+		INSERT INTO users_coupons (user_id, coupon_id)
+		VALUES (#{userId}, #{couponId})
+		ON CONFLICT (user_id, coupon_id) DO NOTHING
+	</insert>
+
+	<!-- 今日のクーポンコード取得 -->
+	<select id="getTodayCouponCode" resultType="string">
+		SELECT c.code
+		FROM users_coupons uc
+		JOIN coupons c ON uc.coupon_id = c.id
+		WHERE uc.user_id = #{userId}
+		AND DATE(uc.acquired_at) = CURRENT_DATE
+		ORDER BY uc.acquired_at DESC
+		LIMIT 1
+	</select>
+
+</mapper>
