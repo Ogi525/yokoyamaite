@@ -20,4 +20,6 @@ public interface UserService {
 
 	User login(String email);
 
+	void updateUser(User user);
+
 }

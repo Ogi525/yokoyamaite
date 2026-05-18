@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
 import com.example.demo.form.UserForm;
+import com.example.demo.mapper.ProfileMapper;
 import com.example.demo.mapper.UserMapper;
 
 @Service
@@ -13,9 +14,11 @@ public class UserServiceImpl implements UserService {
 
 	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	private final ProfileMapper profileMapper;
 
-	public UserServiceImpl(UserMapper userMapper) {
+	public UserServiceImpl(UserMapper userMapper, ProfileMapper profileMapper) {
 		this.userMapper = userMapper;
+		this.profileMapper = profileMapper;
 	}
 
 	@Override
@@ -38,5 +41,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(String email) {
 		return userMapper.findByEmail(email);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		profileMapper.updateUser(user);
 	}
 }
