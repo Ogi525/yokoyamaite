@@ -53,8 +53,17 @@ public class AuthController {
 			return "auth/login";
 		}
 
-		// ログイン成功：セッションにユーザ情報を保存する
+		// ログイン成功：セッションにユーザ情報を保存
 		session.setAttribute("loginUser", user);
+
+		// ★ここを追加
+		String redirect = (String) session.getAttribute("redirectAfterLogin");
+
+		if (redirect != null) {
+			session.removeAttribute("redirectAfterLogin"); // 一度使ったら削除
+			return "redirect:" + redirect; // ← 元のページへ戻る
+		}
+
 		return "redirect:/mypage";
 	}
 
