@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {
 		user.setAddress(form.getAddress());
 		userMapper.insert(user);
 	}
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return userMapper.findByEmail(email) != null;
+	}
 }

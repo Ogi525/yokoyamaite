@@ -2,8 +2,6 @@ package com.example.demo.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 public class LoginForm {
 
@@ -13,29 +11,6 @@ public class LoginForm {
 
 	@NotBlank(message = "パスワードを入力してください")
 	private String password;
-
-	@Pattern(regexp = "\\d{7}", message = "郵便番号を入力してください")
-	private String postal_code;
-
-	@Size(min = 10, message = "10文字以上に入力ください")
-	@NotBlank(message = "住所を入力してください")
-	private String address;
-
-	public String getPostalcode() {
-		return postal_code;
-	}
-
-	public void setPostalcode(String postal_code) {
-		this.postal_code = postal_code;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	public String getEmail() {
 		return email;

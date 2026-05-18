@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,28 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public String submitForm(@ModelAttribute UserForm form, Model model) {
-		// ビジネスロジックを Service に委譲する
+	public String submitForm(
+			@Validated @ModelAttribute("form") UserForm form,
+			BindingResult result,
+			Model model) {
+
+		// メールアドレス重複チェック
+		if (userService.existsByEmail(form.getEmail())) {
+
+			result.rejectValue(
+					"email",
+					"duplicate",
+					"このメールアドレスは既に使用されています");
+		}
+
+		// エラーがある場合は登録画面に戻す
+		if (result.hasErrors()) {
+			return "/register";
+		}
+
+		// 登録処理
 		userService.register(form);
 
-		model.addAttribute("form", form);
 		return "/result";
 	}
 

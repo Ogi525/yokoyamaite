@@ -10,4 +10,5 @@ public interface UserService {
 	 */
 	void register(UserForm form);
 
+	boolean existsByEmail(String email);
 }
