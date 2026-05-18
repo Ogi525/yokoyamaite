@@ -10,6 +10,7 @@ import com.example.demo.entity.Product;
 @Mapper
 public interface SearchMapper {
 
+	// 検索
 	List<Product> search(
 			@Param("keyword") String keyword,
 			@Param("areas") List<Integer> areas,
@@ -17,4 +18,7 @@ public interface SearchMapper {
 			@Param("minPrice") Integer minPrice,
 			@Param("maxPrice") Integer maxPrice,
 			@Param("sort") String sort);
+
+	// 人気ランキング TOP5
+	List<Product> findTop5Popular();
 }

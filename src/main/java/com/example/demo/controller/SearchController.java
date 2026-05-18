@@ -43,14 +43,6 @@ public class SearchController {
 
 			Model model) {
 
-		System.out.println(keyword);
-		System.out.println(areas);
-		System.out.println(categories);
-		System.out.println(minPrice);
-		System.out.println(maxPrice);
-		System.out.println(sort);
-
-		// 検索実行
 		List<Product> products = itemService.search(
 				keyword,
 				areas,
@@ -59,9 +51,21 @@ public class SearchController {
 				maxPrice,
 				sort);
 
-		// HTMLへ渡す
 		model.addAttribute("products", products);
 
 		return "search/searchresult";
+	}
+
+	// 人気ランキング
+	@GetMapping("/ranking")
+	public String ranking(Model model) {
+
+		List<Product> rankingProducts = itemService.findTop5Popular();
+
+		model.addAttribute(
+				"rankingProducts",
+				rankingProducts);
+
+		return "search/ranking";
 	}
 }

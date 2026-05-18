@@ -15,6 +15,7 @@ public class SearchService {
 		this.searchMapper = searchMapper;
 	}
 
+	// 検索
 	public List<Product> search(
 			String keyword,
 			List<Integer> areas,
@@ -30,5 +31,10 @@ public class SearchService {
 				minPrice,
 				maxPrice,
 				sort);
+	}
+
+	// 人気ランキング TOP5
+	public List<Product> findTop5Popular() {
+		return searchMapper.findTop5Popular();
 	}
 }
