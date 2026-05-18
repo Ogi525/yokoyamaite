@@ -75,6 +75,12 @@
 
 		<label>住所</label>
 		<input type="text" name="address" th:value="${user.address}">
+		
+<!--		email重複があった場合...-->
+		<p th:if="${session.errorMessage != null}"
+		   th:text="${session.errorMessage}"
+		   style="color:red;">
+		</p>
 
 	
 

@@ -45,6 +45,14 @@ public class ProfileController {
 			return "redirect:/login";
 		}
 
+		//emailの重複チェック
+		User duplicate = userService.findByEmail(formUser.getEmail());
+
+		if (duplicate != null && duplicate.getId() != loginUser.getId()) {
+			session.setAttribute("errorMessage", "このメールアドレスはすでに使用されています");
+			return "profile/edit";
+		}
+
 		// IDセット
 		formUser.setId(loginUser.getId());
 

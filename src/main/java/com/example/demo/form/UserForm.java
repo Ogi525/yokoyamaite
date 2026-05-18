@@ -1,8 +1,13 @@
 package com.example.demo.form;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class UserForm {
+	@NotBlank(message = "名前は必須です。")
 	private String name;
+	@NotBlank(message = "emailアドレスは必須です")
 	private String email;
+	@NotBlank(message = "passwordを入力してください。")
 	private String password;
 	private String postalcode;
 	private String address;
