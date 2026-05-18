@@ -8,17 +8,18 @@ import com.example.demo.entity.User;
 
 @Mapper
 public interface UserMapper {
+
 	/** メールアドレスでユーザを検索する */
 	@Select("SELECT * FROM users WHERE email = #{email}")
 	User findByEmail(String email);
 
 	/** ユーザを登録する */
-	@Insert("INSERT INTO users (name, email, password,postalcode,adress) VALUES (#{name}, #{email}, #{password},#{postalcode},#{adress})")
+	@Insert("""
+			INSERT INTO users
+			(name, email, password, postal_code, address)
+			VALUES
+			(#{name}, #{email}, #{password}, #{postalCode}, #{address})
+			""")
 	void insert(User user);
-
-	//**ユーザーIDと照合する。
-	User findById(int id);
-
-	User login(String email);
 
 }

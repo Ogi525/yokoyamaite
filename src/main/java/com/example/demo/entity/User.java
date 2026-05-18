@@ -11,6 +11,8 @@ public class User {
 
 	private String postalcode;
 
+	private String password;
+
 	public String getPostalCode() {
 		return postalcode;
 	}
@@ -18,8 +20,6 @@ public class User {
 	public void setPostalCode(String postalcode) {
 		this.postalcode = postalcode;
 	}
-
-	private String password;
 
 	public int getId() {
 		return id;

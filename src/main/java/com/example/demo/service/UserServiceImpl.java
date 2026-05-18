@@ -26,19 +26,17 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(form.getPassword()));
 		user.setPostalCode(form.getPostalCode());
 		user.setAddress(form.getAddress());
-		userMapper.insert(user);
 
+		userMapper.insert(user);
 	}
 
 	@Override
-	public User findById(int id) {
-
-		return userMapper.findById(id);
+	public User findByEmail(String email) {
+		return userMapper.findByEmail(email);
 	}
 
 	@Override
 	public User login(String email) {
-
-		return userMapper.login(email);
+		return userMapper.findByEmail(email);
 	}
 }

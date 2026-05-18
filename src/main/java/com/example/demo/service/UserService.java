@@ -1,11 +1,8 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.User;
 import com.example.demo.form.UserForm;
 
-@Service
 public interface UserService {
 
 	/**
@@ -19,7 +16,7 @@ public interface UserService {
 	 * @param id ユーザーID
 	 * @return ユーザー情報
 	 */
-	User findById(int id);
+	User findByEmail(String email);
 
 	User login(String email);
 

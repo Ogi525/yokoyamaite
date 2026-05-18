@@ -19,12 +19,16 @@ public class MyPageController {
 	@GetMapping("/mypage")
 	public String showMypage(HttpSession session, Model model) {
 		User loginUser = (User) session.getAttribute("loginUser");
+		//
+		if (loginUser == null) {
+			return "redirect:/login";
+		}
 
-		User user = userService.findById(loginUser.getId());
+		User user = userService.findByEmail(loginUser.getEmail());
 
 		//		List<Coupons> coupons = userService.getCoupons(user.getId());
 
-		model.addAttribute("User", user);
+		model.addAttribute("user", loginUser);
 		//		model.addAttribute("coupons", coupons);
 
 		return "/mypage";
