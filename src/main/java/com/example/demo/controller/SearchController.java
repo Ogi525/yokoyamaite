@@ -32,6 +32,7 @@ public class SearchController {
 			@RequestParam(required = false) String keyword,
 
 			@RequestParam(required = false) List<Integer> areas,
+
 			@RequestParam(required = false) List<Integer> categories,
 
 			@RequestParam(required = false) Integer minPrice,

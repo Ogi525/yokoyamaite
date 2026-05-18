@@ -5,236 +5,361 @@
 <title>検索</title>
 
 <style>
-    body{
-        font-family: sans-serif;
-        margin: 30px;
-    }
+
+body{
+    margin:0;
+    padding:0;
+    font-family:sans-serif;
+    background:#f5f5f5;
+}
+
+/* =========================
+   全体
+========================= */
+
+.container{
+    width:99%;
+    max-width:1600px;
+    margin:10px auto;
+}
+
+/* =========================
+   ヘッダー
+========================= */
+
+header{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:30px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    color:#005b96;
+}
+
+/* =========================
+   検索ボックス
+========================= */
+
+.search-wrapper{
+    display:flex;
+    justify-content:center;
+}
+
+.search-box{
+    width:100%;
+    max-width:1100px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+
+    border:3px solid #b7d8ef;
+}
+
+.search-title{
+
+    font-size:35px;
+
+    font-weight:bold;
+
+    color:#005b96;
+
+    margin-bottom:30px;
+
+    border-left:10px solid #005b96;
+
+    padding-left:15px;
+}
+
+/* =========================
+   セクション
+========================= */
+
+.section{
+    margin-bottom:30px;
+}
+
+.section-title{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+    color:#005b96;
+}
+
+label{
+    display:block;
+    margin-bottom:10px;
+    font-size:16px;
+}
+
+/* =========================
+   入力系
+========================= */
+
+input[type="text"],
+input[type="number"],
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid #ccc;
+
+    box-sizing:border-box;
+
+    font-size:15px;
+
+    transition:0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus{
+
+    outline:none;
+
+    border:1px solid #005b96;
+
+    box-shadow:
+        0 0 5px rgba(0,91,150,0.3);
+}
+
+/* チェックボックス */
+
+input[type="checkbox"]{
+    margin-right:8px;
+    transform:scale(1.1);
+}
+
+/* 価格帯 */
+
+.price-area{
+    display:flex;
+    gap:15px;
+}
+
+/* =========================
+   ボタン
+========================= */
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#005b96;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+
+    background:#0077c2;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 10px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   レスポンシブ
+========================= */
+
+@media screen and (max-width:768px){
 
     .search-box{
-        border:1px solid #ccc;
-        padding:20px;
-        width:400px;
-        border-radius:10px;
-    }
-
-    .section{
-        margin-bottom:20px;
-    }
-
-    .section-title{
-        font-weight:bold;
-        margin-bottom:10px;
-    }
-
-    label{
-        display:block;
-        margin-bottom:5px;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    select{
         width:100%;
-        padding:8px;
-        box-sizing:border-box;
+        padding:25px;
     }
 
-    .price-area{
-        display:flex;
-        gap:10px;
+    .search-title{
+        font-size:28px;
     }
 
-    button{
-        width:100%;
-        padding:10px;
-        background:#2d6a4f;
-        color:white;
-        border:none;
-        border-radius:5px;
-        cursor:pointer;
-    }
+}
+/* =========================
+   横並び用
+========================= */
 
-    button:hover{
-        opacity:0.9;
-    }
+.checkbox-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 20px;
+}
+
+.checkbox-group label{
+    display:flex;
+    align-items:center;
+    margin-bottom:0;
+    min-width:110px;
+}
+
 </style>
 
 </head>
+
 <body>
 
-<h1>検索</h1>
+<div class="container">
 
-<form th:action="@{/searchresult}" method="get">
+    <!-- ヘッダー -->
+    <header>
 
-    <div class="search-box">
-
-        <!-- 通常検索 -->
-        <div class="section">
-            <div class="section-title">
-                キーワード検索
-            </div>
-
-            <input type="text"
-                   name="keyword"
-                   placeholder="商品名・説明文など">
+        <div class="logo">
+            横山蒸留所
         </div>
 
-        <!-- エリア -->
-        <div class="section">
+    </header>
 
-            <div class="section-title">
-                エリア
+    <!-- 検索フォーム -->
+    <div class="search-wrapper">
+
+        <form th:action="@{/searchresult}" method="get">
+
+            <div class="search-box">
+
+                <div class="search-title">
+                    商品検索
+                </div>
+
+                <!-- キーワード -->
+                <div class="section">
+
+                    <div class="section-title">
+                        キーワード検索
+                    </div>
+
+                    <input type="text"
+                           name="keyword"
+                           placeholder="商品名・説明文など">
+
+                </div>
+
+                <!-- エリア -->
+				<!-- エリア -->
+				<div class="section">
+
+				    <div class="section-title">
+				        エリア
+				    </div>
+
+				    <div class="checkbox-group">
+
+				        <label><input type="checkbox" name="areas" value="1">道東</label>
+				        <label><input type="checkbox" name="areas" value="2">道央</label>
+				        <label><input type="checkbox" name="areas" value="3">道南</label>
+				        <label><input type="checkbox" name="areas" value="4">道北</label>
+
+				    </div>
+
+				</div>
+
+                <!-- カテゴリー -->
+				<!-- カテゴリー -->
+				<div class="section">
+
+				    <div class="section-title">
+				        カテゴリー
+				    </div>
+
+				    <div class="checkbox-group">
+
+				        <label><input type="checkbox" name="categories" value="1">肉</label>
+				        <label><input type="checkbox" name="categories" value="2">海鮮</label>
+				        <label><input type="checkbox" name="categories" value="3">野菜</label>
+				        <label><input type="checkbox" name="categories" value="4">飲料</label>
+				        <label><input type="checkbox" name="categories" value="5">お酒</label>
+				        <label><input type="checkbox" name="categories" value="6">菓子類</label>
+
+				    </div>
+
+				</div>
+                <!-- 価格 -->
+                <div class="section">
+
+                    <div class="section-title">
+                        価格帯
+                    </div>
+
+                    <div class="price-area">
+
+                        <input type="number"
+                               name="minPrice"
+                               placeholder="最低価格"
+                               min="0"
+                               step="500">
+
+                        <input type="number"
+                               name="maxPrice"
+                               placeholder="最高価格"
+                               min="0"
+                               step="500">
+
+                    </div>
+
+                </div>
+
+                <!-- 並び替え -->
+                <div class="section">
+
+                    <div class="section-title">
+                        並べ替え
+                    </div>
+
+					<select name="sort">
+
+					    <option value="">標準</option>
+					    <option value="newest">更新順</option>
+					    <option value="priceDesc">金額が高い順</option>
+					    <option value="priceAsc">金額が低い順</option>
+					    <option value="popular">人気順</option>
+
+					</select>
+                    </select>
+
+                </div>
+
+                <button type="submit">
+                    検索する
+                </button>
+
             </div>
 
-            <label>
-                <input type="checkbox"
-                       name="areas"
-                       value="1">
-                道東
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="areas"
-                       value="2">
-                道央
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="areas"
-                       value="3">
-                道南
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="areas"
-                       value="4">
-                道北
-            </label>
-
-        </div>
-
-        <!-- カテゴリー -->
-        <div class="section">
-
-            <div class="section-title">
-                カテゴリー
-            </div>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="1">
-                肉
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="2">
-                海鮮
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="3">
-                野菜
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="4">
-                飲料
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="5">
-                お酒
-            </label>
-
-            <label>
-                <input type="checkbox"
-                       name="categories"
-                       value="6">
-                菓子類
-            </label>
-
-        </div>
-
-        <!-- 価格帯 -->
-        <div class="section">
-
-            <div class="section-title">
-                価格帯
-            </div>
-
-            <div class="price-area">
-
-                <input type="number"
-                       name="minPrice"
-                       placeholder="最低価格"
-					   min="0"
-					   step="500">
-
-                <input type="number"
-                       name="maxPrice"
-                       placeholder="最高価格"
-					   min="0"
-					   step="500">
-
-            </div>
-
-        </div>
-
-        <!-- 人気順フィルタ -->
-       
-
-        <!-- 並べ替え -->
-        <div class="section">
-
-            <div class="section-title">
-                並べ替え
-            </div>
-
-            <select name="sort">
-
-                <option value="">
-                    標準
-                </option>
-
-                <option value="updatedDesc">
-                    更新順
-                </option>
-
-                <option value="priceDesc">
-                    金額が高い順
-                </option>
-
-                <option value="priceAsc">
-                    金額が低い順
-                </option>
-
-                <option value="popularDesc">
-                    人気順
-                </option>
-
-            </select>
-
-        </div>
-
-        <button type="submit">
-            検索する
-        </button>
+        </form>
 
     </div>
 
-</form>
+</div>
 
 </body>
 </html>
