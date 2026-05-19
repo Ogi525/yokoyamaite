@@ -8,29 +8,33 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Post;
 import com.example.demo.mapper.PostMapper;
+import com.example.demo.mapper.ProductMapper;
 
 @Service
 public class PostService {
 
 	private final PostMapper postMapper;
-	//	private final ProductMapper productMapper;
+	private final ProductMapper productMapper;
 
-	//ProductMapper連携したら消す
-	public PostService(PostMapper postMapper) {
+	//	ProductMapper追加後に使う
+	public PostService(PostMapper postMapper, ProductMapper productMapper) {
 		this.postMapper = postMapper;
+		this.productMapper = productMapper;
 	}
-	//ProductMapper追加後に使う
-	//	public PostService(PostMapper postMapper,ProductMapper productMapper) {
-	//		this.postMapper = postMapper;
-	//		this.ProductMapper = productMapper;
-	//	}
 
+	/**
+	 * コメント投稿
+	 * @param userId
+	 * @param productId
+	 * @param body
+	 * @param parentId
+	 */
 	public void addPost(Integer userId, Integer productId, String body, Integer parentId) {
 
 		//productIdの確認
-		//		if (productMapper.findById(productId) == null) {
-		//			throw new IllegalArgumentException("存在しない商品です: " + productId);
-		//		}
+		if (productMapper.findById(productId) == null) {
+			throw new IllegalArgumentException("存在しない商品です: " + productId);
+		}
 
 		// 不正なparentIdチェック（返信の場合のみ）
 		if (parentId != null && postMapper.findById(parentId) == null) {
@@ -46,16 +50,27 @@ public class PostService {
 		postMapper.insertPost(post);
 	}
 
-	// ツリー構造で取得
+	/**
+	 * 商品に紐づくコメントをツリー構造で取得
+	 * @param productId
+	 * @return
+	 */
 	public List<Post> getTreePostsByProduct(Integer productId) {
 
 		// 不正なproductIdチェック
-		//		if (productMapper.findById(productId) == null) {
-		//			throw new IllegalArgumentException("存在しない商品です: " + productId);
-		//		}
+		if (productMapper.findById(productId) == null) {
+			throw new IllegalArgumentException("存在しない商品です: " + productId);
+		}
 
+		//親コメントの取得
 		List<Post> parents = postMapper.findParentPostsByProduct(productId);
 
+		// null対策
+		if (parents == null || parents.isEmpty()) {
+			return List.of();
+		}
+
+		//各親コメントに対して再起で返信取得
 		for (Post parent : parents) {
 			parent.setReplies(getRepliesRecursive(parent.getId(), new HashSet<>()));
 		}
@@ -63,6 +78,12 @@ public class PostService {
 		return parents;
 	}
 
+	/**
+	 * 返信を再帰的に取得
+	 * @param parentId
+	 * @param visited
+	 * @return
+	 */
 	private List<Post> getRepliesRecursive(Integer parentId, Set<Integer> visited) {
 
 		// 無限ループ防止
@@ -79,6 +100,7 @@ public class PostService {
 			return List.of();
 		}
 
+		// 再起で子を取得
 		for (Post reply : replies) {
 			reply.setReplies(
 					getRepliesRecursive(reply.getId(), visited));
@@ -87,6 +109,11 @@ public class PostService {
 		return replies;
 	}
 
+	/**
+	 * コメント削除（返信も全て削除）自分のみ
+	 * @param postId
+	 * @param userId
+	 */
 	public void deletePost(Integer postId, Integer userId) {
 
 		Post post = postMapper.findById(postId);
@@ -105,13 +132,18 @@ public class PostService {
 		deleteRecursive(postId);
 	}
 
+	/**
+	 * コメントとその返信を再帰的に削除
+	 * @param postId
+	 */
 	private void deleteRecursive(Integer postId) {
 		List<Post> replies = postMapper.findReplies(postId);
 
-		for (Post reply : replies) {
-			deleteRecursive(reply.getId()); // 孫コメントも再帰削除
+		if (replies != null) {
+			for (Post reply : replies) {
+				deleteRecursive(reply.getId()); // 孫コメントも再帰削除
+			}
 		}
-
 		postMapper.deleteReplies(postId); // 子を削除
 		postMapper.deleteById(postId); // 自身を削除
 	}

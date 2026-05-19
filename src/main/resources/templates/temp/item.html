@@ -420,30 +420,30 @@
 
 		.star {
 			font-size: 22px;
-			
+
 			margin-bottom: 15px;
 		}
-		
-				/* =========================
+
+		/* =========================
 		   フッター
 		========================= */
 
-				footer {
+		footer {
 
-					background: white;
+			background: white;
 
-					padding: 25px;
+			padding: 25px;
 
-					border-radius: 20px;
+			border-radius: 20px;
 
-					text-align: center;
-				}
+			text-align: center;
+		}
 
-				footer a {
-					text-decoration: none;
-					color: #333;
-					margin: 0 10px;
-				}
+		footer a {
+			text-decoration: none;
+			color: #333;
+			margin: 0 10px;
+		}
 
 		/* =========================
    レスポンシブ
@@ -639,7 +639,15 @@
 					<button class="review-btn">
 						コメントを書く
 					</button>
+					<form th:action="@{/post}" method="post">
 
+					    <input type="hidden" name="productId" th:value="${product.id}">
+
+					    <textarea name="body" placeholder="コメントを書く..." required></textarea>
+
+					    <button type="submit">投稿</button>
+
+					</form>
 					<div class="review-note">
 
 						コメントはログインユーザーのみ投稿可能です。
@@ -650,75 +658,111 @@
 
 				<div class="comment-list">
 
-					<div class="comment-card">
+					<div class="comment-card" th:each="comment : ${comments}" th:if="${comment.parentId == null}">
 
-						<div class="user-name">
+						<div class="user-name" th:text="${comment.userName}">
 							ユーザー名
 						</div>
 
-						<div class="post-date">
+						<div class="post-date" th:text="${comment.createdAt}">
 							投稿日 2026/5/13
 						</div>
 
-						<div>
+						<div th:text="${comment.body}">
 							食べてみたい！
+						</div>
+						<div style="margin-left:20px; margin-top:10px;">
+
+							<!-- 返信 -->
+							<div th:each="reply : ${comment.replies}">
+
+								<div class="user-name" th:text="${reply.userName}">
+								</div>
+
+								<div th:text="${reply.body}">
+									あああ
+								</div>
+
+								<!-- 返信フォーム（1つだけ） -->
+								<form th:action="@{/post}" method="post" style="margin-top:10px;">
+
+								    <input type="hidden" name="productId" th:value="${product.id}">
+								    <input type="hidden" name="parentId" th:value="${comment.id}">
+
+								    <input type="text" name="body" placeholder="返信する" required>
+
+								    <button type="submit">返信</button>
+
+								</form>
+							</div>
+
 						</div>
 
 					</div>
 
 				</div>
+				<div th:replace="~{layout/_footer :: footer}"></div>
 
 			</div>
 
-		</div>
-		<div th:replace="~{layout/_footer :: footer}"></div>
+			<script>
 
-	</div>
+				/* 数量 */
 
-	<script>
+				let qty = 1;
 
-		/* 数量 */
+				function increaseQty() {
 
-		let qty = 1;
+					qty++;
 
-		function increaseQty() {
+					document.getElementById("qty").textContent = qty;
+				}
 
-			qty++;
+				function decreaseQty() {
 
-			document.getElementById("qty").textContent = qty;
-		}
+					if (qty > 1) {
 
-		function decreaseQty() {
+						qty--;
 
-			if (qty > 1) {
+						document.getElementById("qty").textContent = qty;
+					}
+				}
 
-				qty--;
+				/* タブ切替 */
 
-				document.getElementById("qty").textContent = qty;
-			}
-		}
+				function showTab(tabId, btn) {
 
-		/* タブ切替 */
+					document.querySelectorAll(".tab-content")
+						.forEach(tab => {
+							tab.classList.remove("active");
+						});
 
-		function showTab(tabId, btn) {
+					document.querySelectorAll(".tab-btn")
+						.forEach(button => {
+							button.classList.remove("active");
+						});
 
-			document.querySelectorAll(".tab-content")
-				.forEach(tab => {
-					tab.classList.remove("active");
-				});
+					document.getElementById(tabId)
+						.classList.add("active");
 
-			document.querySelectorAll(".tab-btn")
-				.forEach(button => {
-					button.classList.remove("active");
-				});
+					btn.classList.add("active");
+				}
+				
+				/* 返信フォームトグル */
+				function toggleReplyForm(postId) {
+				    const form = document.getElementById('replyForm-' + postId);
+				    const isOpen = form.style.display === 'block';
 
-			document.getElementById(tabId)
-				.classList.add("active");
+				    document.querySelectorAll("form[id^='replyForm-']").forEach(f => {
+				        f.style.display = 'none';
+				    });
 
-			btn.classList.add("active");
-		}
+				    if (!isOpen) {
+				        form.style.display = 'block';
+				    }
+				}
 
-	</script>
+			</script>
 
 </body>
 

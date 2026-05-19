@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.User;
 import com.example.demo.form.PostForm;
 import com.example.demo.service.PostService;
 
@@ -44,11 +45,13 @@ public class PostController {
 			HttpSession session,
 			Model model) {
 
-		Integer userId = (Integer) session.getAttribute("userId");
-
-		if (userId == null) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser == null) {
 			return "redirect:/login";
 		}
+
+		Integer userId = loginUser.getId();
+
 		// バリデーションエラー
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("posts", postService.getTreePostsByProduct(form.getProductId()));
@@ -65,7 +68,7 @@ public class PostController {
 			return "error/notFound";
 		}
 
-		return "redirect:/forum/" + form.getProductId();
+		return "redirect:/item/" + form.getProductId();
 	}
 
 	@PostMapping("/post/{postId}/delete")
@@ -74,10 +77,12 @@ public class PostController {
 			HttpSession session,
 			Model model) {
 
-		Integer userId = (Integer) session.getAttribute("userId");
-		if (userId == null) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser == null) {
 			return "redirect:/login";
 		}
+
+		Integer userId = loginUser.getId();
 
 		try {
 			postService.deletePost(postId, userId);
@@ -93,6 +98,6 @@ public class PostController {
 			return "error/serverError";
 		}
 		//forumをあとでproductに変更
-		return "redirect:/forum/" + productId;
+		return "redirect:/item/" + productId;
 	}
 }

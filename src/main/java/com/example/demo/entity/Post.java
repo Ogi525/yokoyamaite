@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Post {
@@ -7,7 +8,7 @@ public class Post {
 	private Integer userId;
 	private Integer productId;
 	private String body;
-	private String createdAt;
+	private LocalDateTime createdAt;
 	private Integer parentId;
 	private String userName;
 
@@ -43,11 +44,11 @@ public class Post {
 		this.body = body;
 	}
 
-	public String getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
