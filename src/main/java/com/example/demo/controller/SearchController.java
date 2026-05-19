@@ -56,16 +56,4 @@ public class SearchController {
 		return "search/searchresult";
 	}
 
-	// 人気ランキング
-	@GetMapping("/ranking")
-	public String ranking(Model model) {
-
-		List<Product> rankingProducts = itemService.findTop5Popular();
-
-		model.addAttribute(
-				"rankingProducts",
-				rankingProducts);
-
-		return "search/ranking";
-	}
 }

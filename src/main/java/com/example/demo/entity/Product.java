@@ -11,15 +11,7 @@ public class Product {
 	private String origin;
 	private String imageUrl;
 	private String description;
-	private Integer favoriteCount;
-
-	public Integer getFavoriteCount() {
-		return favoriteCount;
-	}
-
-	public void setFavoriteCount(Integer favoriteCount) {
-		this.favoriteCount = favoriteCount;
-	}
+	private Integer salesCount;
 
 	// getter setter
 
@@ -86,4 +78,13 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public Integer getFavoriteCount() {
+		return salesCount;
+	}
+
+	public void setFavoriteCount(Integer salesCount) {
+		this.salesCount = salesCount;
+	}
+
 }

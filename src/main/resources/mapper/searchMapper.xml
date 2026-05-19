@@ -4,6 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.search.SearchMapper">
+
+    <!-- 検索 -->
     <select id="search"
             resultType="com.example.demo.entity.Product">
 
@@ -18,38 +20,38 @@
             </if>
 
             <!-- エリア -->
-<if test="areas != null and areas.size() > 0">
+            <if test="areas != null and areas.size() > 0">
 
-    AND area_id IN
+                AND area_id IN
 
-    <foreach collection="areas"
-             item="area"
-             open="("
-             separator=","
-             close=")">
+                <foreach collection="areas"
+                         item="area"
+                         open="("
+                         separator=","
+                         close=")">
 
-        #{area}
+                    #{area}
 
-    </foreach>
+                </foreach>
 
-</if>
+            </if>
 
-<!-- カテゴリー -->
-<if test="categories != null and categories.size() > 0">
+            <!-- カテゴリー -->
+            <if test="categories != null and categories.size() > 0">
 
-    AND category_id IN
+                AND category_id IN
 
-    <foreach collection="categories"
-             item="category"
-             open="("
-             separator=","
-             close=")">
+                <foreach collection="categories"
+                         item="category"
+                         open="("
+                         separator=","
+                         close=")">
 
-        #{category}
+                    #{category}
 
-    </foreach>
+                </foreach>
 
-</if>
+            </if>
 
             <!-- 最低価格 -->
             <if test="minPrice != null">
@@ -87,6 +89,17 @@
             </otherwise>
 
         </choose>
+
+    </select>
+
+    <!-- 人気ランキング TOP5 -->
+    <select id="findTop5Popular"
+            resultType="com.example.demo.entity.Product">
+
+        SELECT *
+        FROM products
+        ORDER BY favorite_count DESC
+        LIMIT 5
 
     </select>
 

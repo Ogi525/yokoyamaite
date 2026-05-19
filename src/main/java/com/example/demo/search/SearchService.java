@@ -37,4 +37,5 @@ public class SearchService {
 	public List<Product> findTop5Popular() {
 		return searchMapper.findTop5Popular();
 	}
+
 }
