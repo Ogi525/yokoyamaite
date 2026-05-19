@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.entity.User;
 import com.example.demo.service.GameService;
 
 @Controller
-@RequestMapping("/game")
+@RequestMapping("/bonusgame")
 public class GameController {
 
 	private final GameService gameService;
@@ -29,16 +30,18 @@ public class GameController {
 	@GetMapping
 	public String gamePage(HttpSession session, Model model) {
 
-		Integer userId = (Integer) session.getAttribute("userId");
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login";
+		}
 
-		boolean playedToday = false;
+		Integer userId = loginUser.getId();
+
+		boolean playedToday = gameService.isPlayedToday(userId);
 		String couponCode = null;
 
-		if (userId != null) {
-			playedToday = gameService.isPlayedToday(userId);
-			if (playedToday) {
-				couponCode = gameService.getTodayCouponCode(userId);
-			}
+		if (playedToday) {
+			couponCode = gameService.getTodayCouponCode(userId);
 		}
 
 		model.addAttribute("playedToday", playedToday);
@@ -50,12 +53,16 @@ public class GameController {
 	@PostMapping("/spin")
 	@ResponseBody
 	public Map<String, Object> playGame(HttpSession session) {
-		Integer userId = (Integer) session.getAttribute("userId");
 
-		if (userId == null) {
-			throw new RuntimeException("ログインしてないよ!");
+		User loginUser = (User) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			Map<String, Object> error = new HashMap<>();
+			error.put("error", "notLoggedIn");
+			return error;
 		}
 
+		Integer userId = loginUser.getId();
 		Map<String, Object> resultMap = gameService.playGame(userId);
 		String result = (String) resultMap.get("result");
 		String couponCode = (String) resultMap.get("couponCode");
