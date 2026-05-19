@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>決済画面</title>
+
+<style>
+.error {
+    color: red;
+}
+
+.credit-card-area,
+.address-area {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 300px;
+}
+</style>
+
+<script>
+function toggleCardArea() {
+    const credit = document.getElementById("credit");
+    const cardArea = document.getElementById("cardArea");
+
+    if (credit.checked) {
+        cardArea.style.display = "block";
+    } else {
+        cardArea.style.display = "none";
+    }
+}
+
+function toggleAddressArea() {
+    const other = document.getElementById("other");
+    const otherAddressArea = document.getElementById("otherAddressArea");
+
+    if (other.checked) {
+        otherAddressArea.style.display = "block";
+    } else {
+        otherAddressArea.style.display = "none";
+    }
+}
+
+window.onload = function () {
+    toggleCardArea();
+    toggleAddressArea();
+}
+</script>
+
+</head>
+<body>
+
+<h1>決済画面</h1>
+
+<form th:action="@{/payment/confirm}" method="post">
+
+    <h2>配送先</h2>
+
+    <label>
+        <input type="radio"
+               name="deliveryType"
+               value="home"
+               onchange="toggleAddressArea()"
+               th:checked="${deliveryType == null or deliveryType == 'home'}">
+        ご自宅に配送
+    </label>
+
+    <br>
+
+    <label>
+        <input type="radio"
+               name="deliveryType"
+               value="other"
+               id="other"
+               onchange="toggleAddressArea()"
+               th:checked="${deliveryType == 'other'}">
+        別の住所に配送
+    </label>
+
+    <div id="otherAddressArea"
+         class="address-area"
+         style="display:none;">
+
+        <p>
+            郵便番号
+			<input type="text"
+			       name="postalCode"
+			       pattern="\d{7}"
+			       maxlength="7">
+        </p>
+
+        <p>
+            住所
+            <input type="text"
+                   name="otherAddress">
+        </p>
+
+        <p>
+            お名前
+            <input type="text"
+                   name="otherName">
+        </p>
+
+    </div>
+
+    <hr>
+
+    <h2>クーポン</h2>
+
+    <div th:if="${coupons != null and !coupons.isEmpty()}">
+
+        <p>利用するクーポンを選択してください</p>
+
+        <div th:each="coupon : ${coupons}">
+            <label>
+                <input type="radio"
+                       name="couponId"
+                       th:value="${coupon.id}">
+
+                <span th:text="${coupon.name}"></span>
+                ：
+                <span th:text="${coupon.discountValue}"></span>円引き
+            </label>
+            <br>
+        </div>
+
+    </div>
+
+    <div th:if="${coupons == null or coupons.isEmpty()}">
+        <p>利用できるクーポンはありません。</p>
+    </div>
+
+    <hr>
+
+    <h2>お支払い方法</h2>
+
+    <label>
+        <input type="radio"
+               name="paymentMethod"
+               value="PayPay"
+               onchange="toggleCardArea()"
+               checked>
+        PayPay
+    </label>
+
+    <br>
+
+    <label>
+        <input type="radio"
+               name="paymentMethod"
+               value="ApplePay"
+               onchange="toggleCardArea()">
+        Apple Pay
+    </label>
+
+    <br>
+
+    <label>
+        <input type="radio"
+               name="paymentMethod"
+               value="クレジットカード"
+               id="credit"
+               onchange="toggleCardArea()">
+        クレジットカード
+    </label>
+
+    <div id="cardArea"
+         class="credit-card-area"
+         style="display:none;">
+
+        <p>
+            カード番号
+            <input type="text"
+                   name="cardNumber"
+                   maxlength="16"
+                   placeholder="16桁の数字">
+        </p>
+
+        <p>
+            有効期限（月）
+            <input type="number"
+                   name="expireMonth"
+                   min="1"
+                   max="12">
+        </p>
+
+        <p>
+            有効期限（年）
+            <input type="number"
+                   name="expireYear">
+        </p>
+
+    </div>
+	
+	<p class="error" th:text="${errorMessage}"></p>
+	<a th:href="@{/cart}">
+	    <button type="button">
+	        カートに戻る
+	    </button>
+	</a>
+
+	<button type="submit">
+	    最終確認へ進む
+	</button>
+
+</form>
+
+<hr>
+
+
+</body>
+</html>

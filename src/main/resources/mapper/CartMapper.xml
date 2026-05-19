@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.CartMapper">
+
+	<select id="findUserCoupons"
+		resultType="com.example.demo.entity.Coupon">
+
+		SELECT
+		c.id,
+		c.name,
+		c.discount_value AS discountValue,
+		uc.is_used AS isUsed
+
+		FROM USERS_COUPONS uc
+
+		INNER JOIN COUPONS c
+		ON uc.coupon_id = c.id
+
+		WHERE uc.user_id = #{userId}
+		AND uc.is_used = false
+
+	</select>
+
+	<select id="findCouponByIdAndUserId"
+		resultType="com.example.demo.entity.Coupon">
+		SELECT
+		c.id,
+		c.name,
+		c.discount_value AS discountValue,
+		uc.is_used AS isUsed
+		FROM
+		USERS_COUPONS uc
+		INNER JOIN
+		COUPONS c
+		ON
+		uc.coupon_id = c.id
+		WHERE
+		uc.user_id = #{userId}
+		AND
+		c.id = #{couponId}
+		AND
+		uc.is_used = false
+	</select>
+	
+	<select id="findStockByProductId" resultType="java.lang.Integer">
+	SELECT stock
+	FROM PRODUCTS
+	WHERE id = #{productId}
+</select>
+
+<insert id="insertOrder">
+	INSERT INTO ORDERS (
+		user_id,
+		total_price
+	)
+	VALUES (
+		#{userId},
+		#{grandTotal}
+	)
+</insert>
+
+<select id="getLastOrderId" resultType="java.lang.Integer">
+	SELECT MAX(id)
+	FROM ORDERS
+</select>
+
+
+
+
+</mapper>
