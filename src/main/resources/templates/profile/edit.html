@@ -62,7 +62,7 @@
 
 	<h2>プロフィール編集</h2>
 
-	<form th:action="@{/profile/update}" method="post">
+	<form th:action="@{/profile/confirm}" method="post">
 
 		<!-- IDは隠しで必須 -->
 		<input type="hidden" name="id" th:value="${user.id}">

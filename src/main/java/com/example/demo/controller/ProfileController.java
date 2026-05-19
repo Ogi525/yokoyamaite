@@ -36,8 +36,7 @@ public class ProfileController {
 	}
 
 	@PostMapping("/profile/update")
-	public String updateProfile(@ModelAttribute User formUser,
-			HttpSession session) {
+	public String updateProfile(@ModelAttribute User formUser, HttpSession session) {
 
 		User loginUser = (User) session.getAttribute("loginUser");
 
@@ -68,4 +67,27 @@ public class ProfileController {
 
 		return "redirect:/mypage";
 	}
+
+	@PostMapping("/profile/confirm")
+	public String confirmProfile(@ModelAttribute User formUser, Model model, HttpSession session) {
+
+		User loginUser = (User) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "redirect:/login";
+		}
+
+		// ID検索→保持
+		formUser.setId(loginUser.getId());
+
+		// パスワード空なら元の値
+		if (formUser.getPassword() == null || formUser.getPassword().isEmpty()) {
+			formUser.setPassword(loginUser.getPassword());
+		}
+
+		model.addAttribute("user", formUser);
+
+		return "profile/confirm";
+	}
+
 }
