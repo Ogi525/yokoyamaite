@@ -35,7 +35,6 @@ public class PostController {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "error/notFound";
 		}
-
 	}
 
 	// 投稿
@@ -68,7 +67,7 @@ public class PostController {
 			return "error/notFound";
 		}
 
-		return "redirect:/item/" + form.getProductId();
+		return "redirect:/item/" + form.getProductId() + "#comment";
 	}
 
 	@PostMapping("/post/{postId}/delete")
@@ -97,7 +96,8 @@ public class PostController {
 			model.addAttribute("errorMessage", "削除に失敗しました。もう一度お試しください。");
 			return "error/serverError";
 		}
+
 		//forumをあとでproductに変更
-		return "redirect:/item/" + productId;
+		return "redirect:/item/" + productId + "#comment";
 	}
 }

@@ -12,27 +12,39 @@
 		VALUES (#{userId},#{productId}, #{body}, #{parentId})
 	</insert>
 
+	<resultMap id="postResultMap"
+		type="com.example.demo.entity.Post">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="productId" column="product_id" />
+		<result property="body" column="body" />
+		<result property="createdAt" column="created_at" />
+		<result property="parentId" column="parent_id" />
+		<result property="userName" column="userName" />
+	</resultMap>
 	<!-- 親 -->
-	<select id="findParentPostsByProduct"
-		resultType="com.example.demo.entity.Post">
-		SELECT p.*, u.name AS userName
+	<select id="findParentPostsByProduct" resultMap="postResultMap">
+		SELECT p.*,
+		u.name AS userName
 		FROM forum_posts p
 		JOIN users
 		u ON p.user_id = u.id
 		WHERE p.parent_id IS NULL
 		AND p.product_id =
 		#{productId}
-		ORDER BY p.created_at DESC
+		ORDER BY
+		p.created_at DESC
 	</select>
 
 	<!-- 子 -->
-	<select id="findReplies"
-		resultType="com.example.demo.entity.Post">
-		SELECT p.*, u.name AS userName
+	<select id="findReplies" resultMap="postResultMap">
+		SELECT p.*, u.name AS
+		userName
 		FROM forum_posts p
 		JOIN users
 		u ON p.user_id = u.id
-		WHERE p.parent_id = #{parentId}
+		WHERE
+		p.parent_id = #{parentId}
 		ORDER BY
 		p.created_at ASC
 	</select>
@@ -44,7 +56,7 @@
 	</select>
 
 	<!-- 対象コメント削除 -->
-	<delete id="deleteById" >
+	<delete id="deleteById">
 		DELETE FROM forum_posts WHERE id = #{id}
 	</delete>
 

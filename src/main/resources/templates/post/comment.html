@@ -21,7 +21,7 @@
                 </button>
 
                 <!-- 削除 -->
-                <form th:if="${session.loginUser.id == post.userId}"
+                <form th:if="${session.loginUser != null and session.loginUser.id == post.userId}"
                       th:action="@{/post/{postId}/delete(postId=${post.id})}"
                       method="post"
                       style="display:inline;">
