@@ -1,35 +1,140 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>確認画面</title>
+	<meta charset="UTF-8">
+	<title>入力内容確認</title>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 40px;
+		}
+
+		.container {
+			max-width: 700px;
+			margin: auto;
+			background: white;
+			padding: 35px;
+			border-radius: 12px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 30px;
+			color: #333;
+		}
+
+		.confirm-box {
+			background-color: #fafafa;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 25px;
+		}
+
+		.item {
+			margin-bottom: 20px;
+			font-size: 16px;
+		}
+
+		.label {
+			display: inline-block;
+			width: 150px;
+			font-weight: bold;
+			color: #555;
+		}
+
+		.button-area {
+			text-align: center;
+			margin-top: 30px;
+		}
+
+		.btn {
+			padding: 12px 20px;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 15px;
+			text-decoration: none;
+			margin: 0 10px;
+		}
+
+		.submit-btn {
+			background-color: rgb(0, 128, 255);
+			color: white;
+		}
+
+		.submit-btn:hover {
+			background-color: rgb(0, 128, 255);
+		}
+
+		.back-btn {
+			background-color: #777;
+			color: white;
+		}
+
+		.back-btn:hover {
+			background-color: #555;
+		}
+	</style>
+
 </head>
+
 <body>
 
-<h1>入力内容確認</h1>
+	<div class="container">
 
-<p>名前：<span th:text="${user.name}"></span></p>
-<p>メール：<span th:text="${user.email}"></span></p>
-<p>住所：<span th:text="${user.address}"></span></p>
+		<h1>入力内容確認</h1>
 
-<form th:action="@{/profile/update}" method="post">
+		<div class="confirm-box">
 
-    <input type="hidden" name="id" th:value="${user.id}">
-    <input type="hidden" name="name" th:value="${user.name}">
-    <input type="hidden" name="email" th:value="${user.email}">
-    <input type="hidden" name="address" th:value="${user.address}">
+			<div class="item">
+				<span class="label">名前：</span>
+				<span th:text="${user.name}">名前</span>
+			</div>
 
-    <button type="submit">
-        更新確定
-    </button>
+			<div class="item">
+				<span class="label">メールアドレス：</span>
+				<span th:text="${user.email}">email</span>
+			</div>
 
-</form>
+			<div class="item">
+				<span class="label">住所：</span>
+				<span th:text="${user.address}">住所</span>
+			</div>
 
-<form th:action="@{/profile/edit}" method="get">
-    <button type="submit">
-        戻る
-    </button>
-</form>
+		
+
+		</div>
+
+		<!-- 更新確定 -->
+		<form th:action="@{/profile/update}" method="post">
+
+			<input type="hidden" name="id" th:value="${user.id}">
+			<input type="hidden" name="name" th:value="${user.name}">
+			<input type="hidden" name="email" th:value="${user.email}">
+			<input type="hidden" name="address" th:value="${user.address}">
+		
+
+			<div class="button-area">
+
+				<button type="submit" class="btn submit-btn">
+					更新する
+				</button>
+
+				<a th:href="@{/profile/edit}" class="btn back-btn">
+					戻る
+				</a>
+
+			</div>
+
+		</form>
+
+	</div>
 
 </body>
+
 </html>
