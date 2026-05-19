@@ -29,17 +29,11 @@
 			text-align: center;
 		}
 
-		.avatar {
+		.avatar-img {
 			width: 180px;
 			height: 180px;
 			border-radius: 50%;
-			background-color: #4CAF50;
-			color: white;
-			font-size: 72px;
-			font-weight: bold;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			display: block;
 			margin: 0 auto 20px auto;
 		}
 
@@ -114,10 +108,12 @@
 
 			<h2>プロフィール</h2>
 
-			<div class="avatar"
-			     th:text="${#strings.substring(user.name,0,1)}">
-				U
-			</div>
+			<img
+				class="avatar-img"
+				th:src="@{/avatar/{name}(name=${user.name})}"
+				width="180"
+				height="180"
+			/>
 
 			<p th:text="${user.name}">
 				ユーザー名

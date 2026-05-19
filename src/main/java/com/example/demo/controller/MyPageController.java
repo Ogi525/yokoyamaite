@@ -29,6 +29,9 @@ public class MyPageController {
 
 		model.addAttribute("user", user);
 
+		// キャッシュ対策
+		model.addAttribute("now", System.currentTimeMillis());
+
 		return "/mypage";
 	}
 
