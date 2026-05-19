@@ -166,21 +166,40 @@
 
 				<h2>購入履歴</h2>
 
-				<table>
+				<table th:if="${histories != null and !histories.isEmpty()}">
 
-					<tr>
-						<th>商品名</th>
-						<th>購入日</th>
-						<th>金額</th>
-					</tr>
+						<tr>
+							<th>商品名</th>
+							<th>購入日</th>
+							<th>金額</th>
+						</tr>
 
-					<tr th:each="history : ${histories}">
-						<td th:text="${history.productName}">商品</td>
-						<td th:text="${history.purchaseDate}">2026-01-01</td>
-						<td>¥ <span th:text="${history.price}">5000</span></td>
-					</tr>
+						<tr th:each="history : ${histories}">
 
-				</table>
+							<td th:text="${history.productName}">
+								商品
+							</td>
+
+							<td th:text="${history.purchaseDate}">
+								2026-01-01
+							</td>
+
+							<td>
+								¥
+								<span th:text="${history.price}">
+									5000
+								</span>
+							</td>
+
+						</tr>
+
+					</table>
+					
+				<!-- 履歴がない場合 -->
+					<p th:if="${histories == null or histories.isEmpty()}">
+						
+						購入履歴はありません
+					</p>
 
 			</div>
 
