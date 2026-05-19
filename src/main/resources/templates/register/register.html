@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>新規登録</title>
+</head>
+<body>
+	<div th:replace="~{layout/_header :: header}"></div>
+
+  <main>
+  <h1>新規登録</h1>
+
+  <form th:action="@{/register}" th:object="${form}" method="post">
+     <p>名前：<input type="text" th:field="*{name}" /></p>
+     <p>メールアドレス：<input type="email" th:field="*{email}" /></p>
+     <p>パスワード：<input type="password" th:field="*{password}" /></p>
+	 <p>郵便番号：<input type= "text" id= "postalCode" th:field="*{postalCode}" pattern= "\d{3}-\d{4}" 
+	 	title="郵便番号をxxx-xxxxの形式で入力してください"/></p>
+	   <p>住所：<input type= "text" th:field="*{address}"/></p>
+     <p><button type="submit">登録</button></p>
+   </form>
+
+  <a href="/">▶ トップページへ戻る</a>
+  </main>
+
+  <div th:replace="~{layout/_footer :: footer}"></div>
+</body>
+</html>

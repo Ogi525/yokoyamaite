@@ -28,9 +28,10 @@ CREATE TABLE IF NOT EXISTS products(
  id SERIAL PRIMARY KEY,
  area_id INTEGER NOT NULL,
  category_id INTEGER NOT NULL,
-    name VARCHAR(100) NOT NULL,
+ name VARCHAR(100) NOT NULL,
     price INTEGER NOT NULL CHECK (price > 0),
     stock INTEGER NOT NULL CHECK (stock >= 0),
+    sales_count INTEGER DEFAULT 0,
     origin VARCHAR(100),
     image_url VARCHAR(500),
     description TEXT,
@@ -98,6 +99,28 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
 
     UNIQUE (user_id, product_id)
+);
+
+-- COMMENTS
+CREATE TABLE IF NOT EXISTS comments (
+
+    id SERIAL PRIMARY KEY,
+
+    user_id INTEGER NOT NULL,
+
+    product_id INTEGER NOT NULL,
+
+    comment TEXT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (product_id)
+        REFERENCES products(id)
+        ON DELETE CASCADE
 );
 
 --  FORUM_POSTS

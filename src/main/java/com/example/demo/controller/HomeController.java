@@ -36,6 +36,6 @@ public class HomeController {
 		model.addAttribute("newProducts", newProducts);
 		model.addAttribute("rankingProducts", rankingProducts);
 
-		return "home";
+		return "auth/home";
 	}
 }

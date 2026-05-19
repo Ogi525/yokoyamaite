@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>プロフィール編集</title>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			padding: 30px;
+		}
+
+		.container {
+			max-width: 600px;
+			margin: auto;
+			background: white;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+		}
+
+		label {
+			display: block;
+			margin-top: 15px;
+			font-weight: bold;
+		}
+
+		input {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		button {
+			margin-top: 20px;
+			padding: 10px 15px;
+			background: #0078d4;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background: #005ea2;
+		}
+
+		a {
+			display: inline-block;
+			margin-top: 15px;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="container">
+
+	<h2>プロフィール編集</h2>
+
+	<form th:action="@{/profile/confirm}" method="post">
+
+		<!-- IDは隠しで必須 -->
+		<input type="hidden" name="id" th:value="${user.id}">
+
+		<label>名前</label>
+		<input type="text" name="name" th:value="${user.name}">
+
+		<label>Email</label>
+		<input type="email" name="email" th:value="${user.email}">
+
+		<label>住所</label>
+		<input type="text" name="address" th:value="${user.address}">
+		
+<!--		email重複があった場合...-->
+		<p th:if="${session.errorMessage != null}"
+		   th:text="${session.errorMessage}"
+		   style="color:red;">
+		</p>
+
+	
+
+		<button type="submit">更新</button>
+
+	</form>
+
+	<a th:href="@{/mypage}">← マイページに戻る</a>
+
+</div>
+
+</body>
+</html>

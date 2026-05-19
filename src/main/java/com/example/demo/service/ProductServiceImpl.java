@@ -40,4 +40,13 @@ public class ProductServiceImpl implements ProductService {
 
 		return productMapper.findRankingProducts();
 	}
+
+	/**
+	 * 商品詳細取得
+	 */
+	@Override
+	public Product findById(Integer id) {
+
+		return productMapper.findById(id);
+	}
 }
