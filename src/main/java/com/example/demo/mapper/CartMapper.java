@@ -10,24 +10,22 @@ import com.example.demo.entity.Coupon;
 @Mapper
 public interface CartMapper {
 
-	// ユーザーの未使用クーポン一覧取得
-	List<Coupon> findUserCoupons(@Param("userId") Integer userId);
+	// ユーザーが持っている未使用クーポン一覧を取得
+	List<Coupon> findUserCoupons(
+			@Param("userId") Integer userId);
 
-	// 選択されたクーポン取得
+	// 指定されたクーポンが
+	// ログインユーザーのものか確認して取得
 	Coupon findCouponByIdAndUserId(
 			@Param("couponId") Integer couponId,
 			@Param("userId") Integer userId);
 
-	Integer findStockByProductId(Integer productId);
-
-	void decreaseStock(
-			@Param("productId") Integer productId,
-			@Param("quantity") Integer quantity);
-
+	// 注文情報をordersテーブルに登録
 	void insertOrder(
 			@Param("userId") Integer userId,
 			@Param("grandTotal") Integer grandTotal);
 
+	// 直前に登録した注文IDを取得
 	Integer getLastOrderId();
 
 }

@@ -12,18 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.service.CartService;
 import com.example.demo.service.CheckoutService;
-import com.example.demo.service.OrderService;
 
 @Controller
 public class CheckoutController {
-
-	@Autowired
-	private CartService cartService;
-
-	@Autowired
-	private OrderService orderService;
 
 	@Autowired
 	private CheckoutService checkoutService;
@@ -34,27 +26,18 @@ public class CheckoutController {
 
 		// ログイン確認
 		//		Object loginUserObj = session.getAttribute("loginUser");
-		Integer userId = (Integer) session.getAttribute("userId");
 
+		User loginUser = (User) session.getAttribute("loginUser");
 		//実際使うやつ
-		//		if (loginUserObj == null) {
-		//
-		//			// ログイン後に戻る先を保存
-		//			session.setAttribute("redirectAfterLogin", "/checkout");
-		//
-		//			return "redirect:/login";
-		//		}
-		//あとで消すやつ
-		if (userId == null) {
+		if (loginUser == null) {
 
 			// ログイン後に戻る先を保存
 			session.setAttribute("redirectAfterLogin", "/checkout");
 
 			return "redirect:/login";
 		}
-		//あとで使う
-		//		User loginUser = (User) loginUserObj;
-		//				Integer userId = loginUser.getId();
+
+		Integer userId = loginUser.getId();
 
 		// カート合計金額（セッション保存してる想定）
 		Integer totalPrice = (Integer) session.getAttribute("totalPrice");

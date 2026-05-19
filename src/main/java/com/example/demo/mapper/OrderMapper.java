@@ -11,13 +11,22 @@ import com.example.demo.entity.History;
 @Mapper
 public interface OrderMapper {
 
+	// 商品IDから現在の在庫数を取得
+	Integer findStockByProductId(
+			Integer productId);
+
+	// 商品の在庫数を減らす
+	void decreaseStock(
+			@Param("productId") Integer productId,
+			@Param("quantity") Integer quantity);
+
 	//注文履歴に残す
 	void insertOrderDetail(
 			@Param("orderId") Integer orderId,
 			@Param("productId") Integer productId,
 			@Param("quantity") Integer quantity,
 			@Param("price") Integer price,
-			@Param("date") Date orderdate);
+			@Param("orderDate") Date orderdate);
 
 	//クーポンを使用済みにする
 	void useCoupon(

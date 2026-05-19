@@ -29,7 +29,7 @@ public class CartController {
 		this.productMapper = productMapper;
 	}
 
-	/** カート一覧を表示する、送料の計算をする */
+	/** カート一覧を表示する */
 	@GetMapping
 	public String showCart(HttpSession session, Model model) {
 		List<CartItem> cart = cartService.getCart(session);

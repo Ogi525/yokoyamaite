@@ -25,10 +25,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{orderDate}
 	)
 </insert>
+
 <update id="useCoupon">
 	UPDATE USERS_COUPONS
 	SET is_used = true
 	WHERE coupon_id = #{couponId}
 	AND user_id = #{userId}
 </update>
+
+<select id="findByUserId"
+        resultType="com.example.demo.entity.History">
+
+    SELECT
+        id,
+        user_id AS userId,
+        date,
+        product_id AS productId,
+        quantity
+    FROM orders
+    WHERE user_id = #{userId}
+    ORDER BY date DESC
+
+</select>
+
 </mapper>

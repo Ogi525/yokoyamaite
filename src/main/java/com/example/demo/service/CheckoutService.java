@@ -49,7 +49,6 @@ public class CheckoutService {
 	}
 
 	// 割引後の金額を計算
-	// 割引後の金額を計算
 	public Integer calculateFinalPrice(Integer totalPrice, Integer discountAmount) {
 		return totalPrice - discountAmount;
 	}
@@ -77,18 +76,6 @@ public class CheckoutService {
 	public List<Coupon> getAvailableCoupons(Integer userId) {
 
 		return cartMapper.findUserCoupons(userId);
-	}
-
-	// 在庫チェック
-	public boolean hasStock(Integer productId, Integer quantity) {
-		Integer stock = cartMapper.findStockByProductId(productId);
-
-		return stock != null && stock >= quantity;
-	}
-
-	// 在庫を減らす
-	public void decreaseStock(Integer productId, Integer quantity) {
-		cartMapper.decreaseStock(productId, quantity);
 	}
 
 }

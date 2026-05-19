@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.CartItem;
 import com.example.demo.entity.Product;
-import com.example.demo.mapper.OrderMapper;
 import com.example.demo.mapper.ProductMapper;
 
 @Service
@@ -20,8 +19,6 @@ public class CartService {
 
 	@Autowired
 	private ProductMapper productMapper;
-	@Autowired
-	private OrderMapper orderMapper;
 
 	/** セッションからカートを取得する（存在しなければ空のリストを返す） */
 	@SuppressWarnings("unchecked")
@@ -103,10 +100,9 @@ public class CartService {
 	}
 
 	/**カートがカラかどうかを判定する*/
-	//あとで外す
-	//	public boolean isCartEmpty(HttpSession session) {
-	//		List<CartItem> cart = getCart(session);
-	//		return cart == null || cart.isEmpty();
-	//	}
+	public boolean isCartEmpty(HttpSession session) {
+		List<CartItem> cart = getCart(session);
+		return cart == null || cart.isEmpty();
+	}
 
 }

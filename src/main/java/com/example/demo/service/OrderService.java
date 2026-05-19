@@ -20,14 +20,14 @@ public class OrderService {
 
 	// 在庫チェック
 	public boolean hasStock(Integer productId, Integer quantity) {
-		Integer stock = cartMapper.findStockByProductId(productId);
+		Integer stock = orderMapper.findStockByProductId(productId);
 
 		return stock != null && stock >= quantity;
 	}
 
 	// 在庫を減らす
 	public void decreaseStock(Integer productId, Integer quantity) {
-		cartMapper.decreaseStock(productId, quantity);
+		orderMapper.decreaseStock(productId, quantity);
 	}
 
 	// 注文情報保存
