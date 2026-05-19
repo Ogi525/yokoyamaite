@@ -46,15 +46,18 @@ public class AuthController {
 		}
 
 		// DBからユーザを検索する
-		User user = userMapper.findByEmail(form.getEmail());
+		User userEmail = userMapper.findByEmail(form.getEmail());
+		User userPassword = userMapper.findByPassword(form.getPassword());
 
-		if (user == null || !passwordEncoder.matches(form.getPassword(), user.getPassword())) {
+		//パスワードが合致しなかった場合
+		if (userEmail == null || userPassword == null) {
 			model.addAttribute("loginError", "メールアドレスまたはパスワードが違います");
 			return "auth/login";
+
 		}
 
 		// ログイン成功：セッションにユーザ情報を保存
-		session.setAttribute("loginUser", user);
+		session.setAttribute("loginUser", userEmail);
 
 		// ★ここを追加
 		String redirect = (String) session.getAttribute("redirectAfterLogin");

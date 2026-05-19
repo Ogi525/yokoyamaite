@@ -1,0 +1,55 @@
+<h2>レビュー投稿</h2>
+
+<p th:if="${reviewError}"
+   th:text="${reviewError}"
+   style="color:red;">
+</p>
+
+<form th:action="@{/products/{id}/reviews(id=${product.id})}"
+      th:object="${reviewForm}"
+      method="post">
+	  <h2>レビュー一覧</h2>
+
+	  <div th:each="review : ${reviews}">
+
+	      <div>
+
+	          <span th:each="i : ${#numbers.sequence(1, review.rating)}">
+	              ★
+	          </span>
+
+	      </div>
+
+	      <p th:text="${review.comment}"></p>
+
+	  </div>
+    <div>
+
+        <label>評価</label>
+
+        <select th:field="*{rating}">
+
+            <option value="1">★1</option>
+            <option value="2">★2</option>
+            <option value="3">★3</option>
+            <option value="4">★4</option>
+            <option value="5">★5</option>
+
+        </select>
+
+    </div>
+
+    <div>
+
+        <label>コメント</label>
+
+        <textarea th:field="*{comment}"
+                  maxlength="200"></textarea>
+
+    </div>
+
+    <button type="submit">
+        投稿
+    </button>
+
+</form>

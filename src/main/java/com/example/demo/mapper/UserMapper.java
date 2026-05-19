@@ -12,6 +12,9 @@ public interface UserMapper {
 	@Select("SELECT * FROM users WHERE email = #{email}")
 	User findByEmail(String email);
 
+	@Select("SELECT * FROM users WHERE password = #{password}")
+	User findByPassword(String password);
+
 	/** ユーザを登録する */
 	@Insert("INSERT INTO users (name, email, password,postal_code,address) VALUES (#{name}, #{email}, #{password},#{postal_code},#{address})")
 	void insert(User user);
