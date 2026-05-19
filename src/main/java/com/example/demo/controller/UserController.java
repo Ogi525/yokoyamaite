@@ -40,6 +40,11 @@ public class UserController {
 					"duplicate",
 					"このメールアドレスは既に使用されています");
 		}
+		// パスワード一致チェック
+		if (!form.getPassword().equals(form.getConfirmPassword())) {
+			model.addAttribute("registerError", "パスワードが一致しません");
+			return "/register";
+		}
 
 		// エラーがある場合は登録画面に戻す
 		if (result.hasErrors()) {

@@ -6,6 +6,15 @@ public class UserForm {
 	private String password;
 	private String postal_code;
 	private String address;
+	private String confirmPassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	public String getName() {
 		return name;

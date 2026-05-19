@@ -47,11 +47,12 @@ public class AuthController {
 
 		// DBからユーザを検索する
 		User userEmail = userMapper.findByEmail(form.getEmail());
-		User userPassword = userMapper.findByPassword(form.getPassword());
+		System.out.println(userEmail);
+		System.out.println(form.getPassword());
 
-		//パスワードが合致しなかった場合
-		if (userEmail == null || userPassword == null) {
+		if (userEmail == null || !passwordEncoder.matches(form.getPassword(), userEmail.getPassword())) {
 			model.addAttribute("loginError", "メールアドレスまたはパスワードが違います");
+
 			return "auth/login";
 
 		}
