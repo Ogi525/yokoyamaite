@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+	<header th:fragment="header">
+
+		<div class="top-menu">
+
+			<!-- ロゴ -->
+			<div class="logo">
+				<a th:href="@{/}">
+					横山蒸留所
+				</a>
+			</div>
+
+			<!-- メニュー -->
+			<nav class="nav">
+
+				<a th:href="@{/category}">
+					カテゴリー
+				</a>
+
+				<a th:href="@{/search}">
+					絞り込み
+				</a>
+
+				<a th:href="@{/bonusgame}">
+					ミニゲーム
+				</a>
+
+				<a th:href="@{/coupon}">
+					所持クーポン
+				</a>
+
+			</nav>
+
+			<!-- 右側 -->
+			<div class="right-area">
+
+				<div class="search">
+
+
+
+					<form action="/searchresult" method="get">
+						<input type="text" name="keyword" placeholder="商品名・説明文など">
+					</form>
+
+				</div>
+
+				<div class="icon-box">
+
+					<a href="/cart" class="icon-btn">
+						🛒
+					</a>
+
+					<a href="/mypage" class="icon-btn">
+						👤
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</header>
+
+</body>
+
+</html>

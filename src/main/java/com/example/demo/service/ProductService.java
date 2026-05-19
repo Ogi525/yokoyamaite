@@ -14,4 +14,7 @@ public interface ProductService {
 
 	// ランキング商品一覧取得
 	List<Product> findRankingProducts();
+
+	// 商品詳細取得
+	Product findById(Integer id);
 }

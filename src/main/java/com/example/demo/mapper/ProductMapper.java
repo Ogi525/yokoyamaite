@@ -3,6 +3,7 @@ package com.example.demo.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.demo.entity.Product;
 
@@ -17,4 +18,7 @@ public interface ProductMapper {
 
 	// ランキング商品
 	List<Product> findRankingProducts();
+
+	// ★ 商品詳細
+	Product findById(@Param("id") Integer id);
 }

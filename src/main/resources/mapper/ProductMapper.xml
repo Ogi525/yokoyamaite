@@ -30,8 +30,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		SELECT *
 		FROM products
+		ORDER BY sales_count DESC
 		LIMIT 5
 
 	</select>
+	
+	<select id="findById"
+        resultType="com.example.demo.entity.Product">
+
+	SELECT
+		id,
+		area_id AS areaId,
+		category_id AS categoryId,
+		name,
+		price,
+		stock,
+		origin,
+		image_url AS imageUrl,
+		description
+	FROM products
+	WHERE id = #{id}
+
+</select>
 
 </mapper>
