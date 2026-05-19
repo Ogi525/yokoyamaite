@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+	<div th:fragment="commentFragment(post, level, productId)">
+
+		<div th:style="'margin-left:' + (${level} * 20) + 'px'">
+
+			<p>
+				<b th:text="${post.userName}"></b>
+				<span th:text="${post.createdAt}"></span>
+			</p>
+
+			<p th:text="${post.body}"></p>
+
+			<!-- 返信ボタン -->
+			<div th:if="${session.userId != null}">
+				<button type="button" th:onclick="'toggleReplyForm(' + ${post.id} + ')'">
+					返信
+				</button>
+				
+				<!-- 本人のみ削除ボタン表示 -->
+				<form th:if="${session.userId == post.userId}" th:action="@{/post/{postId}/delete(postId=${post.id})}"
+					method="post" onsubmit="return confirm('このコメントを削除しますか？返信も全て削除されます。')">
+					<input type="hidden" name="productId" th:value="${productId}">
+					<button type="submit">削除</button>
+				</form>
+				<!--送信ボタン-->
+				<form th:action="@{/post}" method="post" th:id="'replyForm-' + ${post.id}" style="display:none;">
+					<input type="hidden" name="parentId" th:value="${post.id}">
+					<input type="hidden" name="productId" th:value="${productId}">
+					<textarea name="body"></textarea>
+					<button type="submit">送信</button>
+				</form>
+			</div>
+
+			<!-- 再帰表示 -->
+			<div th:each="reply : ${post.replies}">
+				<div th:replace="post/comment :: commentFragment(${reply}, ${level + 1}, ${productId})"></div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+</body>
+
+</html>

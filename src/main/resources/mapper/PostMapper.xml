@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.PostMapper">
+
+	<!-- 投稿 -->
+	<insert id="insertPost">
+		INSERT INTO forum_posts (user_id, product_id, body,
+		parent_id)
+		VALUES (#{userId},#{productId}, #{body}, #{parentId})
+	</insert>
+
+	<!-- 親 -->
+	<select id="findParentPostsByProduct"
+		resultType="com.example.demo.entity.Post">
+		SELECT p.*, u.name AS userName
+		FROM forum_posts p
+		JOIN users
+		u ON p.user_id = u.id
+		WHERE p.parent_id IS NULL
+		AND p.product_id =
+		#{productId}
+		ORDER BY p.created_at DESC
+	</select>
+
+	<!-- 子 -->
+	<select id="findReplies"
+		resultType="com.example.demo.entity.Post">
+		SELECT p.*, u.name AS userName
+		FROM forum_posts p
+		JOIN users
+		u ON p.user_id = u.id
+		WHERE p.parent_id = #{parentId}
+		ORDER BY
+		p.created_at ASC
+	</select>
+
+	<!-- productidの検索 -->
+	<select id="findById" resultType="com.example.demo.entity.Post">
+		SELECT * FROM forum_posts WHERE
+		id = #{id}
+	</select>
+
+	<!-- 対象コメント削除 -->
+	<delete id="deleteById" >
+		DELETE FROM forum_posts WHERE id = #{id}
+	</delete>
+
+	<!-- 子コメント削除 -->
+	<delete id="deleteReplies">
+		DELETE FROM forum_posts WHERE parent_id = #{parentId}
+	</delete>
+</mapper>
