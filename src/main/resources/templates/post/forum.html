@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>コメント</title>
+</head>
+
+<body>
+
+	<h2>コメント</h2>
+
+	<!-- 新規投稿（ログイン中のみ） -->
+	<div th:if="${session.userId != null}">
+		<form th:action="@{/post}" method="post">
+			<input type="hidden" name="productId" th:value="${productId}">
+			<textarea name="body" placeholder="コメントを入力..."></textarea>
+			<button type="submit">投稿</button>
+		</form>
+		<!-- エラーメッセージ -->
+		<div th:if="${errors}" style="color:red;">
+		    <p th:each="error : ${errors}" th:text="${error.defaultMessage}"></p>
+		</div>
+	</div>
+
+	<hr>
+
+	<!-- コメント一覧 -->
+	<div th:each="post : ${posts}">
+		<div th:replace="post/comment :: commentFragment(${post}, 0, ${productId})"></div>
+	</div>
+	<script>
+		function toggleReplyForm(postId) {
+			const form = document.getElementById('replyForm-' + postId);
+			const isOpen = form.style.display === 'block';
+
+			// 全部閉じる
+			document.querySelectorAll("form[id^='replyForm-']").forEach(f => {
+				f.style.display = 'none';
+			});
+
+			// 閉じていたなら開く（開いていたなら閉じたまま）
+			if (!isOpen) {
+				form.style.display = 'block';
+			}
+		}
+	</script>
+</body>
+
+</html>
