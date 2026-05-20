@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>横山蒸留所</title>
+	<title>横山販売所</title>
 
 	<style>
 		body {
@@ -13,19 +13,11 @@
 			background: #f5f5f5;
 		}
 
-		/* =========================
-   全体
-========================= */
-
 		.container {
 			width: 95%;
 			max-width: 1400px;
 			margin: 30px auto;
 		}
-
-		/* =========================
-		   ヘッダー
-		========================= */
 
 		header {
 			background: white;
@@ -43,12 +35,12 @@
 		.logo {
 			font-size: 32px;
 			font-weight: bold;
-			color: #005b96;
+			color: #1a2a4a;
 		}
 
 		.logo a {
 			text-decoration: none;
-			color: #005b96;
+			color: #1a2a4a;
 		}
 
 		.nav {
@@ -62,13 +54,11 @@
 			font-weight: bold;
 		}
 
-		/* 右側 */
 		.right-area {
 			display: flex;
 			align-items: center;
 			gap: 20px;
 		}
-
 
 		.icon-box {
 			display: flex;
@@ -85,12 +75,12 @@
 
 		.icon-btn:hover {
 			transform: scale(1.2);
-			color: #005b96;
+			color: #1a2a4a;
 		}
 
 		/* =========================
-   回転寿司レーン
-========================= */
+		   回転寿司レーン
+		========================= */
 
 		.sushi-lane {
 			background: #ececec;
@@ -116,9 +106,7 @@
 			display: flex;
 			align-items: center;
 			gap: 50px;
-
 			width: max-content;
-
 			animation: sushiLoop 25s linear infinite;
 		}
 
@@ -126,93 +114,52 @@
 			animation-play-state: paused;
 		}
 
-		/* =========================
-   皿付き商品
-========================= */
-
 		.lane-item {
-
 			width: 220px;
-
 			flex-shrink: 0;
-
 			text-align: center;
-
 			position: relative;
-
 			padding-bottom: 60px;
 		}
 
-		/* 外皿 */
 		.lane-item::before {
-
 			content: "";
-
 			position: absolute;
-
 			bottom: 50px;
 			left: 50%;
-
 			transform: translateX(-50%);
-
 			width: 190px;
 			height: 50px;
-
-			background: linear-gradient(to bottom,
-					#ffffff,
-					#d9d9d9);
-
+			background: linear-gradient(to bottom, #ffffff, #d9d9d9);
 			border-radius: 50%;
-
-			border: 8px solid #008000;
-
+			border: 8px solid #1a2a4a;
 			z-index: 1;
-
-			box-shadow:
-				0 10px 15px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
 		}
 
-		/* 内皿 */
 		.lane-item::after {
-
 			content: "";
-
 			position: absolute;
-
 			bottom: 63px;
 			left: 50%;
-
 			transform: translateX(-50%);
-
 			width: 140px;
 			height: 22px;
-
 			border-radius: 50%;
-
-			border: 5px solid #008000;
-
+			border: 5px solid #1a2a4a;
 			z-index: 1;
 		}
 
-		/* 商品画像 */
 		.lane-item img {
-
 			width: 140px;
 			height: 140px;
-
 			border-radius: 50%;
-
 			object-fit: cover;
-
 			border: 6px solid white;
-
 			background: white;
-
 			position: relative;
 			z-index: 2;
-
 			animation: rotateSushi 8s linear infinite;
-
 			transition: 0.3s;
 		}
 
@@ -220,7 +167,6 @@
 			transform: scale(1.1);
 		}
 
-		/* 商品名 */
 		.lane-item p {
 			margin-top: 15px;
 			font-size: 20px;
@@ -228,17 +174,12 @@
 		}
 
 		/* =========================
-   SSR金ぴか魚
-========================= */
+		   SSR金ぴか魚
+		========================= */
 
 		.gold-fish img {
-
 			border: 6px solid gold;
-
-			box-shadow:
-				0 0 15px gold,
-				0 0 30px gold,
-				0 0 60px gold;
+			box-shadow: 0 0 15px gold, 0 0 30px gold, 0 0 60px gold;
 		}
 
 		.gold-fish::before {
@@ -250,77 +191,52 @@
 		}
 
 		/* =========================
-   カード型商品一覧
-========================= */
+		   カード型商品一覧
+		========================= */
 
 		.section {
 			margin-bottom: 60px;
 		}
 
 		.section-title {
-
 			font-size: 35px;
 			font-weight: bold;
-
 			margin-bottom: 25px;
-
-			border-left: 10px solid #005b96;
-
+			border-left: 10px solid #1a2a4a;
 			padding-left: 15px;
-
-			color: #005b96;
+			color: #1a2a4a;
 		}
 
 		.product-list {
-
 			display: flex;
-
 			gap: 20px;
-
 			flex-wrap: wrap;
 		}
 
-		/* カード */
-
 		.product-card {
-
 			width: 205px;
-
 			background: white;
-
 			border-radius: 24px;
-
 			overflow: hidden;
-
-			border: 3px solid #b7d8ef;
-
+			border: 3px solid #8fa8c8;
 			transition: 0.3s;
-
-			box-shadow:
-				0 5px 10px rgba(0, 0, 0, 0.08);
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
 		}
 
 		.product-card:hover {
-
 			transform: translateY(-8px);
-
-			box-shadow:
-				0 10px 20px rgba(0, 0, 0, 0.15);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 		}
 
 		.card-image {
-
 			width: 100%;
 			height: 150px;
-
 			overflow: hidden;
 		}
 
 		.card-image img {
-
 			width: 100%;
 			height: 100%;
-
 			object-fit: cover;
 		}
 
@@ -329,44 +245,31 @@
 		}
 
 		.card-name {
-
 			font-size: 20px;
-
 			font-weight: bold;
-
 			margin-bottom: 10px;
 		}
 
 		.card-price {
-
 			font-size: 19px;
-
-			color: #005b96;
-
+			color: #1a2a4a;
 			font-weight: bold;
-
 			margin-bottom: 8px;
 		}
 
 		.card-origin {
-
 			font-size: 13px;
-
 			color: #777;
 		}
 
 		/* =========================
-   フッター
-========================= */
+		   フッター
+		========================= */
 
 		footer {
-
 			background: white;
-
 			padding: 25px;
-
 			border-radius: 20px;
-
 			text-align: center;
 		}
 
@@ -377,53 +280,35 @@
 		}
 
 		/* =========================
-   アニメーション
-========================= */
+		   アニメーション
+		========================= */
 
-		/* レーン移動 */
 		@keyframes sushiLoop {
-
-			from {
-				transform: translateX(0);
-			}
-
-			to {
-				transform: translateX(-50%);
-			}
+			from { transform: translateX(0); }
+			to { transform: translateX(-50%); }
 		}
 
-		/* 商品回転 */
 		@keyframes rotateSushi {
-
-			from {
-				transform: rotate(0deg);
-			}
-
-			to {
-				transform: rotate(360deg);
-			}
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
 		}
 
 		/* =========================
-   レスポンシブ
-========================= */
+		   レスポンシブ
+		========================= */
 
 		@media screen and (max-width:768px) {
-
 			.top-menu {
 				flex-direction: column;
 				gap: 20px;
 			}
-
 			.nav {
 				flex-wrap: wrap;
 				justify-content: center;
 			}
-
 			.product-list {
 				justify-content: center;
 			}
-
 			.lane-title {
 				font-size: 40px;
 			}
@@ -446,49 +331,39 @@
 			</div>
 
 			<div class="lane-wrapper">
-
 				<div class="lane-track">
 
 					<!-- 1周目 -->
-					<a th:each="product : ${recommendProducts}" th:href="@{/item/{id}(id=${product.id})}"
-						class="lane-item" style="text-decoration:none; color:inherit;">
-
+					<a th:each="product : ${recommendProducts}"
+					   th:href="@{/item/{id}(id=${product.id})}"
+					   class="lane-item"
+					   style="text-decoration:none; color:inherit;">
 						<img th:src="${product.imageUrl}" th:alt="${product.name}">
-
 						<p th:text="${product.name}"></p>
-
 					</a>
 
 					<!-- SSR金ぴか魚 -->
 					<div class="lane-item gold-fish">
-
 						<img src="/images/gold-fish.png" alt="SSR金ぴか魚">
-
 						<p>SSR金ぴか魚</p>
-
 					</div>
 
 					<!-- 2周目 -->
-					<a th:each="product : ${recommendProducts}" th:href="@{/item/{id}(id=${product.id})}"
-						class="lane-item" style="text-decoration:none; color:inherit;">
-
+					<a th:each="product : ${recommendProducts}"
+					   th:href="@{/item/{id}(id=${product.id})}"
+					   class="lane-item"
+					   style="text-decoration:none; color:inherit;">
 						<img th:src="${product.imageUrl}" th:alt="${product.name}">
-
 						<p th:text="${product.name}"></p>
-
 					</a>
 
 					<!-- SSR金ぴか魚 -->
 					<div class="lane-item gold-fish">
-
 						<img src="/images/gold-fish.png" alt="SSR金ぴか魚">
-
 						<p>SSR金ぴか魚</p>
-
 					</div>
 
 				</div>
-
 			</div>
 
 		</div>
@@ -496,80 +371,47 @@
 		<!-- 新着商品 -->
 		<section class="section">
 
-			<h2 class="section-title">
-				新着商品
-			</h2>
+			<h2 class="section-title">新着商品</h2>
 
 			<div class="product-list">
-
-				<a th:each="product : ${newProducts}" th:href="@{/item/{id}(id=${product.id})}"
-					style="text-decoration:none; color:inherit;">
-
+				<a th:each="product : ${newProducts}"
+				   th:href="@{/item/{id}(id=${product.id})}"
+				   style="text-decoration:none; color:inherit;">
 					<div class="product-card">
-
 						<div class="card-image">
 							<img th:src="${product.imageUrl}">
 						</div>
-
 						<div class="card-body">
-
-							<div class="card-name" th:text="${product.name}">
-							</div>
-
-							<div class="card-price">
-								¥<span th:text="${product.price}"></span>
-							</div>
-
-							<div class="card-origin" th:text="${product.origin}">
-							</div>
-
+							<div class="card-name" th:text="${product.name}"></div>
+							<div class="card-price">¥<span th:text="${product.price}"></span></div>
+							<div class="card-origin" th:text="${product.origin}"></div>
 						</div>
-
 					</div>
-
 				</a>
-
 			</div>
 
 		</section>
 
-
 		<!-- ランキング -->
 		<section class="section">
 
-			<h2 class="section-title">
-				売れ筋ランキング
-			</h2>
+			<h2 class="section-title">売れ筋ランキング</h2>
 
 			<div class="product-list">
-
-				<a th:each="product : ${rankingProducts}" th:href="@{/item/{id}(id=${product.id})}"
-					style="text-decoration:none; color:inherit;">
-
+				<a th:each="product : ${rankingProducts}"
+				   th:href="@{/item/{id}(id=${product.id})}"
+				   style="text-decoration:none; color:inherit;">
 					<div class="product-card">
-
 						<div class="card-image">
 							<img th:src="${product.imageUrl}">
 						</div>
-
 						<div class="card-body">
-
-							<div class="card-name" th:text="${product.name}">
-							</div>
-
-							<div class="card-price">
-								¥<span th:text="${product.price}"></span>
-							</div>
-
-							<div class="card-origin" th:text="${product.origin}">
-							</div>
-
+							<div class="card-name" th:text="${product.name}"></div>
+							<div class="card-price">¥<span th:text="${product.price}"></span></div>
+							<div class="card-origin" th:text="${product.origin}"></div>
 						</div>
-
 					</div>
-
 				</a>
-
 			</div>
 
 		</section>
