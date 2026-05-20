@@ -3,24 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <title>新規登録</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    main {
+      width: 400px;
+      margin: 80px auto;
+      padding: 50px 75px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+     
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: #1a2a4a;
+    }
+
+    .info-block {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .info-block p {
+      font-size: 14px;
+      color: #888;
+      margin: 0 0 4px 0;
+    }
+
+    .info-block input {
+      display: block;
+      width: 100%;
+      font-size: 16px;
+      color: #1a2a4a;
+      font-weight: bold;
+      padding: 10px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      transition: 0.2s;
+    }
+
+    .info-block input:focus {
+      outline: none;
+      background-color: white;
+      border: 1px solid #1a2a4a;
+      box-shadow: 0 0 5px rgba(26, 42, 74, 0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .btn-submit {
+      background-color: #1a2a4a;
+      color: white;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #2a4a7a;
+    }
+
+    .btn-back {
+      background-color: white;
+      color: #1a2a4a;
+      border: 1px solid #1a2a4a;
+    }
+
+    .btn-back:hover {
+      background-color: #f0f4ff;
+    }
+  </style>
 </head>
 <body>
-	<div th:replace="~{layout/_header :: header}"></div>
+  <div th:replace="~{layout/_header :: header}"></div>
 
   <main>
-  <h1>新規登録</h1>
+    <h1>新規登録</h1>
 
-  <form th:action="@{/register}" th:object="${form}" method="post">
-     <p>名前：<input type="text" th:field="*{name}" /></p>
-     <p>メールアドレス：<input type="email" th:field="*{email}" /></p>
-     <p>パスワード：<input type="password" th:field="*{password}" /></p>
-	 <p>郵便番号：<input type= "text" id= "postalCode" th:field="*{postalCode}" pattern= "\d{3}-\d{4}" 
-	 	title="郵便番号をxxx-xxxxの形式で入力してください"/></p>
-	   <p>住所：<input type= "text" th:field="*{address}"/></p>
-     <p><button type="submit">登録</button></p>
-   </form>
+    <form th:action="@{/register}" th:object="${form}" method="post">
+      <div class="info-block">
+        <p>名前</p>
+        <input type="text" th:field="*{name}" />
+      </div>
+      <div class="info-block">
+        <p>メールアドレス</p>
+        <input type="email" th:field="*{email}" />
+      </div>
+      <div class="info-block">
+        <p>パスワード</p>
+        <input type="password" th:field="*{password}" />
+      </div>
+      <div class="info-block">
+        <p>郵便番号</p>
+        <input type="text" id="postalCode" th:field="*{postalCode}"
+               pattern="\d{3}-\d{4}"
+               title="郵便番号をxxx-xxxxの形式で入力してください" />
+      </div>
+      <div class="info-block">
+        <p>住所</p>
+        <input type="text" th:field="*{address}" />
+      </div>
 
-  <a href="/">▶ トップページへ戻る</a>
+      <p><button type="submit" class="btn-submit">登録</button></p>
+    </form>
+
+    <form action="/" method="get">
+      <button type="submit" class="btn-back">▶ 戻る</button>
+    </form>
   </main>
 
   <div th:replace="~{layout/_footer :: footer}"></div>

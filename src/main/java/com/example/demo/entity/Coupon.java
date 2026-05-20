@@ -1,11 +1,16 @@
 package com.example.demo.entity;
 
+import java.time.LocalDateTime;
+
 public class Coupon {
+
 	private Integer id;
 	private String code;
 	private String name;
 	private boolean isUsed;
 	private Integer discountValue;
+
+	private LocalDateTime endAt;
 
 	public Integer getId() {
 		return id;
@@ -27,16 +32,16 @@ public class Coupon {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public boolean isUsed() {
 		return isUsed;
 	}
 
 	public void setUsed(boolean isUsed) {
 		this.isUsed = isUsed;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Integer getDiscountValue() {
@@ -47,4 +52,11 @@ public class Coupon {
 		this.discountValue = discountValue;
 	}
 
+	public LocalDateTime getEndAt() {
+		return endAt;
+	}
+
+	public void setEndAt(LocalDateTime endAt) {
+		this.endAt = endAt;
+	}
 }

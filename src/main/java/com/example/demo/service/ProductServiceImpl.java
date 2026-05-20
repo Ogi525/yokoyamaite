@@ -49,4 +49,13 @@ public class ProductServiceImpl implements ProductService {
 
 		return productMapper.findById(id);
 	}
+
+	/**
+	 * ゴールデンりんちゃん取得
+	 */
+	@Override
+	public Product getGoldenRinchan() {
+
+		return productMapper.findByProductName("ゴールデンりんちゃん");
+	}
 }

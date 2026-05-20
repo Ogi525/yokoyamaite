@@ -59,6 +59,20 @@ public class AuthController {
 
 		// ログイン成功：セッションにユーザ情報を保存する
 		session.setAttribute("loginUser", userEmail);
+
+		// ログイン前に保存したURLを取得
+		String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+
+		// 保存されていた場合
+		if (redirectUrl != null) {
+
+			// 一度使ったら削除
+			session.removeAttribute("redirectAfterLogin");
+
+			return "redirect:" + redirectUrl;
+		}
+
+		// 通常時
 		return "redirect:/mypage";
 	}
 

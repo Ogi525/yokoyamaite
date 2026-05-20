@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.HistoryMapper">
+
+<select id="findByUserId"
+        resultType="com.example.demo.entity.History">
+
+    SELECT
+        o.id,
+        o.user_id AS userId,
+        o.ordered_at AS date,
+        op.product_id AS productId,
+        op.quantity AS quantity
+    FROM orders o
+    JOIN orders_products op ON o.id = op.order_id
+    WHERE o.user_id = #{userId}
+    ORDER BY o.ordered_at DESC
+
+</select>
+
+</mapper>

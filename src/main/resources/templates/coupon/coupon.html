@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>クーポン一覧</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    background:#111;
+    font-family:'Segoe UI', sans-serif;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ===============================
+   HEADER
+================================ */
+
+header {
+
+	background:
+		linear-gradient(135deg,
+			rgba(12, 10, 25, 0.97),
+			rgba(5, 5, 12, 0.98));
+
+	border-bottom: 2px solid #c89b3c;
+
+	box-shadow:
+		0 0 25px rgba(255, 215, 0, 0.15);
+
+	padding: 14px 32px;
+
+	position: sticky;
+	top: 0;
+	z-index: 999;
+
+	backdrop-filter: blur(8px);
+}
+
+.top-menu {
+
+	display: flex;
+
+	align-items: center;
+
+	justify-content: space-between;
+}
+
+/* LOGO */
+
+.logo a {
+
+	text-decoration: none;
+
+	font-size: 36px;
+
+	font-weight: bold;
+
+	letter-spacing: 1px;
+
+	background:
+		linear-gradient(to bottom,
+			#fff4b0,
+			#ffd95a,
+			#c98a00);
+
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+	text-shadow:
+		0 0 8px rgba(255, 215, 0, 0.3),
+		0 0 16px rgba(255, 215, 0, 0.2);
+}
+
+/* NAV */
+
+.nav {
+
+	display: flex;
+
+	align-items: center;
+
+	gap: 30px;
+}
+
+.nav a {
+
+	position: relative;
+
+	text-decoration: none;
+
+	color: #f5d67a;
+
+	font-size: 17px;
+
+	font-weight: bold;
+
+	letter-spacing: 1px;
+
+	transition: 0.3s;
+}
+
+.nav a::after {
+
+	content: "";
+
+	position: absolute;
+
+	left: 0;
+	bottom: -6px;
+
+	width: 0%;
+	height: 2px;
+
+	background: gold;
+
+	transition: 0.3s;
+}
+
+.nav a:hover {
+
+	color: #fff2b3;
+
+	text-shadow:
+		0 0 10px gold,
+		0 0 20px gold;
+}
+
+.nav a:hover::after {
+
+	width: 100%;
+}
+
+/* RIGHT */
+
+.right-area {
+
+	display: flex;
+
+	align-items: center;
+
+	gap: 20px;
+}
+
+/* SEARCH */
+
+.search input {
+
+	width: 220px;
+
+	padding: 9px 15px;
+
+	border-radius: 999px;
+
+	border: 2px solid #c89b3c;
+
+	background:
+		rgba(255, 255, 255, 0.05);
+
+	color: white;
+
+	font-size: 13px;
+
+	outline: none;
+
+	transition: 0.3s;
+
+	box-shadow:
+		inset 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.search input::placeholder {
+
+	color: #d8c37d;
+}
+
+.search input:focus {
+
+	border-color: gold;
+
+	box-shadow:
+		0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+/* ICON */
+
+.icon-box {
+
+	display: flex;
+
+	align-items: center;
+
+	gap: 16px;
+}
+
+.icon-btn {
+
+	text-decoration: none;
+
+	font-size: 24px;
+
+	transition: 0.25s;
+}
+
+.icon-btn:hover {
+
+	transform: scale(1.18);
+
+	filter:
+		drop-shadow(0 0 8px gold);
+}
+
+/* ===============================
+   COUPON AREA
+================================ */
+
+.main-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:30px;
+    padding:40px;
+    position:relative;
+}
+
+/* 左右キャラ */
+
+.side-rin{
+    width:220px;
+    position:sticky;
+    top:130px;
+    z-index:10;
+
+    filter:
+        drop-shadow(0 0 10px gold)
+        drop-shadow(0 0 25px rgba(255,215,0,0.7));
+
+    animation:floatRin 3s ease-in-out infinite;
+}
+
+.left-rin{
+    transform:scaleX(1);
+}
+
+.right-rin{
+    transform:scaleX(-1);
+}
+
+@keyframes floatRin{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* 中央 */
+
+.center-content{
+    flex:1;
+    max-width:1200px;
+}
+
+/* タイトル */
+
+.page-title{
+    text-align:center;
+    font-size:52px;
+    font-weight:bold;
+    margin-bottom:50px;
+    color:gold;
+
+    text-shadow:
+        0 0 10px rgba(255,215,0,0.8),
+        0 0 25px rgba(255,215,0,0.6);
+}
+
+/* 一覧 */
+
+.coupon-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+/* クーポン */
+
+.coupon-card{
+    position:relative;
+
+    background:
+        linear-gradient(135deg,#1f1f1f,#2b2b2b);
+
+    border:3px solid gold;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:
+        0 0 15px rgba(255,215,0,0.4),
+        0 0 30px rgba(255,215,0,0.2);
+
+    transition:0.3s;
+
+    overflow:hidden;
+}
+
+.coupon-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.12),
+            transparent
+        );
+
+    transform:translateX(-100%);
+    transition:0.7s;
+}
+
+.coupon-card:hover::before{
+    transform:translateX(100%);
+}
+
+.coupon-card:hover{
+    transform:translateY(-5px) scale(1.02);
+
+    box-shadow:
+        0 0 20px rgba(255,215,0,0.8),
+        0 0 40px rgba(255,215,0,0.5);
+}
+
+/* 使用済み */
+
+.coupon-card.used{
+    opacity:0.6;
+    border-color:#777;
+    filter:grayscale(70%);
+}
+
+/* 割引 */
+
+.discount{
+    font-size:40px;
+    font-weight:bold;
+    color:gold;
+    margin-bottom:15px;
+
+    text-shadow:
+        0 0 10px rgba(255,215,0,0.8);
+}
+
+/* 名前 */
+
+.coupon-name{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+/* 期限 */
+
+.expire{
+    font-size:15px;
+    color:#ccc;
+    margin-bottom:15px;
+}
+
+/* コード */
+
+.coupon-code{
+    background:#000;
+
+    border:1px dashed gold;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media screen and (max-width:1400px){
+
+    .side-rin{
+        width:160px;
+    }
+}
+
+@media screen and (max-width:1000px){
+
+    .main-wrapper{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .side-rin{
+        position:static;
+        width:180px;
+    }
+
+    .page-title{
+        font-size:40px;
+    }
+}
+
+@media screen and (max-width:768px){
+
+    .logo a{
+        font-size:28px;
+    }
+
+    .nav a{
+        font-size:15px;
+    }
+
+    .search input{
+        width:180px;
+    }
+
+    .coupon-list{
+        grid-template-columns:1fr;
+    }
+
+    .page-title{
+        font-size:34px;
+    }
+
+    .discount{
+        font-size:32px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div th:replace="~{layout/_header :: header}"></div>
+
+<div class="main-wrapper">
+
+    <!-- 左キャラ -->
+    <img th:src="@{/images/niyake-rin.png}"
+         alt="niyake-rin"
+         class="side-rin left-rin">
+
+    <!-- 中央 -->
+    <div class="center-content">
+
+        <h1 class="page-title">🎫 クーポン一覧</h1>
+
+        <div class="coupon-list">
+
+            <div class="coupon-card"
+                 th:each="coupon : ${couponList}"
+                 th:classappend="${coupon.used} ? ' used' : ''">
+
+                <div class="discount">
+                    <span th:text="${coupon.discountValue}"></span>円引き
+                </div>
+
+                <div class="coupon-name"
+                     th:text="${coupon.name}">
+                </div>
+
+                <div class="expire">
+                    使用期限：
+                    <span th:text="${#temporals.format(coupon.endAt, 'yyyy/MM/dd')}"></span>
+                </div>
+
+                <div class="coupon-code">
+                    CODE :
+                    <span th:text="${coupon.code}"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 右キャラ -->
+    <img th:src="@{/images/tikoku-rin.png}"
+         alt="tikoku-rin"
+         class="side-rin right-rin">
+
+</div>
+
+</body>
+</html>

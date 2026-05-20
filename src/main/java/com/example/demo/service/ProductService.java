@@ -17,4 +17,7 @@ public interface ProductService {
 
 	// 商品詳細取得
 	Product findById(Integer id);
+
+	//ゴールデンりんちゃん取得
+	Product getGoldenRinchan();
 }
