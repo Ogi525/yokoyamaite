@@ -644,7 +644,7 @@
 					レビュー
 				</button>
 
-				<button id="commentTabBtn" class="tab-btn" onclick="showTab('commentTabContent', this)"> <!-- id="comment"はtextareaで使用済み -->
+				<button id="commentTabBtn" class="tab-btn" onclick="showTab('commentTabContent', this)">
 					コメント
 				</button>
 
@@ -676,20 +676,8 @@
 						<div class="post-date" th:text="${#temporals.format(review.createdAt, 'yyyy/MM/dd')}">投稿日</div>
 
 						<div class="star">
-
-							<span
-								th:if="${review.rating != null}"
-								th:each="i : ${#numbers.sequence(1, review.rating)}">
-								★
-							</span>
-
-							<span
-								th:if="${review.rating != null and review.rating < 5}"
-								th:each="i : ${#numbers.sequence(review.rating + 1, 5)}"
-								style="color:#ccc;">
-								★
-							</span>
-
+							<span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+							<span th:each="i : ${#numbers.sequence(review.rating + 1, 5)}" style="color:#ccc;">★</span>
 						</div>
 
 						<div th:text="${review.comment}">本文</div>
@@ -769,6 +757,19 @@
 					</form>
 				</div>
 
+				<th:block th:fragment="renderReplies(replies, level)">
+					<div th:each="reply : ${replies}">
+						<div class="reply-card" th:style="'margin-left:' + (${level} * 20) + 'px'">
+							<div class="user-name" th:text="${reply.userName}"></div>
+							<div class="post-date" th:text="${reply.createdAt}"></div>
+							<div class="comment-body" th:text="${reply.body}"></div>
+							<div th:if="${reply.replies != null and !#lists.isEmpty(reply.replies)}"
+								th:insert="~{this::renderReplies(replies=${reply.replies}, level=${level + 1})}">
+							</div>
+						</div>
+					</div>
+				</th:block>
+
 				<div class="comment-list">
 
 					<div class="comment-card" th:each="comment : ${comments}">
@@ -778,11 +779,7 @@
 								<div class="user-name" th:text="${comment.userName}"></div>
 								<div class="post-date" th:text="${comment.createdAt}"></div>
 							</div>
-							<form th:if="${session.loginUser != null 
-									and session.loginUser.id != null
-									and comment.userId != null
-									and session.loginUser.id.equals(comment.userId)
-									and comment.parentId == null}"
+							<form th:if="${session.loginUser != null and session.loginUser.id == comment.userId and comment.parentId == null}"
 								th:action="@{/post/{postId}/delete(postId=${comment.id})}"
 								method="post">
 								<input type="hidden" name="productId" th:value="${product.id}">
@@ -802,21 +799,8 @@
 						<div class="reply-area" th:id="'replyArea-' + ${comment.id}" style="display:none;">
 							<div class="reply-count" th:text="'返信 ' + ${#lists.size(comment.replies)} + ' 件'"
 								th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}"></div>
-								<div th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}">
-
-									<div th:each="reply : ${comment.replies}"
-										class="reply-card"
-										style="margin-left:20px;">
-
-										<div class="user-name" th:text="${reply.userName}"></div>
-
-										<div class="post-date" th:text="${reply.createdAt}"></div>
-
-										<div class="comment-body" th:text="${reply.body}"></div>
-
-									</div>
-
-								</div>
+							<div th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}"
+								th:insert="~{this::renderReplies(replies=${comment.replies}, level=1)}"></div>
 							<div th:if="${comment.replies == null or #lists.isEmpty(comment.replies)}" class="reply-count">
 								返信はまだありません
 							</div>
@@ -874,11 +858,9 @@
 					.forEach(button => {
 						button.classList.remove("active");
 					});
-				const selectedTab = document.getElementById(tabId);
-				console.log({selectedTab, tabId});
+
 				document.getElementById(tabId)
 					.classList.add("active");
-				
 
 				btn.classList.add("active");
 			}
