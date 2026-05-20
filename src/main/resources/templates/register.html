@@ -93,6 +93,7 @@
 			<div class="form-group">
 				<label>名前</label>
 				<input type="text" th:field="*{name}" placeholder="名前を入力してください" />
+				<div th:errors="*{name}" style="color:red"></div>
 			</div>
 			<div class="form-group">
 				<label>メールアドレス</label>
@@ -124,11 +125,13 @@
 					   pattern="\d{3}-\d{4}"
 					   title="郵便番号をxxx-xxxxの形式で入力してください"
 					   placeholder="123-4567" />
+					   <div th:errors="*{postalCode}" style="color:red"></div>
 			</div>
 
 			<div class="form-group">
 				<label>住所</label>
 				<input type="text" th:field="*{address}" placeholder="住所を入力してください" />
+				<div th:errors="*{address}" style="color:red"></div>
 			</div>
 
 		
