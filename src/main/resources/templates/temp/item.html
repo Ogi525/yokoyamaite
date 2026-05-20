@@ -59,22 +59,24 @@
 		/* 上段 */
 
 		.item-top {
-			display: flex;
-			gap: 40px;
-			margin-bottom: 50px;
-			align-items: flex-start;
+		  display: flex;
+		  gap: 40px;
+		  margin-bottom: 50px;
+		  align-items: stretch; /* ←ここ変更 */
 		}
 		/* 左画像 */
 
 		.item-image {
-			width: 640px;
-			flex-shrink: 0;
+		  width: 640px;
+		  flex-shrink: 0;
+		  display: flex;
+		  align-items: stretch;
 		}
 
 		.item-image img {
 			width: 100%;
 
-			aspect-ratio: 4 / 3;
+			aspect-ratio: 16 /11 ;
 
 			object-fit: cover;
 
@@ -87,14 +89,12 @@
 		/* 右情報 */
 
 		.item-info {
-			flex: 1;
+		  flex: 1;
+		  display: flex;
+		  flex-direction: column;
 
-			display: flex;
-			flex-direction: column;
-
-			justify-content: space-between;
-
-			height: 100%;
+		  /* これが重要 */
+		  height: 100%;
 		}
 
 		/* 商品名 */
@@ -125,10 +125,9 @@
 		/* 価格 */
 
 		.price-box {
-			padding-top: 10px;
+		  margin-top: auto;
 		}
-
-		.item-id {
+		-id {
 			color: #777;
 			margin-bottom: 10px;
 
@@ -402,9 +401,8 @@
 		<!-- 商品詳細 -->
 		<div class="item-wrapper">
 
-			<!-- 戻る -->
-			<a href="/" class="back-link">
-				← 商品一覧へ戻る
+			<a href="javascript:history.back()" class="back-link">
+				← 戻る
 			</a>
 
 			<!-- 上段 -->
@@ -429,10 +427,7 @@
 
 					</div>
 
-					<!-- 説明 -->
-					<div class="short-description" th:text="${product.description}">
-						商品説明
-					</div>
+					
 
 					<!-- 購入 -->
 					<div class="price-box">
