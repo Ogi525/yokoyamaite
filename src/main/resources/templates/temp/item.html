@@ -380,8 +380,7 @@
 
 		/* カード */
 
-		.review-list,
-		.comment-list {
+		.review-list {
 
 			display: flex;
 
@@ -390,8 +389,88 @@
 			flex-wrap: wrap;
 		}
 
-		.review-card,
+		.comment-list {
+
+			display: flex;
+
+			flex-direction: column;
+
+			gap: 24px;
+		}
+
 		.comment-card {
+			width: 100%;
+			max-width: 820px;
+			padding: 20px;
+			border-radius: 20px;
+			background: #f5f5f5;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		}
+
+		.comment-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			gap: 16px;
+			margin-bottom: 12px;
+		}
+
+		.reply-area {
+			margin-top: 12px;
+			padding-top: 12px;
+			border-top: 1px solid #d8d8d8;
+		}
+
+		.reply-card {
+			margin-top: 12px;
+			padding: 14px;
+			border-radius: 16px;
+			background: #ffffff;
+			border: 1px solid #dcdcdc;
+		}
+
+		.reply-count {
+			font-size: 14px;
+			color: #444;
+			margin-bottom: 10px;
+		}
+
+		.reply-form {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin-top: 16px;
+		}
+
+		.reply-form input[type="text"] {
+			flex: 1;
+			min-width: 180px;
+			padding: 12px 14px;
+			border-radius: 16px;
+			border: 1px solid #ccc;
+			background: #fff;
+		}
+
+		.reply-form button,
+		.toggle-replies,
+		.delete-button {
+			border: none;
+			background: #3b82f6;
+			color: white;
+			padding: 10px 16px;
+			border-radius: 14px;
+			cursor: pointer;
+		}
+
+		.toggle-replies {
+			background: #2563eb;
+		}
+
+		.delete-button {
+			background: #ef4444;
+		}
+
+		.review-card {
 
 			width: 260px;
 
@@ -420,30 +499,30 @@
 
 		.star {
 			font-size: 22px;
-			
+
 			margin-bottom: 15px;
 		}
-		
-				/* =========================
+
+		/* =========================
 		   フッター
 		========================= */
 
-				footer {
+		footer {
 
-					background: white;
+			background: white;
 
-					padding: 25px;
+			padding: 25px;
 
-					border-radius: 20px;
+			border-radius: 20px;
 
-					text-align: center;
-				}
+			text-align: center;
+		}
 
-				footer a {
-					text-decoration: none;
-					color: #333;
-					margin: 0 10px;
-				}
+		footer a {
+			text-decoration: none;
+			color: #333;
+			margin: 0 10px;
+		}
 
 		/* =========================
    レスポンシブ
@@ -565,7 +644,7 @@
 					レビュー
 				</button>
 
-				<button class="tab-btn" onclick="showTab('comment', this)">
+				<button id="commentTabBtn" class="tab-btn" onclick="showTab('comment', this)">
 					コメント
 				</button>
 
@@ -626,100 +705,152 @@
 				</div>
 
 			</div>
-
 			<!-- コメント -->
 			<div id="comment" class="tab-content">
 
-				<div class="review-top">
-
-					<div class="review-score">
-						コメント
-					</div>
-
-					<button class="review-btn">
-						コメントを書く
-					</button>
-
-					<div class="review-note">
-
-						コメントはログインユーザーのみ投稿可能です。
-
-					</div>
-
+				<div class="comment-card" style="margin-bottom:20px;">
+					<div class="user-name">コメントを投稿</div>
+					<form th:action="@{/post}" method="post" class="reply-form">
+						<input type="hidden" name="productId" th:value="${product.id}">
+						<input type="text" name="body" placeholder="コメントを入力してください" required>
+						<button type="submit">投稿</button>
+					</form>
 				</div>
+
+				<th:block th:fragment="renderReplies(replies, level)">
+					<div th:each="reply : ${replies}">
+						<div class="reply-card" th:style="'margin-left:' + (${level} * 20) + 'px'">
+							<div class="user-name" th:text="${reply.userName}"></div>
+							<div class="post-date" th:text="${reply.createdAt}"></div>
+							<div class="comment-body" th:text="${reply.body}"></div>
+							<div th:if="${reply.replies != null and !#lists.isEmpty(reply.replies)}"
+								th:insert="~{this::renderReplies(replies=${reply.replies}, level=${level + 1})}">
+							</div>
+						</div>
+					</div>
+				</th:block>
 
 				<div class="comment-list">
 
-					<div class="comment-card">
+					<div class="comment-card" th:each="comment : ${comments}">
 
-						<div class="user-name">
-							ユーザー名
+						<div class="comment-header">
+							<div>
+								<div class="user-name" th:text="${comment.userName}"></div>
+								<div class="post-date" th:text="${comment.createdAt}"></div>
+							</div>
+							<form th:if="${session.loginUser != null and session.loginUser.id == comment.userId and comment.parentId == null}"
+								th:action="@{/post/{postId}/delete(postId=${comment.id})}"
+								method="post">
+								<input type="hidden" name="productId" th:value="${product.id}">
+								<button type="submit" class="delete-button">削除</button>
+							</form>
 						</div>
 
-						<div class="post-date">
-							投稿日 2026/5/13
+						<div class="comment-body" th:text="${comment.body}"></div>
+
+						<button type="button"
+							class="toggle-replies"
+							th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}"
+							th:onclick="'toggleReplySection(' + ${comment.id} + ')'">
+							返信を見る
+						</button>
+
+						<div class="reply-area" th:id="'replyArea-' + ${comment.id}" style="display:none;">
+							<div class="reply-count" th:text="'返信 ' + ${#lists.size(comment.replies)} + ' 件'"
+								th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}"></div>
+							<div th:if="${comment.replies != null and !#lists.isEmpty(comment.replies)}"
+								th:insert="~{this::renderReplies(replies=${comment.replies}, level=1)}"></div>
+							<div th:if="${comment.replies == null or #lists.isEmpty(comment.replies)}" class="reply-count">
+								返信はまだありません
+							</div>
 						</div>
 
-						<div>
-							食べてみたい！
-						</div>
+						<form th:action="@{/post}" method="post" class="reply-form">
+							<input type="hidden" name="parentId" th:value="${comment.id}">
+							<input type="hidden" name="productId" th:value="${product.id}">
+							<input type="text" name="body" placeholder="返信を書く..." required>
+							<button type="submit">返信</button>
+						</form>
 
 					</div>
 
 				</div>
 
 			</div>
+			<div th:replace="~{layout/_footer :: footer}"></div>
 
 		</div>
-		<div th:replace="~{layout/_footer :: footer}"></div>
 
-	</div>
+		<script>
 
-	<script>
+			/* 数量 */
 
-		/* 数量 */
+			let qty = 1;
 
-		let qty = 1;
+			function increaseQty() {
 
-		function increaseQty() {
-
-			qty++;
-
-			document.getElementById("qty").textContent = qty;
-		}
-
-		function decreaseQty() {
-
-			if (qty > 1) {
-
-				qty--;
+				qty++;
 
 				document.getElementById("qty").textContent = qty;
 			}
-		}
 
-		/* タブ切替 */
+			function decreaseQty() {
 
-		function showTab(tabId, btn) {
+				if (qty > 1) {
 
-			document.querySelectorAll(".tab-content")
-				.forEach(tab => {
-					tab.classList.remove("active");
-				});
+					qty--;
 
-			document.querySelectorAll(".tab-btn")
-				.forEach(button => {
-					button.classList.remove("active");
-				});
+					document.getElementById("qty").textContent = qty;
+				}
+			}
 
-			document.getElementById(tabId)
-				.classList.add("active");
+			/* タブ切替 */
 
-			btn.classList.add("active");
-		}
+			function showTab(tabId, btn) {
 
-	</script>
+				document.querySelectorAll(".tab-content")
+					.forEach(tab => {
+						tab.classList.remove("active");
+					});
 
-</body>
+				document.querySelectorAll(".tab-btn")
+					.forEach(button => {
+						button.classList.remove("active");
+					});
+
+				document.getElementById(tabId)
+					.classList.add("active");
+
+				btn.classList.add("active");
+			}
+
+			function restoreActiveTab() {
+				const hash = location.hash.replace('#', '');
+				const params = new URLSearchParams(location.search);
+				const tab = hash || params.get('tab');
+				if (!tab) {
+					return;
+				}
+				const btn = document.getElementById(tab + 'TabBtn');
+				if (btn) {
+					showTab(tab, btn);
+				}
+			}
+
+			window.addEventListener('load', restoreActiveTab);
+
+			/* 返信表示トグル */
+			function toggleReplySection(commentId) {
+				const section = document.getElementById('replyArea-' + commentId);
+				if (!section) {
+					return;
+				}
+
+				section.style.display = section.style.display === 'block' ? 'none' : 'block';
+			}
+		</script>
+
+	</body>
 
 </html>
