@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.entity.Product;
-import com.example.demo.service.CommentService;
+import com.example.demo.form.ReviewForm;
+import com.example.demo.service.PostService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ReviewService;
 
@@ -20,8 +21,11 @@ public class ItemController {
 	@Autowired
 	private ReviewService reviewService;
 
+	//	@Autowired
+	//	private CommentService commentService;
+
 	@Autowired
-	private CommentService commentService;
+	private PostService postService;
 
 	@GetMapping("/item/{id}")
 	public String showItem(
@@ -42,8 +46,10 @@ public class ItemController {
 		// コメント一覧
 		model.addAttribute(
 				"comments",
-				commentService.findByProductId(id));
-
+				postService.getTreePostsByProduct(id));
+		model.addAttribute("productId", id);
+		model.addAttribute("reviewForm", new ReviewForm());
 		return "temp/item";
 	}
+
 }

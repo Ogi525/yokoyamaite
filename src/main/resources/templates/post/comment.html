@@ -1,51 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="commentFragment(post, level, productId)">
 
-<body>
+    <div th:style="'margin-left:' + (${level} * 30) + 'px'">
 
-	<div th:fragment="commentFragment(post, level, productId)">
+        <!-- コメント本体 -->
+        <div class="comment-box">
 
-		<div th:style="'margin-left:' + (${level} * 20) + 'px'">
+            <div class="user-name" th:text="${post.userName}"></div>
 
-			<p>
-				<b th:text="${post.userName}"></b>
-				<span th:text="${post.createdAt}"></span>
-			</p>
+            <div class="post-date" th:text="${post.createdAt}"></div>
 
-			<p th:text="${post.body}"></p>
+            <div class="comment-body" th:text="${post.body}"></div>
 
-			<!-- 返信ボタン -->
-			<div th:if="${session.userId != null}">
-				<button type="button" th:onclick="'toggleReplyForm(' + ${post.id} + ')'">
-					返信
-				</button>
-				
-				<!-- 本人のみ削除ボタン表示 -->
-				<form th:if="${session.userId == post.userId}" th:action="@{/post/{postId}/delete(postId=${post.id})}"
-					method="post" onsubmit="return confirm('このコメントを削除しますか？返信も全て削除されます。')">
-					<input type="hidden" name="productId" th:value="${productId}">
-					<button type="submit">削除</button>
-				</form>
-				<!--送信ボタン-->
-				<form th:action="@{/post}" method="post" th:id="'replyForm-' + ${post.id}" style="display:none;">
-					<input type="hidden" name="parentId" th:value="${post.id}">
-					<input type="hidden" name="productId" th:value="${productId}">
-					<textarea name="body"></textarea>
-					<button type="submit">送信</button>
-				</form>
-			</div>
+            <!-- ボタン -->
+            <div th:if="${session.loginUser != null}" style="margin-top:10px;">
 
-			<!-- 再帰表示 -->
-			<div th:each="reply : ${post.replies}">
-				<div th:replace="post/comment :: commentFragment(${reply}, ${level + 1}, ${productId})"></div>
-			</div>
+                <!-- 返信ボタン -->
+                <button type="button"
+                        th:onclick="'toggleReplyForm(' + ${post.id} + ')'">
+                    返信
+                </button>
 
-		</div>
+                <!-- 削除 -->
+                <form th:if="${session.loginUser != null and session.loginUser.id == post.userId}"
+                      th:action="@{/post/{postId}/delete(postId=${post.id})}"
+                      method="post"
+                      style="display:inline;">
 
-	</div>
+                    <input type="hidden" name="productId" th:value="${productId}">
+                    <button type="submit">削除</button>
+                </form>
 
+                <!-- 返信フォーム -->
+                <form th:action="@{/post}" method="post"
+                      th:id="'replyForm-' + ${post.id}"
+                      style="display:none; margin-top:10px;">
 
+                    <input type="hidden" name="parentId" th:value="${post.id}">
+                    <input type="hidden" name="productId" th:value="${productId}">
 
-</body>
+                    <textarea name="body" placeholder="返信を書く..." required></textarea>
+                    <button type="submit">送信</button>
 
-</html>
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- 子コメント（再帰） -->
+        <div th:each="reply : ${post.replies}">
+            <div th:replace="post/comment :: commentFragment(${reply}, ${level + 1}, ${productId})"></div>
+        </div>
+
+    </div>
+
+</div>
