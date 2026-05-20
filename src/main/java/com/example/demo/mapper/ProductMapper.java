@@ -21,4 +21,11 @@ public interface ProductMapper {
 
 	// ★ 商品詳細
 	Product findById(@Param("id") Integer id);
+	
+	// 商品1件取得
+		Product findById(int id);
+
+		// 在庫更新
+		void updateStock(Product product);
+	
 }
