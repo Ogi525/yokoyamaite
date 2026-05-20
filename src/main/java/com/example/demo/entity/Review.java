@@ -8,6 +8,8 @@ public class Review {
 
 	private Integer userId;
 
+	private String userName;
+
 	private Integer productId;
 
 	private Integer rating;
@@ -30,6 +32,14 @@ public class Review {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Integer getProductId() {

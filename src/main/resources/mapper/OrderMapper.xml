@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.OrderMapper">
+
+
+
+
+<insert id="insertOrderDetail">
+	INSERT INTO orders_products (
+		order_id,
+		product_id,
+		quantity,
+		price
+	)
+	VALUES (
+		#{orderId},
+		#{productId},
+		#{quantity},
+		#{price}
+	)
+</insert>
+
+<update id="useCoupon">
+	UPDATE USERS_COUPONS
+	SET is_used = true
+	WHERE coupon_id = #{couponId}
+	AND user_id = #{userId}
+</update>
+
+<select id="findByUserId"
+        resultType="com.example.demo.entity.History">
+
+    SELECT
+        id,
+        user_id AS userId,
+        date,
+        product_id AS productId,
+        quantity
+    FROM orders
+    WHERE user_id = #{userId}
+    ORDER BY orderDate DESC
+
+</select>
+
+
+<select id="findStockByProductId" resultType="int">
+    SELECT stock
+    FROM products
+    WHERE id = #{productId}
+</select>
+
+<update id="decreaseStock">
+    UPDATE products
+    SET stock = stock - #{quantity}
+    WHERE id = #{productId}
+      AND stock >= #{quantity}
+</update>
+</mapper>

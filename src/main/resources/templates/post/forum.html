@@ -1,0 +1,40 @@
+<div th:fragment="forumFragment">
+
+    <h2>コメント</h2>
+
+    <!-- 投稿フォーム -->
+    <div th:if="${session.loginUser != null}">
+        <form th:action="@{/post}" method="post">
+            <input type="hidden" name="productId" th:value="${productId}">
+            <textarea name="body" placeholder="コメントを入力..."></textarea>
+            <button type="submit">投稿</button>
+        </form>
+
+        <div th:if="${errors}" style="color:red;">
+            <p th:each="error : ${errors}" th:text="${error.defaultMessage}"></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- コメント一覧 -->
+    <div th:each="post : ${posts}">
+        <div th:replace="post/comment :: commentFragment(${post}, 0, ${productId})"></div>
+    </div>
+
+    <script>
+        function toggleReplyForm(postId) {
+            const form = document.getElementById('replyForm-' + postId);
+            const isOpen = form.style.display === 'block';
+
+            document.querySelectorAll("form[id^='replyForm-']").forEach(f => {
+                f.style.display = 'none';
+            });
+
+            if (!isOpen) {
+                form.style.display = 'block';
+            }
+        }
+    </script>
+
+</div>

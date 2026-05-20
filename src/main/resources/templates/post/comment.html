@@ -1,0 +1,57 @@
+<div th:fragment="commentFragment(post, level, productId)">
+
+    <div th:style="'margin-left:' + (${level} * 30) + 'px'">
+
+        <!-- コメント本体 -->
+        <div class="comment-box">
+
+            <div class="user-name" th:text="${post.userName}"></div>
+
+            <div class="post-date" th:text="${post.createdAt}"></div>
+
+            <div class="comment-body" th:text="${post.body}"></div>
+
+            <!-- ボタン -->
+            <div th:if="${session.loginUser != null}" style="margin-top:10px;">
+
+                <!-- 返信ボタン -->
+                <button type="button"
+                        th:onclick="'toggleReplyForm(' + ${post.id} + ')'">
+                    返信
+                </button>
+
+                <!-- 削除 -->
+                <form th:if="${session.loginUser != null and session.loginUser.id == post.userId}"
+                      th:action="@{/post/{postId}/delete(postId=${post.id})}"
+                      method="post"
+                      style="display:inline;">
+
+                    <input type="hidden" name="productId" th:value="${productId}">
+                    <button type="submit">削除</button>
+                </form>
+
+                <!-- 返信フォーム -->
+                <form th:action="@{/post}" method="post"
+                      th:id="'replyForm-' + ${post.id}"
+                      style="display:none; margin-top:10px;">
+
+                    <input type="hidden" name="parentId" th:value="${post.id}">
+                    <input type="hidden" name="productId" th:value="${productId}">
+
+                    <textarea name="body" placeholder="返信を書く..." required></textarea>
+                    <button type="submit">送信</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- 子コメント（再帰） -->
+        <div th:each="reply : ${post.replies}">
+            <div th:replace="post/comment :: commentFragment(${reply}, ${level + 1}, ${productId})"></div>
+        </div>
+
+    </div>
+
+</div>

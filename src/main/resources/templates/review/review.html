@@ -1,0 +1,40 @@
+<div th:fragment="reviewFragment(review, level,productId)">
+
+    <div th:style="'margin-left:' + (${level} * 30) + 'px'">
+
+        <!-- コメント本体 -->
+        <div class="comment-box">
+
+            <div class="user-name" th:text="${review.userName}"></div>
+
+            <div class="review-date" th:text="${review.createdAt}"></div>
+			
+			
+			<div class="review-rating" th:text="${review.rating}"></div>
+			
+            <div class="review-body" th:text="${review.body}"></div>
+
+            <!-- ボタン -->
+            <div th:if="${session.loginUser != null}" style="margin-top:10px;">
+
+
+
+                <!-- 削除 -->
+<!--                <form th:if="${session.loginUser != null and session.loginUser.id == post.userId}"-->
+<!--                      th:action="@{/post/{postId}/delete(postId=${post.id})}"-->
+<!--                      method="post"-->
+<!--                      style="display:inline;">-->
+
+<!--                    <input type="hidden" name="productId" th:value="${productId}">-->
+<!--                    <button type="submit">削除</button>-->
+<!--                </form>-->
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

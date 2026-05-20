@@ -26,9 +26,11 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewMapper.findByProductId(productId);
 	}
 
+	// ReviewServiceImpl.java
 	@Override
 	public boolean hasPurchased(Integer userId, Integer productId) {
-		return reviewMapper.hasPurchased(userId, productId) > 0;
+		Integer count = reviewMapper.hasPurchased(userId, productId);
+		return count != null && count > 0;
 	}
 
 	@Override
