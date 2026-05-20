@@ -1,145 +1,379 @@
+<!-- ========================================
+templates/cart/index.html
+======================================== -->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>カート</title>
+	<meta charset="UTF-8">
+	<title>カート | 横山販売所</title>
+
+	<style>
+		/* ===== 共通ヘッダー・フッター ===== */
+				  header { background: white; padding: 20px; border-radius: 20px; margin-bottom: 30px; }
+				  .top-menu { display: flex; justify-content: space-between; align-items: center; }
+				  .logo { font-size: 32px; font-weight: bold; color: #1a2a4a; }
+				  .logo a { text-decoration: none; color: #1a2a4a; }
+				  .nav { display: flex; gap: 20px; }
+				  .nav a { text-decoration: none; color: #333; font-weight: bold; }
+				  .right-area { display: flex; align-items: center; gap: 20px; }
+				  .icon-box { display: flex; gap: 15px; align-items: center; }
+				  .icon-btn { font-size: 26px; text-decoration: none; color: #333; transition: 0.2s; }
+				  .icon-btn:hover { transform: scale(1.2); color: #1a2a4a; }
+				  footer { background: white; padding: 25px; border-radius: 20px; text-align: center; }
+				  footer a { text-decoration: none; color: #333; margin: 0 10px; }
+
+				  /* ===== 以下、既存のitem.html用スタイル ===== */
+		body {
+			margin: 0;
+			padding: 0;
+			background: #f5f5f5;
+			font-family: sans-serif;
+			color: #333;
+		}
+
+		.container {
+			width: 95%;
+			max-width: 1300px;
+			margin: 30px auto;
+		}
+
+		.cart-title {
+			font-size: 40px;
+			font-weight: bold;
+			color: #1a2a4a;
+			margin-bottom: 35px;
+			border-left: 10px solid #1a2a4a;
+			padding-left: 18px;
+		}
+
+		.cart-wrapper {
+			display: flex;
+			gap: 30px;
+			align-items: flex-start;
+		}
+
+		.cart-list {
+			flex: 2;
+		}
+
+		.cart-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 25px;
+			background: white;
+			border-radius: 24px;
+			padding: 25px;
+			margin-bottom: 25px;
+			border: 3px solid #dbe4ef;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+			transition: 0.25s;
+		}
+
+		.cart-item:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+		}
+
+		.item-info {
+			flex: 1;
+		}
+
+		.item-name {
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 12px;
+			color: #1a2a4a;
+		}
+
+		.item-price {
+			font-size: 18px;
+			margin-bottom: 10px;
+			color: #555;
+		}
+
+		.item-stock {
+			font-size: 14px;
+			color: #888;
+		}
+
+		.quantity-area {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			background: #f5f8fc;
+			padding: 12px 18px;
+			border-radius: 18px;
+		}
+
+		.quantity-number {
+			font-size: 22px;
+			font-weight: bold;
+			min-width: 35px;
+			text-align: center;
+			color: #1a2a4a;
+		}
+
+		.qty-btn {
+			width: 42px;
+			height: 42px;
+			border: none;
+			border-radius: 50%;
+			background: #1a2a4a;
+			color: white;
+			font-size: 22px;
+			cursor: pointer;
+			transition: 0.2s;
+		}
+
+		.qty-btn:hover {
+			transform: scale(1.08);
+			background: #2a3d63;
+		}
+
+		.subtotal-area {
+			text-align: right;
+		}
+
+		.subtotal {
+			font-size: 22px;
+			font-weight: bold;
+			color: #1a2a4a;
+			margin-bottom: 15px;
+		}
+
+		.remove-btn {
+			border: none;
+			background: #d9534f;
+			color: white;
+			padding: 12px 20px;
+			border-radius: 12px;
+			cursor: pointer;
+			font-weight: bold;
+			transition: 0.2s;
+		}
+
+		.remove-btn:hover {
+			transform: translateY(-2px);
+			opacity: 0.9;
+		}
+
+		.summary {
+			flex: 1;
+			background: white;
+			padding: 30px;
+			border-radius: 24px;
+			position: sticky;
+			top: 20px;
+			border: 3px solid #dbe4ef;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+		}
+
+		.summary h2 {
+			margin-top: 0;
+			margin-bottom: 30px;
+			font-size: 28px;
+			color: #1a2a4a;
+		}
+
+		.summary-row {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			font-size: 18px;
+		}
+
+		.total {
+			font-size: 28px;
+			font-weight: bold;
+			border-top: 2px solid #ddd;
+			padding-top: 25px;
+			color: #1a2a4a;
+		}
+
+		.checkout-btn {
+			width: 100%;
+			margin-top: 30px;
+			padding: 18px;
+			border: none;
+			background: #1a2a4a;
+			color: white;
+			font-size: 20px;
+			font-weight: bold;
+			border-radius: 16px;
+			cursor: pointer;
+			transition: 0.25s;
+		}
+
+		.checkout-btn:hover {
+			background: #2a3d63;
+			transform: translateY(-2px);
+		}
+
+		.empty-cart {
+			background: white;
+			padding: 80px;
+			border-radius: 24px;
+			text-align: center;
+			font-size: 22px;
+			border: 3px solid #dbe4ef;
+		}
+
+		.error-message {
+			background: #ffe5e5;
+			color: #d90000;
+			padding: 18px;
+			border-radius: 14px;
+			margin-bottom: 25px;
+			font-weight: bold;
+		}
+
+		@media screen and (max-width: 900px) {
+
+			.cart-wrapper {
+				flex-direction: column;
+			}
+
+			.summary {
+				position: static;
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			.cart-item {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			.subtotal-area {
+				width: 100%;
+				text-align: left;
+			}
+		}
+	</style>
 </head>
+
 <body>
-<!--  <header th:replace="layout/_header :: header"></header>-->
 
-  <main>
-    <h1>カート</h1>
-	
-	<p th:if="${errorMessage}"
-	   th:text="${errorMessage}"
-	   style="color:red;">
-	</p>
+	<div class="container">
 
-    <th:block th:if="${#lists.isEmpty(cart)}">
-      <p>カートに商品が入っていません。</p>
-    </th:block>
+		<div th:replace="~{layout/_header :: header}"></div>
 
-    <th:block th:unless="${#lists.isEmpty(cart)}">
-      <table border="1">
-        <tr>
-          <th>商品名</th>
-          <th>単価</th>
-          <th>数量</th>
-          <th>小計</th>
-          <th>操作</th>
-        </tr>
+		<h1 class="cart-title">
+			ショッピングカート
+		</h1>
 
-        <tr th:each="item : ${cart}">
-          <td>[[${item.name}]]</td>
+		<div th:if="${errorMessage}" class="error-message">
+			<span th:text="${errorMessage}"></span>
+		</div>
 
-          <td>
-            [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]]円
-          </td>
+		<div th:if="${#lists.isEmpty(cart)}" class="empty-cart">
+			<h2>カートに商品がありません</h2>
+		</div>
 
-          <td>
-            <form th:action="@{/cart/decrement}" method="post" style="display:inline;">
-              <input type="hidden"
-                     name="productId"
-                     th:value="${item.productId}" />
-              <button type="submit">－</button>
-            </form>
+		<div th:unless="${#lists.isEmpty(cart)}" class="cart-wrapper">
 
-            [[${item.quantity}]]
+			<div class="cart-list">
 
-            <form th:action="@{/cart/increment}" method="post" style="display:inline;">
-              <input type="hidden"
-                     name="productId"
-                     th:value="${item.productId}" />
-              <button type="submit">＋</button>
-            </form>
-          </td>
+				<div class="cart-item" th:each="item : ${cart}">
 
-          <td>
-            [[${#numbers.formatDecimal(item.subtotal, 0, 'COMMA', 0, 'POINT')}]]円
-          </td>
+					<div class="item-info">
 
-          <td>
-            <form th:action="@{/cart/remove}" method="post">
-              <input type="hidden"
-                     name="productId"
-                     th:value="${item.productId}" />
-              <button type="submit">削除</button>
-            </form>
-          </td>
-        </tr>
-      </table>
+						<div class="item-name"
+							 th:text="${item.productName}">
+						</div>
 
-      <p>
-		<div th:if="${coupons != null and !coupons.isEmpty()}">
+						<div class="item-price">
+							¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+						</div>
 
-		    <p>クーポンを選択してください</p>
+						<div class="item-stock">
+							在庫：
+							<span th:text="${item.stock}"></span>
+						</div>
 
-		    <div th:each="coupon : ${coupons}">
+					</div>
 
-		        <label>
+					<div class="quantity-area">
 
-		            <input type="radio"
-		                   name="couponId"
-		                   th:value="${coupon.id}">
+						<form th:action="@{/cart/decrement}" method="post">
+							<input type="hidden"
+								   name="productId"
+								   th:value="${item.productId}">
+							<button type="submit" class="qty-btn">−</button>
+						</form>
 
-		            <span th:text="${coupon.name}"></span>
-		            :
-		            <span th:text="${coupon.discountValue}"></span>円引き
+						<div class="quantity-number"
+							 th:text="${item.quantity}">
+						</div>
 
-		        </label>
+						<form th:action="@{/cart/increment}" method="post">
+							<input type="hidden"
+								   name="productId"
+								   th:value="${item.productId}">
+							<button type="submit" class="qty-btn">＋</button>
+						</form>
 
-		        <br>
+					</div>
 
-		    </div>
+					<div class="subtotal-area">
 
-		<hr>
+						<div class="subtotal">
+							¥<span th:text="${#numbers.formatInteger(item.subtotal, 3, 'COMMA')}"></span>
+						</div>
 
-		<h2>お支払い金額</h2>
+						<form th:action="@{/cart/remove}" method="post">
+							<input type="hidden"
+								   name="productId"
+								   th:value="${item.productId}">
 
-		<p>
-		    商品合計：
-		    [[${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}]]円
-		</p>
+							<button type="submit" class="remove-btn">
+								削除
+							</button>
+						</form>
 
-		<p>
-		    送料：
-		    [[${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 0, 'POINT')}]]円
-		</p>
+					</div>
 
-		<p>
-		    値引額：
-		    -[[${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')}]]円
-		</p>
+				</div>
 
-		<hr>
+			</div>
 
-		<p>
-		    <strong>
-		        ご請求額：
-		        [[${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 0, 'POINT')}]]円
-		    </strong>
-		</p>
-        
-    </th:block>
+			<div class="summary">
 
-	<div>
-	    <a th:href="@{/products}">▶ お買い物を続ける</a>
+				<h2>注文概要</h2>
 
-	    &nbsp;&nbsp;
+				<div class="summary-row">
+					<span>商品合計</span>
+					<span>
+						¥<span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>
+					</span>
+				</div>
 
-	    <a th:href="@{/checkout}">▶ レジへ進む</a>
-		
-		
-<!--		<a th:if="${!cartEmpty}" th:href="@{/checkout}">-->
-<!--			レジに進む-->
-<!--		</a>-->
+				<div class="summary-row total">
+					<span>合計</span>
+					<span>
+						¥<span th:text="${#numbers.formatInteger(finalTotalPrice, 3, 'COMMA')}"></span>
+					</span>
+				</div>
 
-<!--		<button th:if="${cartEmpty}" type="button" disabled>-->
-<!--			レジに進む-->
-<!--		</button>-->
+				<form th:action="@{/checkout}" method="get">
+
+					<button type="submit" class="checkout-btn">
+						購入手続きへ
+					</button>
+
+				</form>
+
+			</div>
+
+		</div>
+
+		<div th:replace="~{layout/_footer :: footer}"></div>
+
 	</div>
-  </main>
 
-<!--  <footer th:replace="layout/_footer :: footer"></footer>-->
 </body>
+
 </html>

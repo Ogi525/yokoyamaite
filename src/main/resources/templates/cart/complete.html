@@ -1,18 +1,237 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
-	<title>購入完了</title>
+	<title>注文完了 | 横山販売所</title>
+
+	<style>
+		/* ===== 共通ヘッダー・フッター ===== */
+				  header { background: white; padding: 20px; border-radius: 20px; margin-bottom: 30px; }
+				  .top-menu { display: flex; justify-content: space-between; align-items: center; }
+				  .logo { font-size: 32px; font-weight: bold; color: #1a2a4a; }
+				  .logo a { text-decoration: none; color: #1a2a4a; }
+				  .nav { display: flex; gap: 20px; }
+				  .nav a { text-decoration: none; color: #333; font-weight: bold; }
+				  .right-area { display: flex; align-items: center; gap: 20px; }
+				  .icon-box { display: flex; gap: 15px; align-items: center; }
+				  .icon-btn { font-size: 26px; text-decoration: none; color: #333; transition: 0.2s; }
+				  .icon-btn:hover { transform: scale(1.2); color: #1a2a4a; }
+				  footer { background: white; padding: 25px; border-radius: 20px; text-align: center; }
+				  footer a { text-decoration: none; color: #333; margin: 0 10px; }
+
+				  /* ===== 以下、既存のitem.html用スタイル ===== */
+		body {
+			margin: 0;
+			padding: 0;
+			background: #f5f5f5;
+			font-family: sans-serif;
+			color: #333;
+		}
+
+		.container {
+			width: 95%;
+			max-width: 1000px;
+			margin: 30px auto;
+		}
+
+		.complete-wrapper {
+			background: white;
+			border-radius: 30px;
+			padding: 70px 50px;
+			text-align: center;
+			border: 3px solid #dbe4ef;
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+		}
+
+		.complete-icon {
+			width: 120px;
+			height: 120px;
+			margin: 0 auto 35px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #1a2a4a, #2f4b7c);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 60px;
+			box-shadow: 0 10px 20px rgba(26, 42, 74, 0.2);
+		}
+
+		.complete-title {
+			font-size: 42px;
+			font-weight: bold;
+			color: #1a2a4a;
+			margin-bottom: 25px;
+		}
+
+		.complete-message {
+			font-size: 18px;
+			line-height: 2;
+			color: #666;
+			margin-bottom: 50px;
+		}
+
+		.info-box {
+			max-width: 500px;
+			margin: 0 auto 45px;
+			background: #f8fafc;
+			border: 2px solid #dbe4ef;
+			border-radius: 20px;
+			padding: 25px;
+		}
+
+		.info-title {
+			font-size: 20px;
+			font-weight: bold;
+			color: #1a2a4a;
+			margin-bottom: 15px;
+		}
+
+		.info-text {
+			color: #666;
+			line-height: 1.8;
+			font-size: 15px;
+		}
+
+		.button-area {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			flex-wrap: wrap;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 18px 38px;
+			border-radius: 16px;
+			text-decoration: none;
+			font-size: 17px;
+			font-weight: bold;
+			transition: 0.25s;
+		}
+
+		.home-btn {
+			background: #1a2a4a;
+			color: white;
+		}
+
+		.home-btn:hover {
+			background: #2a3d63;
+			transform: translateY(-3px);
+		}
+
+		.shopping-btn {
+			background: #dfe5ec;
+			color: #333;
+		}
+
+		.shopping-btn:hover {
+			background: #cfd7e0;
+			transform: translateY(-3px);
+		}
+
+		@media screen and (max-width: 768px) {
+
+			.complete-wrapper {
+				padding: 50px 25px;
+			}
+
+			.complete-title {
+				font-size: 32px;
+			}
+
+			.complete-message {
+				font-size: 16px;
+			}
+
+			.complete-icon {
+				width: 90px;
+				height: 90px;
+				font-size: 45px;
+			}
+
+			.button-area {
+				flex-direction: column;
+			}
+
+			.btn {
+				width: 100%;
+				box-sizing: border-box;
+			}
+			
+		}
+	</style>
+
 </head>
+
 <body>
 
-	<h1>ご購入ありがとうございました。</h1>
+	<div class="container">
 
-	<p>注文が完了しました。</p>
+		<div th:replace="~{layout/_header :: header}"></div>
 
-	<a th:href="@{/home}">
-		トップページへ戻る
-	</a>
+		<div class="complete-wrapper">
+
+			<div class="complete-icon">
+				✓
+			</div>
+
+			<!-- 完了画像 -->
+			<div class="complete-image-area">
+
+				<img src="/images/購入画面.png"
+					 alt="購入完了画像"
+					 class="complete-image">
+
+			</div>
+			<h1 class="complete-title">
+				ご注文ありがとうございました
+			</h1>
+
+			<p class="complete-message">
+				ご注文が正常に完了しました。<br>
+				商品の発送まで今しばらくお待ちください。
+			</p>
+
+			<div class="info-box">
+
+				<div class="info-title">
+					発送について
+				</div>
+
+				<div class="info-text">
+					通常2〜5営業日以内に発送いたします。<br>
+					発送完了後、ご登録メールアドレスへ
+					配送情報をお送りします。
+				</div>
+
+			</div>
+
+			<div class="button-area">
+
+				<a th:href="@{/index}"
+				   class="btn home-btn">
+
+					トップページへ戻る
+
+				</a>
+
+				<a th:href="@{/products}"
+				   class="btn shopping-btn">
+
+					買い物を続ける
+
+				</a>
+
+			</div>
+
+		</div>
+
+		<div th:replace="~{layout/_footer :: footer}"></div>
+
+	</div>
 
 </body>
+
 </html>
