@@ -9,7 +9,6 @@ public class Product {
 	private String name;
 	private Integer price;
 	private Integer stock;
-
 	private String origin;
 	private String imageUrl;
 	private String description;

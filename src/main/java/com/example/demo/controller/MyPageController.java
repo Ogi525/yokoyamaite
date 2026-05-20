@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.entity.Coupon;
+import com.example.demo.entity.History;
 import com.example.demo.entity.User;
 import com.example.demo.service.CouponService;
+import com.example.demo.service.HistoryService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -22,6 +24,9 @@ public class MyPageController {
 
 	@Autowired
 	CouponService couponService;
+
+	@Autowired
+	HistoryService historyService;
 
 	@GetMapping("/mypage")
 	public String showMypage(HttpSession session, Model model) {
@@ -37,8 +42,12 @@ public class MyPageController {
 		//クーポンを表示する
 		List<Coupon> coupons = couponService.findByUserId(user.getId());
 
+		//購入履歴を表示する
+		List<History> histories = historyService.findByUserId(user.getId());
+
 		model.addAttribute("user", user);
 		model.addAttribute("coupons", coupons);
+		model.addAttribute("histories", histories);
 
 		return "/mypage";
 

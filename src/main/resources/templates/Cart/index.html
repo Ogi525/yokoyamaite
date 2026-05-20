@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>カート</title>
+</head>
+<body>
+<!--  <header th:replace="layout/_header :: header"></header>-->
+
+  <main>
+    <h1>カート</h1>
+	
+	<p th:if="${errorMessage}"
+	   th:text="${errorMessage}"
+	   style="color:red;">
+	</p>
+
+    <th:block th:if="${#lists.isEmpty(cart)}">
+      <p>カートに商品が入っていません。</p>
+    </th:block>
+
+    <th:block th:unless="${#lists.isEmpty(cart)}">
+      <table border="1">
+        <tr>
+          <th>商品名</th>
+          <th>単価</th>
+          <th>数量</th>
+          <th>小計</th>
+          <th>操作</th>
+        </tr>
+
+        <tr th:each="item : ${cart}">
+          <td>[[${item.name}]]</td>
+
+          <td>
+            [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]]円
+          </td>
+
+          <td>
+            <form th:action="@{/cart/decrement}" method="post" style="display:inline;">
+              <input type="hidden"
+                     name="productId"
+                     th:value="${item.productId}" />
+              <button type="submit">－</button>
+            </form>
+
+            [[${item.quantity}]]
+
+            <form th:action="@{/cart/increment}" method="post" style="display:inline;">
+              <input type="hidden"
+                     name="productId"
+                     th:value="${item.productId}" />
+              <button type="submit">＋</button>
+            </form>
+          </td>
+
+          <td>
+            [[${#numbers.formatDecimal(item.subtotal, 0, 'COMMA', 0, 'POINT')}]]円
+          </td>
+
+          <td>
+            <form th:action="@{/cart/remove}" method="post">
+              <input type="hidden"
+                     name="productId"
+                     th:value="${item.productId}" />
+              <button type="submit">削除</button>
+            </form>
+          </td>
+        </tr>
+      </table>
+
+      <p>
+		<div th:if="${coupons != null and !coupons.isEmpty()}">
+
+		    <p>クーポンを選択してください</p>
+
+		    <div th:each="coupon : ${coupons}">
+
+		        <label>
+
+		            <input type="radio"
+		                   name="couponId"
+		                   th:value="${coupon.id}">
+
+		            <span th:text="${coupon.name}"></span>
+		            :
+		            <span th:text="${coupon.discountValue}"></span>円引き
+
+		        </label>
+
+		        <br>
+
+		    </div>
+
+		<hr>
+
+		<h2>お支払い金額</h2>
+
+		<p>
+		    商品合計：
+		    [[${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}]]円
+		</p>
+
+		<p>
+		    送料：
+		    [[${#numbers.formatDecimal(shippingFee, 0, 'COMMA', 0, 'POINT')}]]円
+		</p>
+
+		<p>
+		    値引額：
+		    -[[${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')}]]円
+		</p>
+
+		<hr>
+
+		<p>
+		    <strong>
+		        ご請求額：
+		        [[${#numbers.formatDecimal(finalTotal, 0, 'COMMA', 0, 'POINT')}]]円
+		    </strong>
+		</p>
+        
+    </th:block>
+
+	<div>
+	    <a th:href="@{/products}">▶ お買い物を続ける</a>
+
+	    &nbsp;&nbsp;
+
+	    <a th:href="@{/checkout}">▶ レジへ進む</a>
+		
+		
+<!--		<a th:if="${!cartEmpty}" th:href="@{/checkout}">-->
+<!--			レジに進む-->
+<!--		</a>-->
+
+<!--		<button th:if="${cartEmpty}" type="button" disabled>-->
+<!--			レジに進む-->
+<!--		</button>-->
+	</div>
+  </main>
+
+<!--  <footer th:replace="layout/_footer :: footer"></footer>-->
+</body>
+</html>
