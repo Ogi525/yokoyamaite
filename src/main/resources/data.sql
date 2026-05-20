@@ -43,4 +43,5 @@ VALUES
 ('GOLDENRINZARASHI','景品プレゼント',1)
 ON CONFLICT (code) DO NOTHING;
 
+
  

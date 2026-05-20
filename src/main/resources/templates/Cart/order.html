@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>最終確認</title>
+</head>
+<body>
+
+	<h1>最終確認</h1>
+
+	<h2>金額</h2>
+	<p>商品合計：<span th:text="${totalPrice}"></span>円</p>
+	<p>値引額：<span th:text="${discountAmount}"></span>円</p>
+	<p>送料：<span th:text="${shippingFee}"></span>円</p>
+	<p>支払合計：<span th:text="${finalPrice}"></span>円</p>
+
+	<h2>配送先</h2>
+
+	<div th:if="${deliveryType == 'home'}">
+		<p>自宅に配送</p>
+	</div>
+
+	<div th:if="${deliveryType == 'other'}">
+		<p>郵便番号：<span th:text="${postalCode}"></span></p>
+		<p>住所：<span th:text="${otherAddress}"></span></p>
+		<p>宛名：<span th:text="${otherName}"></span></p>
+	</div>
+
+	<h2>決済方法</h2>
+	<p th:text="${paymentMethod}"></p>
+
+	<form th:action="@{/checkout}" method="get">
+		<button type="submit">決済方法選択画面に戻る</button>
+	</form>
+
+<form th:action="@{/cart/complete}" method="post">
+		<input type="hidden" name="paymentMethod" th:value="${paymentMethod}">
+		<input type="hidden" name="deliveryType" th:value="${deliveryType}">
+		<input type="hidden" name="postalCode" th:value="${postalCode}">
+		<input type="hidden" name="otherAddress" th:value="${otherAddress}">
+		<input type="hidden" name="otherName" th:value="${otherName}">
+		<input type="hidden" name="couponId" th:value="${couponId}">
+
+		<button type="submit">確定する</button>
+	</form>
+
+</body>
+</html>
