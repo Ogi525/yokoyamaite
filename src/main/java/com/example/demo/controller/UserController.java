@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.UserForm;
+import com.example.demo.form.UserForm;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -42,8 +42,10 @@ public class UserController {
 		}
 		// パスワード一致チェック
 		if (!form.getPassword().equals(form.getConfirmPassword())) {
-			model.addAttribute("registerError", "パスワードが一致しません");
-			return "/register";
+			result.rejectValue(
+					"confirmPassword",
+					"mismatch",
+					"パスワードが一致しません");
 		}
 
 		// エラーがある場合は登録画面に戻す
