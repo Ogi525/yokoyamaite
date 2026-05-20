@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.entity.Product;
+import com.example.demo.form.ReviewForm;
 import com.example.demo.service.PostService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ReviewService;
@@ -47,6 +48,7 @@ public class ItemController {
 				"comments",
 				postService.getTreePostsByProduct(id));
 		model.addAttribute("productId", id);
+		model.addAttribute("reviewForm", new ReviewForm());
 		return "temp/item";
 	}
 

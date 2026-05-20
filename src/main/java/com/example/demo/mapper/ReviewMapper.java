@@ -42,13 +42,11 @@ public interface ReviewMapper {
 	@Select("""
 			    SELECT COUNT(*)
 			    FROM orders_products op
-			    JOIN orders o
-			    ON op.order_id = o.id
-
+			    JOIN orders o ON op.order_id = o.id
 			    WHERE o.user_id = #{userId}
 			    AND op.product_id = #{productId}
 			""")
-	int hasPurchased(
+	Integer hasPurchased(
 			@Param("userId") Integer userId,
 			@Param("productId") Integer productId);
 

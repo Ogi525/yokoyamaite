@@ -661,45 +661,85 @@
 			<!-- レビュー -->
 			<div id="review" class="tab-content">
 
-				<div class="review-top">
+				<!-- レビュー一覧 -->
+				<h2>レビュー一覧</h2>
 
-					<div class="review-score">
-						レビュー ★★★★☆
-					</div>
-
-					<button class="review-btn">
-						レビューを書く
-					</button>
-
-					<div class="review-note">
-
-						レビューは購入者のみ投稿できます。<br>
-						ログイン後に購入履歴が確認できる場合のみ投稿可能です。
-
-					</div>
-
+				<div th:if="${#lists.isEmpty(reviews)}" style="color:#888; margin-bottom:20px;">
+					まだレビューはありません。
 				</div>
 
 				<div class="review-list">
+					<div class="review-card" th:each="review : ${reviews}">
 
-					<div class="review-card">
+						<div class="user-name" th:text="${review.userName}">ユーザー名</div>
 
-						<div class="user-name">
-							ユーザー名
-						</div>
-
-						<div class="post-date">
-							投稿日 2026/5/13
-						</div>
+						<div class="post-date" th:text="${#temporals.format(review.createdAt, 'yyyy/MM/dd')}">投稿日</div>
 
 						<div class="star">
-							★★★★★
+							<span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+							<span th:each="i : ${#numbers.sequence(review.rating + 1, 5)}" style="color:#ccc;">★</span>
 						</div>
 
-						<div>
-							とても美味しかったです！
+						<div th:text="${review.comment}">本文</div>
+
+					</div>
+				</div>
+
+				<!-- 投稿フォーム -->
+				<div style="margin-top:40px;">
+
+					<div th:if="${session.loginUser == null}">
+						<p><a th:href="@{/login}">ログイン</a>して購入済みの場合はレビューを投稿できます。</p>
+					</div>
+
+					<div th:if="${session.loginUser != null}">
+						<h3>レビューを投稿する</h3>
+
+						<!-- エラーメッセージ -->
+						<div th:if="${reviewError}"
+						     style="color:red; margin-bottom:15px;"
+						     th:text="${reviewError}">
 						</div>
 
+						<form th:action="@{/item/{id}/reviews(id=${product.id})}"
+						      th:object="${reviewForm}"
+						      method="post">
+
+							<div style="margin-bottom:15px;">
+								<label>評価</label><br>
+								<select th:field="*{rating}" style="padding:8px; border-radius:8px; border:1px solid #ccc;">
+									<option value="">選択してください</option>
+									<option value="1">★1</option>
+									<option value="2">★2</option>
+									<option value="3">★3</option>
+									<option value="4">★4</option>
+									<option value="5">★5</option>
+								</select>
+								<div th:if="${#fields.hasErrors('rating')}"
+								     th:errors="*{rating}"
+								     style="color:red; font-size:13px;">
+								</div>
+							</div>
+
+							<div style="margin-bottom:15px;">
+								<label>コメント</label><br>
+								<textarea th:field="*{comment}"
+								          rows="4"
+								          maxlength="200"
+								          placeholder="200文字以内で入力してください"
+								          style="width:100%; max-width:600px; padding:10px; border-radius:8px; border:1px solid #ccc;">
+								</textarea>
+								<div th:if="${#fields.hasErrors('comment')}"
+								     th:errors="*{comment}"
+								     style="color:red; font-size:13px;">
+								</div>
+							</div>
+
+							<button type="submit" class="cart-btn" style="max-width:200px;">
+								レビューを投稿する
+							</button>
+
+						</form>
 					</div>
 
 				</div>
