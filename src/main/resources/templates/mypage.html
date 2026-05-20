@@ -152,14 +152,21 @@
 
 				<h2>クーポン</h2>
 
-				<ul>
+				<ul th:if="${coupons != null and !coupons.isEmpty()}">
 					<li th:each="coupon : ${coupons}">
 						<span th:text="${coupon.name}">クーポン名</span>
-						-
-						<span th:text="${coupon.discount}">1000</span>
-						円OFF
+						
+						<span th:text="${coupon.discountValue}">1000</span>
+						
+						（コード：
+						<span th:text="${coupon.code}">CODE</span>
+						）
 					</li>
 				</ul>
+
+				<p th:if="${coupons == null or coupons.isEmpty()}">
+					利用可能なクーポンはありません
+				</p>
 
 			</div>
 
