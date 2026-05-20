@@ -171,3 +171,4 @@ CREATE TABLE IF NOT EXISTS game_results (
 
     UNIQUE (user_id, played_at)
 );
+
