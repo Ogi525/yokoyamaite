@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.entity.Review;
 import com.example.demo.entity.User;
 import com.example.demo.form.ReviewForm;
+import com.example.demo.service.PostService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ReviewService;
 
@@ -21,10 +22,16 @@ public class ReviewController {
 
 	private final ReviewService reviewService;
 	private final ProductService productService;
+	private final PostService postService;
 
-	public ReviewController(ReviewService reviewService, ProductService productService) {
+	public ReviewController(
+			ReviewService reviewService,
+			ProductService productService,
+			PostService postService) {
+
 		this.reviewService = reviewService;
 		this.productService = productService;
+		this.postService = postService;
 	}
 
 	@PostMapping("/item/{productId}/reviews")
@@ -50,24 +57,69 @@ public class ReviewController {
 
 		// バリデーションエラー
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("product", productService.findById(productId));
-			model.addAttribute("reviews", reviewService.findByProductId(productId));
+
+			model.addAttribute(
+					"product",
+					productService.findById(productId));
+
+			model.addAttribute(
+					"reviews",
+					reviewService.findByProductId(productId));
+
+			model.addAttribute(
+					"comments",
+					postService.getTreePostsByProduct(productId));
+
+			model.addAttribute("productId", productId);
+
 			return "temp/item";
 		}
 
 		// 購入済み判定
 		if (!reviewService.hasPurchased(loginUser.getId(), productId)) {
-			model.addAttribute("product", productService.findById(productId));
-			model.addAttribute("reviews", reviewService.findByProductId(productId));
-			model.addAttribute("reviewError", "購入済み商品のみレビューできます");
+
+			model.addAttribute(
+					"product",
+					productService.findById(productId));
+
+			model.addAttribute(
+					"reviews",
+					reviewService.findByProductId(productId));
+
+			model.addAttribute(
+					"comments",
+					postService.getTreePostsByProduct(productId));
+
+			model.addAttribute("productId", productId);
+
+			model.addAttribute(
+					"reviewError",
+					"購入済み商品のみレビューできます");
+
 			return "temp/item";
 		}
 
 		// 重複レビュー判定
 		if (reviewService.hasReviewed(loginUser.getId(), productId)) {
-			model.addAttribute("product", productService.findById(productId));
-			model.addAttribute("reviews", reviewService.findByProductId(productId));
-			model.addAttribute("reviewError", "すでにレビュー済みです");
+
+			model.addAttribute(
+					"product",
+					productService.findById(productId));
+
+			model.addAttribute(
+					"reviews",
+					reviewService.findByProductId(productId));
+
+			model.addAttribute(
+					"comments",
+					postService.getTreePostsByProduct(productId));
+
+			model.addAttribute("productId", productId);
+
+			model.addAttribute(
+					"reviewError",
+					"すでにレビュー済みです");
+
 			return "temp/item";
 		}
 
