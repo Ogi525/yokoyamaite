@@ -2,23 +2,115 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <title>登録画面</title>
+  <title>登録確認画面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    main {
+      width: 400px;
+      margin: 80px auto;
+      padding: 50px 75px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: #1a2a4a;
+    }
+
+    .info-block {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .info-block p {
+      font-size: 14px;
+      color: #888;
+      margin: 0 0 4px 0;
+    }
+
+    .info-block .value {
+      font-size: 16px;
+      color: #1a2a4a;
+      font-weight: bold;
+      padding: 4px 0;
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .btn-submit {
+      background-color: #1a2a4a;
+      color: white;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .btn-submit:hover {
+      background-color: #2a4a7a;
+    }
+
+    .btn-back {
+      background-color: white;
+      color: #1a2a4a;
+      border: 1px solid #1a2a4a;
+    }
+
+    .btn-back:hover {
+      background-color: #f0f4ff;
+    }
+  </style>
 </head>
 <body>
-  <header th:replace="layout/_header :: header"></header>
+  <div th:replace="~{layout/_header :: header}"></div>
 
   <main>
-  <h1>登録画面</h1>
-  <ul>
-  <li>名前：[[${form.name}]]</li>
-  <li>メール：[[${form.email}]]</li>
-  <li>パスワード：[[${form.password}]]</li>
-  <li>郵便番号：[[${form.postalCode}]]</li>
-  <li>住所：[[${form.address}]]</li>
-  </ul>
-  <a href="/register">▶ 戻る</a>
+    <h1>登録確認画面</h1>
+
+    <div class="info-block">
+      <p>名前</p>
+      <span class="value" th:text="${form.name}"></span>
+    </div>
+    <div class="info-block">
+      <p>メールアドレス</p>
+      <span class="value" th:text="${form.email}"></span>
+    </div>
+    <div class="info-block">
+      <p>パスワード</p>
+      <span class="value" th:text="${form.password}"></span>
+    </div>
+    <div class="info-block">
+      <p>郵便番号</p>
+      <span class="value" th:text="${form.postalCode}"></span>
+    </div>
+    <div class="info-block">
+      <p>住所</p>
+      <span class="value" th:text="${form.address}"></span>
+    </div>
+
+ 
+
+    <form action="/register" method="get">
+      <button type="submit" class="btn-back">▶ 戻る</button>
+    </form>
   </main>
 
-  <footer th:replace="layout/_footer :: footer"></footer>
+  <div th:replace="~{layout/_footer :: footer}"></div>
 </body>
 </html>

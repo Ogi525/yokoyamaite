@@ -11,7 +11,7 @@
 
     main {
       width: 400px;
-      margin: 80px auto; /* 中央寄せ */
+      margin: 80px auto;
       padding: 75px;
       background-color: white;
       border-radius: 10px;
@@ -20,61 +20,73 @@
     }
 
     h1 {
-      font-size: 28px; /* 大きく */
+      font-size: 28px;
       margin-bottom: 20px;
+      color: #1a2a4a;
     }
 
-	input {
-	      width: 100%;
-	      padding: 10px;
-	      margin-top: 5px;
-	      font-size: 16px;
-	    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      transition: 0.2s;
+    }
 
-	    button {
-	      width: 106%;
-	      padding: 12px;
-	      font-size: 16px;
-	      background-color: #0078d4;
-	      color: white;
-	      border: none;
-	      border-radius: 5px;
-	      cursor: pointer;
-	    }
+    input:focus {
+      outline: none;
+      border: 1px solid #1a2a4a;
+      box-shadow: 0 0 5px rgba(26, 42, 74, 0.3);
+    }
 
-	    button:hover {
-	      background-color: #005ea2;
-	    }
+    button {
+      width: 106%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #1a2a4a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-	    a {
-	      display: inline-block;
-	      margin-top: 15px;
-	    }
-	  </style>
+    button:hover {
+      background-color: #2a4a7a;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      color: #1a2a4a;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  
+
   <main>
-  <h1>ログイン</h1>
-  <p th:if="${loginError}" style="color:red">[[${loginError}]]</p>
+    <h1>ログイン</h1>
+    <p th:if="${loginError}" style="color:red">[[${loginError}]]</p>
 
-  <form th:action="@{/login}" th:object="${form}" method="post">
-    <p>
-      メールアドレス<input type="email" th:field="*{email}" />
-      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    </p>
-    <p>
-      パスワード<input type="password" th:field="*{password}" />
-      <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    </p>
-	
-	
-    <p><button type="submit">ログイン</button></p>
-  </form>
+    <form th:action="@{/login}" th:object="${form}" method="post">
+      <p>
+        メールアドレス<input type="email" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      </p>
+      <p>
+        パスワード<input type="password" th:field="*{password}" />
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+      </p>
 
-  <p><a href="/register">▶ 新規会員登録はこちら</a></p>
+      <p><button type="submit">ログイン</button></p>
+    </form>
+
+    <p><a href="/register">▶ 新規会員登録はこちら</a></p>
   </main>
 
-  
 </body>
 </html>

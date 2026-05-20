@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>購入履歴</title>
+</head>
+<body>
+
+<h1>購入履歴</h1>
+
+<table border="1">
+	<tr>
+		<th>注文日</th>
+		<th>商品ID</th>
+		<th>数量</th>
+	</tr>
+
+	<tr th:each="order : ${orderList}">
+		<td th:text="${order.date}"></td>
+		<td th:text="${order.productId}"></td>
+		<td th:text="${order.quantity}"></td>
+	</tr>
+</table>
+
+</body>
+</html>

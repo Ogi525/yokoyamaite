@@ -101,37 +101,19 @@ CREATE TABLE IF NOT EXISTS reviews (
     UNIQUE (user_id, product_id)
 );
 
--- COMMENTS
-CREATE TABLE IF NOT EXISTS comments (
-
-    id SERIAL PRIMARY KEY,
-
-    user_id INTEGER NOT NULL,
-
-    product_id INTEGER NOT NULL,
-
-    comment TEXT NOT NULL,
-
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (user_id)
-        REFERENCES users(id)
-        ON DELETE CASCADE,
-
-    FOREIGN KEY (product_id)
-        REFERENCES products(id)
-        ON DELETE CASCADE
-);
-
 --  FORUM_POSTS
 CREATE TABLE IF NOT EXISTS forum_posts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
-    title VARCHAR(255) NOT NULL,
+    product_id INTEGER NOT NULL,
+    title VARCHAR(255),
     body TEXT NOT NULL,
+    parent_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES forum_posts(id) ON DELETE CASCADE
 );
 
 --  COUPONS
