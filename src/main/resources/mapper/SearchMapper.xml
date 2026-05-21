@@ -4,90 +4,84 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.SearchMapper">
-    <select id="search"
-            resultType="com.example.demo.entity.Product">
+	<select id="search" resultType="com.example.demo.entity.Product">
 
-        SELECT *
-        FROM products
+		SELECT *
+		FROM products
 
-        <where>
+		<where>
 
-            <!-- キーワード検索 -->
-            <if test="keyword != null and keyword != ''">
-                AND name LIKE CONCAT('%', #{keyword}, '%')
-            </if>
+			AND hidden = FALSE
+			<!-- キーワード検索 -->
+			<if test="keyword != null and keyword != ''">
+				AND name LIKE CONCAT('%', #{keyword}, '%')
+			</if>
 
-            <!-- エリア -->
-<if test="areas != null and areas.size() > 0">
+			<!-- エリア -->
+			<if test="areas != null and areas.size() > 0">
 
-    AND area_id IN
+				AND area_id IN
 
-    <foreach collection="areas"
-             item="area"
-             open="("
-             separator=","
-             close=")">
+				<foreach collection="areas" item="area" open="("
+					separator="," close=")">
 
-        #{area}
+					#{area}
 
-    </foreach>
+				</foreach>
 
-</if>
+			</if>
 
-<!-- カテゴリー -->
-<if test="categories != null and categories.size() > 0">
+			<!-- カテゴリー -->
+			<if test="categories != null and categories.size() > 0">
 
-    AND category_id IN
+				AND category_id IN
 
-    <foreach collection="categories"
-             item="category"
-             open="("
-             separator=","
-             close=")">
+				<foreach collection="categories" item="category" open="("
+					separator="," close=")">
 
-        #{category}
+					#{category}
 
-    </foreach>
+				</foreach>
 
-</if>
+			</if>
 
-            <!-- 最低価格 -->
-            <if test="minPrice != null">
-                AND price &gt;= #{minPrice}
-            </if>
+			<!-- 最低価格 -->
+			<if test="minPrice != null">
+				AND price &gt;= #{minPrice}
+			</if>
 
-            <!-- 最高価格 -->
-            <if test="maxPrice != null">
-                AND price &lt;= #{maxPrice}
-            </if>
+			<!-- 最高価格 -->
+			<if test="maxPrice != null">
+				AND price &lt;= #{maxPrice}
+			</if>
 
-        </where>
+		</where>
 
-        <!-- 並び替え -->
-        <choose>
+		<!-- 並び替え -->
+		<choose>
 
-            <when test="sort eq 'popular'">
-                ORDER BY sales_count DESC
-            </when>
+			<when test="sort eq 'popular'">
+				ORDER BY sales_count DESC
+			</when>
 
-            <when test="sort eq 'priceAsc'">
-                ORDER BY price ASC
-            </when>
+			<when test="sort eq 'priceAsc'">
+				ORDER BY price ASC
+			</when>
 
-            <when test="sort eq 'priceDesc'">
-                ORDER BY price DESC
-            </when>
+			<when test="sort eq 'priceDesc'">
+				ORDER BY price DESC
+			</when>
 
-            <when test="sort eq 'newest'">
-                ORDER BY updated_at DESC
-            </when>
+			<when test="sort eq 'newest'">
+				ORDER BY updated_at DESC
+			</when>
 
-            <otherwise>
-                ORDER BY id DESC
-            </otherwise>
+			<otherwise>
+				ORDER BY id DESC
+			</otherwise>
 
-        </choose>
+		</choose>
 
-    </select>
+	</select>
 
 </mapper>

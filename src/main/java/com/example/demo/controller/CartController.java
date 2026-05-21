@@ -60,6 +60,7 @@ public class CartController {
 	@PostMapping("/add")
 	public String addToCart(
 			@RequestParam("productId") int productId,
+			@RequestParam(value = "quantity", defaultValue = "1") int quantity,
 			HttpSession session) {
 
 		System.out.println("追加 productId = " + productId);
@@ -69,7 +70,7 @@ public class CartController {
 		System.out.println(product);
 
 		if (product != null) {
-			cartService.addItem(session, product);
+			cartService.addItem(session, product, quantity);
 		}
 
 		return "redirect:/cart";
@@ -102,7 +103,7 @@ public class CartController {
 					"在庫数を超えて追加できません");
 		}
 
-		return "cart/index";
+		return "redirect:/cart";
 	}
 
 	/**カートの商品を減らす*/
@@ -110,7 +111,7 @@ public class CartController {
 	public String decrementFromCart(@RequestParam("productId") int productId,
 			HttpSession session) {
 		cartService.decrementQuantity(session, productId);
-		return "cart/index";
+		return "redirect:/cart";
 	}
 
 	//	/**クーポン関連*/

@@ -330,7 +330,7 @@
 				</div>
 
 				<!-- 数量 -->
-				<div class="quantity-area">
+				<div class="quantity-area" th:if="${item.hidden != true and item.hidden != 'true'}">
 
 					<form th:action="@{/cart/decrement}" method="post">
 

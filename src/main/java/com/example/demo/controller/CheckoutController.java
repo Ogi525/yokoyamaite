@@ -119,11 +119,7 @@ public class CheckoutController {
 			}
 		}
 
-		//後で使う
-		//		User loginUser = (User) session.getAttribute("loginUser");
-		//		Integer userId = loginUser.getId();
-
-		//消すやつ
+		// ログインユーザー取得
 		User loginUser = (User) session.getAttribute("loginUser");
 		Integer userId = loginUser.getId();
 
