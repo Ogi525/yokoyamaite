@@ -32,20 +32,52 @@ public class CartService {
 	}
 
 	/** カートに商品を追加する（同じ商品が既にあれば数量を増やす） */
-	public void addItem(HttpSession session, Product product) {
+	public void addItem(HttpSession session, Product product, int quantity) {
+
+		if (product == null) {
+			return;
+		}
+
+		if (quantity < 1) {
+			quantity = 1;
+		}
+
+		if (quantity > product.getStock()) {
+			quantity = product.getStock();
+		}
+
 		List<CartItem> cart = getCart(session);
+
 		for (CartItem item : cart) {
+
 			if (item.getProductId() == product.getId()) {
-				// GOLDENりんちゃんは2個以上にしない
+
 				if (Boolean.TRUE.equals(product.getHidden())) {
 					return;
 				}
-				item.incrementQuantity();
+
+				for (int i = 0; i < quantity; i++) {
+					if (item.getQuantity() < product.getStock()) {
+						item.incrementQuantity();
+					}
+				}
+
 				return;
 			}
 		}
-		cart.add(new CartItem(product.getId(), product.getName(), product.getPrice(), product.getStock(),
-				product.getHidden()));
+
+		CartItem cartItem = new CartItem(
+				product.getId(),
+				product.getName(),
+				product.getPrice(),
+				product.getStock(),
+				product.getHidden());
+
+		for (int i = 1; i < quantity; i++) {
+			cartItem.incrementQuantity();
+		}
+
+		cart.add(cartItem);
 	}
 
 	/** カートから商品を削除する */

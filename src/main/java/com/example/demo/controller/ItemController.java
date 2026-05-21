@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +32,22 @@ public class ItemController {
 	@GetMapping("/item/{id}")
 	public String showItem(
 			@PathVariable Integer id,
-			Model model) {
+			Model model,
+			HttpSession session) {
 
 		// 商品取得
 		Product product = productService.findById(id);
-		if (product == null) {
-			return "redirect:/";
-		}
+		if (Boolean.TRUE.equals(product.getHidden())) {
 
-		if (Boolean.TRUE.equals(product.getHidden())
-				&& product.getId() != 1) {
+			Boolean goldenAccess = (Boolean) session.getAttribute("goldenAccess");
 
-			return "redirect:/";
+			if (goldenAccess == null || !goldenAccess) {
+
+				return "redirect:/";
+			}
+
+			/* 一回見たら権限削除 */
+			session.removeAttribute("goldenAccess");
 		}
 
 		// HTMLへ渡す
