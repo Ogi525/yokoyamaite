@@ -330,7 +330,7 @@
 				</div>
 
 				<!-- 数量 -->
-				<div class="quantity-area">
+				<div class="quantity-area" th:if="${item.hidden != true and item.hidden != 'true'}">
 
 					<form th:action="@{/cart/decrement}" method="post">
 
@@ -429,19 +429,6 @@
 				</span>
 			</div>
 
-			<div class="summary-row">
-				<span>送料</span>
-				<span>
-					¥<span th:text="${#numbers.formatInteger(shippingFee, 3, 'COMMA')}"></span>
-				</span>
-			</div>
-
-			<div class="summary-row">
-				<span>値引き</span>
-				<span>
-					-¥<span th:text="${#numbers.formatInteger(discount, 3, 'COMMA')}"></span>
-				</span>
-			</div>
 
 			<div class="summary-row total">
 				<span>合計</span>

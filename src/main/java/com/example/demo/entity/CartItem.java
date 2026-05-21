@@ -9,11 +9,14 @@ public class CartItem {
 	private int stock;
 	private int quantity;
 
-	public CartItem(int productId, String productName, int price, int stock) {
+	private Boolean hidden;
+
+	public CartItem(int productId, String productName, int price, int stock, Boolean hidden) {
 		this.productId = productId;
 		this.productName = productName;
 		this.price = price;
 		this.stock = stock;
+		this.hidden = hidden;
 		this.quantity = 1;
 
 	}
@@ -58,4 +61,11 @@ public class CartItem {
 		return price * quantity;
 	}
 
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
 }

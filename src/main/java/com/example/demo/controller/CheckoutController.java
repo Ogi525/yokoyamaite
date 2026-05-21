@@ -119,11 +119,6 @@ public class CheckoutController {
 			}
 		}
 
-		//後で使う
-		//		User loginUser = (User) session.getAttribute("loginUser");
-		//		Integer userId = loginUser.getId();
-
-		//消すやつ
 		User loginUser = (User) session.getAttribute("loginUser");
 		Integer userId = loginUser.getId();
 
@@ -147,6 +142,9 @@ public class CheckoutController {
 				discountAmount,
 				shippingFee);
 
+		// ここに追加
+		session.setAttribute("couponId", couponId);
+		session.setAttribute("grandTotal", grandTotal);
 		// 確認画面に渡す
 		model.addAttribute("paymentMethod", paymentMethod);
 		model.addAttribute("deliveryType", deliveryType);

@@ -57,6 +57,11 @@
 			font-size: 60px;
 			box-shadow: 0 10px 20px rgba(26, 42, 74, 0.2);
 		}
+		.complete-image {
+			width: 1200px;
+			height: auto;
+			margin-bottom: 25px;
+		}
 
 		.complete-title {
 			font-size: 42px;
@@ -166,6 +171,7 @@
 </head>
 
 <body>
+	<audio id="rinVoice" src="/sounds/buyvice.mp3" preload="auto"></audio>
 
 	<div class="container">
 
@@ -210,19 +216,13 @@
 
 			<div class="button-area">
 
-				<a th:href="@{/index}"
+				<a th:href="@{/}"
 				   class="btn home-btn">
 
 					トップページへ戻る
 
 				</a>
 
-				<a th:href="@{/products}"
-				   class="btn shopping-btn">
-
-					買い物を続ける
-
-				</a>
 
 			</div>
 
@@ -231,6 +231,15 @@
 		<div th:replace="~{layout/_footer :: footer}"></div>
 
 	</div>
+	<script>
+		window.addEventListener("load", () => {
+			const voice = document.getElementById("rinVoice");
+
+			voice.play().catch(() => {
+				console.log("ブラウザの自動再生制限で再生されませんでした");
+			});
+		});
+	</script>
 
 </body>
 

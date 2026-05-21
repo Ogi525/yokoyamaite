@@ -22,14 +22,18 @@ CREATE TABLE IF NOT EXISTS categories(
  id SERIAL PRIMARY KEY,
  category_name VARCHAR(100) NOT NULL
 );
+INSERT INTO categories (id, category_name)
+VALUES (777, '景品')
+ON CONFLICT (id) DO NOTHING;
 
 -- PRODUCTS
+--DROP TABLE IF EXISTS products CASCADE;
 CREATE TABLE IF NOT EXISTS products(
  id SERIAL PRIMARY KEY,
  area_id INTEGER NOT NULL,
  category_id INTEGER NOT NULL,
- name VARCHAR(100) NOT NULL,
-    price INTEGER NOT NULL CHECK (price > 0),
+name VARCHAR(100) NOT NULL UNIQUE,
+    price INTEGER NOT NULL CHECK (price >= 0),
     stock INTEGER NOT NULL CHECK (stock >= 0),
     sales_count INTEGER DEFAULT 0,
     origin VARCHAR(100),
@@ -40,6 +44,8 @@ CREATE TABLE IF NOT EXISTS products(
  FOREIGN KEY (area_id) REFERENCES areas(id) ON DELETE CASCADE,
  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
+ALTER TABLE products
+ADD COLUMN IF NOT EXISTS hidden BOOLEAN DEFAULT FALSE;
 
 -- ORDERS
 CREATE TABLE IF NOT EXISTS orders (
@@ -56,7 +62,7 @@ CREATE TABLE IF NOT EXISTS orders_products (
     id SERIAL PRIMARY KEY,
     order_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
-    price INTEGER NOT NULL CHECK (price > 0),
+    price INTEGER NOT NULL CHECK (price >= 0),
     quantity INTEGER NOT NULL CHECK (quantity > 0),
 
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,

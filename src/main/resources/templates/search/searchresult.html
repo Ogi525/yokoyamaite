@@ -301,8 +301,28 @@
 
 				<div class="card-body">
 					<div class="card-name" th:text="${product.name}"></div>
-					<div class="card-info">エリア：<span th:text="${product.areaId}"></span></div>
-					<div class="card-info">カテゴリー：<span th:text="${product.categoryId}"></span></div>
+					<!-- 修正後 -->
+					<div class="card-info">エリア：
+					  <span th:switch="${product.areaId}">
+					    <span th:case="1">道南</span>
+					    <span th:case="2">道北</span>
+					    <span th:case="3">道央</span>
+					    <span th:case="4">道東</span>
+					    <span th:case="*" th:text="${product.areaId}"></span>
+					  </span>
+					</div>
+
+					<div class="card-info">カテゴリー：
+					  <span th:switch="${product.categoryId}">
+					    <span th:case="1">肉</span>
+					    <span th:case="2">海鮮</span>
+					    <span th:case="3">野菜</span>
+					    <span th:case="4">お菓子</span>
+					    <span th:case="5">飲料水</span>
+					    <span th:case="6">お酒</span>
+					    <span th:case="*" th:text="${product.categoryId}"></span>
+					  </span>
+					</div>
 					<div class="card-price">¥<span th:text="${product.price}"></span></div>
 				</div>
 

@@ -5,27 +5,24 @@
 
 <mapper namespace="com.example.demo.mapper.CouponMapper">
 
-    <select id="findUserCoupons"
-            resultType="com.example.demo.entity.Coupon">
+<select id="findUserCoupons"
+        resultType="com.example.demo.entity.Coupon">
 
-        SELECT
-            uc.id AS user_coupon_id,
-            c.id AS coupon_id,
-            c.code,
-            c.name,
-            c.discount_value,
-            uc.is_used,
-            c.end_at
+    SELECT
+        uc.id AS user_coupon_id,
+        c.id AS coupon_id,
+        c.code,
+        c.name,
+        c.discount_value,
+        uc.is_used,
+        c.end_at
+    FROM users_coupons uc
+    INNER JOIN coupons c
+        ON uc.coupon_id = c.id
+    WHERE uc.user_id = #{userId}
+      AND uc.is_used = false
+    ORDER BY uc.acquired_at DESC
 
-        FROM users_coupons uc
-
-        INNER JOIN coupons c
-            ON uc.coupon_id = c.id
-
-        WHERE uc.user_id = #{userId}
-
-        ORDER BY uc.acquired_at DESC
-
-    </select>
+</select>
 
 </mapper>

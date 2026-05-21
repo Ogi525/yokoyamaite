@@ -2,7 +2,10 @@ package com.example.demo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.example.demo.entity.Coupon;
@@ -50,4 +53,41 @@ public interface CouponMapper {
 	Coupon findCouponByIdAndUserId(
 			Integer couponId,
 			Integer userId);
+
+	// 追加：couponsテーブルにクーポンを作成
+	@Insert("""
+			INSERT INTO coupons (
+				code,
+				name,
+				discount_value,
+				end_at
+			)
+			VALUES (
+				#{code},
+				#{name},
+				#{discountValue},
+				#{endAt}
+			)
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	void insertCoupon(Coupon coupon);
+
+	// 追加：users_couponsテーブルにユーザーとクーポンを紐づけ
+	@Insert("""
+			INSERT INTO users_coupons (
+				user_id,
+				coupon_id,
+				is_used,
+				acquired_at
+			)
+			VALUES (
+				#{userId},
+				#{couponId},
+				false,
+				NOW()
+			)
+			""")
+	void insertUserCoupon(
+			@Param("userId") Integer userId,
+			@Param("couponId") Integer couponId);
 }
