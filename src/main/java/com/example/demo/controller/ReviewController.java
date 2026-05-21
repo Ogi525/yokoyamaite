@@ -24,7 +24,7 @@ public class ReviewController {
 		this.reviewService = reviewService;
 	}
 
-	@PostMapping("/products/{productId}/reviews")
+	@PostMapping("/item/{productId}/reviews")
 	public String postReview(
 			@PathVariable Integer productId,
 			@Valid @ModelAttribute("reviewForm") ReviewForm form,
@@ -40,40 +40,26 @@ public class ReviewController {
 
 			session.setAttribute(
 					"redirectAfterLogin",
-					"/products/" + productId);
+					"/item/" + productId);
 
 			return "redirect:/login";
 		}
 
 		// バリデーションエラー
 		if (bindingResult.hasErrors()) {
-			return "product/detail";
+			return "redirect:/item/" + productId + "?tab=review";
 		}
 
 		// 購入済み判定
-		boolean purchased = reviewService.hasPurchased(
-				loginUser.getId(),
-				productId);
-
-		if (!purchased) {
-			model.addAttribute(
-					"reviewError",
-					"購入済み商品のみレビューできます");
-
-			return "product/detail";
+		if (!reviewService.hasPurchased(loginUser.getId(), productId)) {
+			session.setAttribute("reviewError", "購入済み商品のみレビューできます");
+			return "redirect:/item/" + productId + "?tab=review";
 		}
 
 		// 重複レビュー判定
-		boolean reviewed = reviewService.hasReviewed(
-				loginUser.getId(),
-				productId);
-
-		if (reviewed) {
-			model.addAttribute(
-					"reviewError",
-					"すでにレビュー済みです");
-
-			return "product/detail";
+		if (reviewService.hasReviewed(loginUser.getId(), productId)) {
+			session.setAttribute("reviewError", "すでにレビュー済みです");
+			return "redirect:/item/" + productId + "?tab=review";
 		}
 
 		// Review作成
@@ -90,6 +76,6 @@ public class ReviewController {
 		// 保存
 		reviewService.saveReview(review);
 
-		return "redirect:/products/" + productId;
+		return "redirect:/item/" + productId + "?tab=review";
 	}
 }

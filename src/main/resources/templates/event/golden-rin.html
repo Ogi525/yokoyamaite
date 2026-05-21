@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>SSR発見！</title>
+
+	<style>
+		body {
+			margin: 0;
+			height: 100vh;
+			background: radial-gradient(circle, #fff8dc, #d4af37, #1a2a4a);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: sans-serif;
+			overflow: hidden;
+		}
+
+		.event-box {
+			text-align: center;
+			color: white;
+			animation: pop 0.8s ease-out;
+		}
+
+		.event-box img {
+			width: 260px;
+			filter: drop-shadow(0 0 25px gold);
+			animation: float 1.5s infinite ease-in-out;
+		}
+
+		.event-title {
+			font-size: 48px;
+			font-weight: bold;
+			text-shadow: 0 0 20px gold;
+			margin: 20px 0;
+		}
+
+		.event-text {
+			font-size: 24px;
+			margin-bottom: 30px;
+		}
+
+		.detail-btn {
+			display: inline-block;
+			background: white;
+			color: #1a2a4a;
+			padding: 16px 32px;
+			border-radius: 999px;
+			font-weight: bold;
+			text-decoration: none;
+			font-size: 20px;
+		}
+
+		@keyframes pop {
+			from {
+				transform: scale(0.3);
+				opacity: 0;
+			}
+			to {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+
+		@keyframes float {
+			0% { transform: translateY(0); }
+			50% { transform: translateY(-15px); }
+			100% { transform: translateY(0); }
+		}
+	</style>
+</head>
+<body>
+
+	<div class="event-box">
+
+		<img src="/images/gold-rin.png" alt="ゴールデンりんちゃん">
+
+		<div class="event-title">
+			ゴールデンりんざらし
+		</div>
+
+		<div class="event-text">
+			ゴールデンりんざらしの商品を発見しました！
+		</div>
+
+		<a th:href="@{/item/1}" class="detail-btn">
+			商品を確認する
+		</a>
+
+	</div>
+
+</body>
+</html>

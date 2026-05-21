@@ -34,6 +34,15 @@ public class ItemController {
 
 		// 商品取得
 		Product product = productService.findById(id);
+		if (product == null) {
+			return "redirect:/";
+		}
+
+		if (Boolean.TRUE.equals(product.getHidden())
+				&& product.getId() != 1) {
+
+			return "redirect:/";
+		}
 
 		// HTMLへ渡す
 		model.addAttribute("product", product);

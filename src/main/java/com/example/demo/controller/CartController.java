@@ -102,7 +102,7 @@ public class CartController {
 					"在庫数を超えて追加できません");
 		}
 
-		return "cart/index";
+		return "redirect:/cart";
 	}
 
 	/**カートの商品を減らす*/
@@ -110,7 +110,7 @@ public class CartController {
 	public String decrementFromCart(@RequestParam("productId") int productId,
 			HttpSession session) {
 		cartService.decrementQuantity(session, productId);
-		return "cart/index";
+		return "redirect:/cart";
 	}
 
 	//	/**クーポン関連*/
