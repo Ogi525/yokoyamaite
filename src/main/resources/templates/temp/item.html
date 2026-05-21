@@ -559,7 +559,7 @@
 						</div>
 
 						<!-- 数量 -->
-						<div class="quantity-area">
+						<div class="quantity-area" th:if="${!product.hidden}">
 
 							<button type="button" class="qty-btn" onclick="decreaseQty()">
 								−
@@ -569,13 +569,18 @@
 								1
 							</div>
 
-							<button type="button" class="qty-btn" onclick="increaseQty()">
+							<button type="button"
+							        class="qty-btn"
+							        th:onclick="'increaseQty(' + ${product.stock} + ')'">
+
 								＋
+
 							</button>
 
 						</div>
 
 						<!-- カート -->
+						
 						<form th:action="@{/cart/add}" method="post">
 
 							<input type="hidden" name="productId" th:value="${product.id}">
@@ -778,39 +783,78 @@
 
 		<script>
 
-			/* 数量 */
+			/* =========================
+			   数量
+			========================= */
 
 			let qty = 1;
 
-			function increaseQty() {
+			/* 初期同期 */
+			window.addEventListener("load", () => {
 
-				qty++;
+				updateQuantity();
 
-				document.getElementById("qty").textContent = qty;
+				restoreActiveTab();
+			});
+
+			/* 数量表示とhidden input同期 */
+			function updateQuantity() {
+
+				const qtyText =
+					document.getElementById("qty");
+
+				const qtyInput =
+					document.getElementById("quantityInput");
+
+				if (qtyText) {
+					qtyText.textContent = qty;
+				}
+
+				if (qtyInput) {
+					qtyInput.value = qty;
+				}
 			}
 
+			/* ＋ */
+			function increaseQty(stock) {
+
+				if (qty < stock) {
+
+					qty++;
+
+					updateQuantity();
+				}
+			}
+
+			/* − */
 			function decreaseQty() {
 
 				if (qty > 1) {
 
 					qty--;
 
-					document.getElementById("qty").textContent = qty;
+					updateQuantity();
 				}
 			}
 
-			/* タブ切替 */
+			/* =========================
+			   タブ切替
+			========================= */
 
 			function showTab(tabId, btn) {
 
 				document.querySelectorAll(".tab-content")
 					.forEach(tab => {
+
 						tab.classList.remove("active");
+
 					});
 
 				document.querySelectorAll(".tab-btn")
 					.forEach(button => {
+
 						button.classList.remove("active");
+
 					});
 
 				document.getElementById(tabId)
@@ -819,29 +863,50 @@
 				btn.classList.add("active");
 			}
 
+			/* タブ復元 */
 			function restoreActiveTab() {
-				const hash = location.hash.replace('#', '');
-				const params = new URLSearchParams(location.search);
-				const tab = hash || params.get('tab');
+
+				const hash =
+					location.hash.replace('#', '');
+
+				const params =
+					new URLSearchParams(location.search);
+
+				const tab =
+					hash || params.get('tab');
+
 				if (!tab) {
 					return;
 				}
-				const btn = document.getElementById(tab + 'TabBtn');
+
+				const btn =
+					document.getElementById(tab + 'TabBtn');
+
 				if (btn) {
+
 					showTab(tab, btn);
 				}
 			}
 
-			window.addEventListener('load', restoreActiveTab);
+			/* =========================
+			   返信表示トグル
+			========================= */
 
-			/* 返信表示トグル */
 			function toggleReplySection(commentId) {
-				const section = document.getElementById('replyArea-' + commentId);
+
+				const section =
+					document.getElementById(
+						'replyArea-' + commentId
+					);
+
 				if (!section) {
 					return;
 				}
 
-				section.style.display = section.style.display === 'block' ? 'none' : 'block';
+				section.style.display =
+					section.style.display === 'block'
+						? 'none'
+						: 'block';
 			}
 
 		</script>

@@ -13,6 +13,7 @@ public class Product {
 	private String origin;
 	private String imageUrl;
 	private String description;
+	private Boolean hidden;
 
 	// getter setter
 
@@ -87,4 +88,13 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
 }

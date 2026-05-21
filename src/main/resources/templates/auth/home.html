@@ -401,10 +401,14 @@
 					</a>
 
 					<!-- SSR金ぴか魚 -->
-					<div class="lane-item gold-fish">
+					<a th:href="@{/golden-rin/event}" class="lane-item gold-fish"
+					   style="text-decoration:none; color:inherit;">
+
 						<img src="/images/gold-rin.png" alt="SSR金ぴか魚">
+
 						<p>SSR金ぴか魚</p>
-					</div>
+
+					</a>
 
 					<!-- 2周目 -->
 					<a th:each="product : ${recommendProducts}"
@@ -416,10 +420,14 @@
 					</a>
 
 					<!-- SSR金ぴか魚 -->
-					<div class="lane-item gold-rin">
+					<a th:href="@{/golden-rin/event}" class="lane-item gold-fish"
+					   style="text-decoration:none; color:inherit;">
+
 						<img src="/images/gold-rin.png" alt="SSR金ぴか魚">
+
 						<p>SSR金ぴか魚</p>
-					</div>
+
+					</a>
 
 				</div>
 			</div>
