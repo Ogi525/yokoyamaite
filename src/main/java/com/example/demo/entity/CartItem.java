@@ -11,11 +11,12 @@ public class CartItem {
 	private int quantity;
 	private Boolean hidden;
 
-	public CartItem(int productId, String productName, int price, int stock) {
+	public CartItem(int productId, String productName, int price, int stock, Boolean hidden) {
 		this.productId = productId;
 		this.productName = productName;
 		this.price = price;
 		this.stock = stock;
+		this.hidden = hidden;
 		this.quantity = 1;
 
 	}

@@ -44,7 +44,8 @@ public class CartService {
 				return;
 			}
 		}
-		cart.add(new CartItem(product.getId(), product.getName(), product.getPrice(), product.getStock()));
+		cart.add(new CartItem(product.getId(), product.getName(), product.getPrice(), product.getStock(),
+				product.getHidden()));
 	}
 
 	/** カートから商品を削除する */
@@ -63,6 +64,9 @@ public class CartService {
 
 		// DBから最新商品取得
 		Product product = productMapper.findById(productId);
+		if (product == null || Boolean.TRUE.equals(product.getHidden())) {
+			return false;
+		}
 
 		for (CartItem item : cart) {
 

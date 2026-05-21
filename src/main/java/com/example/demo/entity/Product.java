@@ -96,4 +96,5 @@ public class Product {
 	public void setHidden(Boolean hidden) {
 		this.hidden = hidden;
 	}
+
 }
