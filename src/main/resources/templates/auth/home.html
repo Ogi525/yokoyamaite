@@ -104,7 +104,7 @@
 
 		.lane-track {
 			display: flex;
-			align-items: flex-end; /* ← center → flex-end に変更（お皿の底を揃える） */
+			align-items: flex-end;
 			gap: 50px;
 			width: max-content;
 			animation: sushiLoop 25s linear infinite;
@@ -114,19 +114,18 @@
 			animation-play-state: paused;
 		}
 
-		/* ★ <a>タグ用に display:block を追加し、擬似要素が正しく効くようにする */
 		.lane-item {
 			display: block;
 			width: 220px;
 			flex-shrink: 0;
 			text-align: center;
 			position: relative;
-			padding-top: 60px;        /* 上に商品名、下にお皿なので padding-top に変更 */
+			padding-top: 60px;
 			text-decoration: none;
 			color: inherit;
 		}
 
-		/* お皿（楕円の外枠）：imgの下に配置 */
+		/* お皿（楕円の外枠） */
 		.lane-item::before {
 			content: "";
 			position: absolute;
@@ -149,25 +148,25 @@
 			bottom: 13px;
 			left: 50%;
 			transform: translateX(-50%);
-			width: 140px;
+			width: 160px;
 			height: 22px;
-			border-radius: 50%;
+			border-radius: 60%;
 			border: 5px solid #1a2a4a;
 			z-index: 1;
 		}
 
+		/* 通常商品画像：四角・回転なし */
 		.lane-item img {
 			width: 140px;
 			height: 140px;
-			border-radius: 50%;
+			border-radius: 8px;
 			object-fit: cover;
 			border: 6px solid white;
 			background: white;
 			position: relative;
 			z-index: 2;
-			animation: rotateSushi 8s linear infinite;
 			transition: transform 0.3s;
-			margin-bottom: 5px;       /* お皿との隙間を少し確保 */
+			margin-bottom: 5px;
 		}
 
 		.lane-item img:hover {
@@ -175,7 +174,7 @@
 		}
 
 		.lane-item p {
-			margin: 0 0 10px;         /* 上余白なし・下余白で画像との間隔を確保 */
+			margin: 0 0 10px;
 			font-size: 20px;
 			font-weight: bold;
 			white-space: nowrap;
@@ -196,6 +195,16 @@
 			align-items: center;
 		}
 
+		/* 金ぴか魚のお皿を金色に上書き */
+		.gold-fish::before {
+			border: 8px solid gold;
+		}
+
+		.gold-fish::after {
+			border: 5px solid gold;
+		}
+
+		/* 金ぴか魚アイコン：円形・回転あり */
 		.gold-fish-icon {
 			width: 140px;
 			height: 140px;
@@ -203,7 +212,7 @@
 			border: 6px solid gold;
 			box-shadow: 0 0 12px 4px gold;
 			background-color: white;
-			background-image: url('/images/gold-fish.png');
+			background-image: url('/images/gold-rin.png');
 			background-size: contain;
 			background-repeat: no-repeat;
 			background-position: center center;
@@ -213,20 +222,12 @@
 			transition: transform 0.3s;
 			margin: 0 auto 5px;
 			display: block;
-			flex-shrink: 0; /* flexコンテナ内で潰れないよう */
+			flex-shrink: 0;
 			box-sizing: border-box;
 		}
 
 		.gold-fish-icon:hover {
 			transform: scale(1.1);
-		}
-
-		.gold-fish::before {
-			border: 8px solid gold;
-		}
-
-		.gold-fish::after {
-			border: 5px solid gold;
 		}
 
 		/* =========================
@@ -390,8 +391,8 @@
 
 					<!-- SSR金ぴか魚 -->
 					<div class="lane-item gold-fish">
-						<p>SSR金ぴか魚</p>
-						<img src="/images/gold-fish.png" alt="SSR金ぴか魚">
+						<p>✨金のりんざらし✨</p>
+						<div class="gold-fish-icon"></div>
 					</div>
 
 					<!-- 2周目 -->
@@ -404,8 +405,8 @@
 
 					<!-- SSR金ぴか魚 -->
 					<div class="lane-item gold-fish">
-						<p>SSR金ぴか魚</p>
-						<img src="/images/gold-fish.png" alt="SSR金ぴか魚">
+						<p>✨金のりんざらし✨</p>
+						<div class="gold-fish-icon"></div>
 					</div>
 
 				</div>
