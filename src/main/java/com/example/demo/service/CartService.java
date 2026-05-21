@@ -36,6 +36,10 @@ public class CartService {
 		List<CartItem> cart = getCart(session);
 		for (CartItem item : cart) {
 			if (item.getProductId() == product.getId()) {
+				// GOLDENりんちゃんは2個以上にしない
+				if (Boolean.TRUE.equals(product.getHidden())) {
+					return;
+				}
 				item.incrementQuantity();
 				return;
 			}
@@ -59,10 +63,6 @@ public class CartService {
 
 		// DBから最新商品取得
 		Product product = productMapper.findById(productId);
-
-		if (Boolean.TRUE.equals(product.getHidden())) {
-			return false;
-		}
 
 		for (CartItem item : cart) {
 
