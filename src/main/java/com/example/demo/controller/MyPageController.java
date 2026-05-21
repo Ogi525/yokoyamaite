@@ -45,11 +45,15 @@ public class MyPageController {
 		//購入履歴を表示する
 		List<History> histories = historyService.findByUserId(user.getId());
 
+		System.out.println("ログインユーザーID：" + user.getId());
+		System.out.println("購入履歴件数：" + histories.size());
+		System.out.println(histories);
+
 		model.addAttribute("user", user);
 		model.addAttribute("coupons", coupons);
 		model.addAttribute("histories", histories);
 
-		return "/mypage";
+		return "mypage/mypage";
 
 	}
 

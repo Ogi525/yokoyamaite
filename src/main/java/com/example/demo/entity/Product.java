@@ -13,8 +13,16 @@ public class Product {
 	private String origin;
 	private String imageUrl;
 	private String description;
+	private Boolean hidden;
 
 	// getter setter
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public Integer getId() {
 		return id;
