@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>SSR発見！</title>
@@ -56,6 +57,7 @@
 				transform: scale(0.3);
 				opacity: 0;
 			}
+
 			to {
 				transform: scale(1);
 				opacity: 1;
@@ -63,13 +65,23 @@
 		}
 
 		@keyframes float {
-			0% { transform: translateY(0); }
-			50% { transform: translateY(-15px); }
-			100% { transform: translateY(0); }
+			0% {
+				transform: translateY(0);
+			}
+
+			50% {
+				transform: translateY(-15px);
+			}
+
+			100% {
+				transform: translateY(0);
+			}
 		}
 	</style>
 </head>
+
 <body>
+	<audio id="rinVoice" src="/sounds/discovervice.mp3" preload="auto"></audio>
 
 	<div class="event-box">
 
@@ -82,12 +94,25 @@
 		<div class="event-text">
 			ゴールデンりんざらしの商品を発見しました！
 		</div>
+		<button onclick="document.getElementById('rinVoice').play()">
+			🔊 りんちゃんの声を聞く
+		</button>
 
 		<a th:href="@{/item/1}" class="detail-btn">
 			商品を確認する
 		</a>
 
 	</div>
+	<script>
+		window.addEventListener("load", () => {
+			const voice = document.getElementById("rinVoice");
+
+			voice.play().catch(() => {
+				console.log("ブラウザの自動再生制限で再生されませんでした");
+			});
+		});
+	</script>
 
 </body>
+
 </html>

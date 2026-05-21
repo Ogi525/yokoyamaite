@@ -166,6 +166,8 @@
 </head>
 
 <body>
+	<audio id="rinVoice" src="/sounds/buyvice.mp3" preload="auto"></audio>
+
 
 	<div class="container">
 
@@ -231,6 +233,15 @@
 		<div th:replace="~{layout/_footer :: footer}"></div>
 
 	</div>
+	<script>
+		window.addEventListener("load", () => {
+			const voice = document.getElementById("rinVoice");
+
+			voice.play().catch(() => {
+				console.log("ブラウザの自動再生制限で再生されませんでした");
+			});
+		});
+	</script>
 
 </body>
 
