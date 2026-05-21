@@ -70,7 +70,7 @@ VALUES
     '稚内',
     '/images/products_sumple/category_1/1_3.png',
     '稚内の広大な牧場で育ったラム肉を食べやすくカットしました。クセが少なく柔らかな肉質が特徴で、ジンギスカンや焼肉に最適です。脂の旨味と赤身のバランスが良く、北海道定番の味覚を自宅で手軽に楽しめます。',
-    NULL
+    'https://youtu.be/xVsbFCIBt5M?si=WS8ue4qgXLoL1mIF'
 ),
 
 (

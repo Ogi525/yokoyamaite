@@ -39,18 +39,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         resultType="com.example.demo.entity.Product">
 
 	SELECT
-		id,
-		area_id AS areaId,
-		category_id AS categoryId,
-		name,
-		price,
-		stock,
-		origin,
-		image_url AS imageUrl,
-		description
-	FROM products
-	WHERE id = #{id}
-
+    id,
+    area_id      AS areaId,
+    category_id  AS categoryId,
+    name,
+    price,
+    stock,
+    origin,
+    image_url    AS imageUrl,
+    video_url    AS videoUrl,   
+    description
+	
+FROM products
+WHERE id = #{id}
 </select>
 
 </mapper>

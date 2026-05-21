@@ -6,22 +6,84 @@
 	<title th:text="${product.name} + ' | 横山蒸留所'"></title>
 
 	<style>
-		  /* ===== 共通ヘッダー・フッター ===== */
-		  header { background: white; padding: 20px; border-radius: 20px; margin-bottom: 30px; }
-		  .top-menu { display: flex; justify-content: space-between; align-items: center; }
-		  .logo { font-size: 32px; font-weight: bold; color: #1a2a4a; }
-		  .logo a { text-decoration: none; color: #1a2a4a; }
-		  .nav { display: flex; gap: 20px; }
-		  .nav a { text-decoration: none; color: #333; font-weight: bold; }
-		  .right-area { display: flex; align-items: center; gap: 20px; }
-		  .icon-box { display: flex; gap: 15px; align-items: center; }
-		  .icon-btn { font-size: 26px; text-decoration: none; color: #333; transition: 0.2s; }
-		  .icon-btn:hover { transform: scale(1.2); color: #1a2a4a; }
-		  footer { background: white; padding: 25px; border-radius: 20px; text-align: center; }
-		  footer a { text-decoration: none; color: #333; margin: 0 10px; }
 
-		  /* ===== 以下、既存のitem.html用スタイル ===== */
-		 
+		/* ===== 共通ヘッダー・フッター ===== */
+
+		header {
+			background: white;
+			padding: 20px;
+			border-radius: 20px;
+			margin-bottom: 30px;
+		}
+
+		.top-menu {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.logo {
+			font-size: 32px;
+			font-weight: bold;
+			color: #1a2a4a;
+		}
+
+		.logo a {
+			text-decoration: none;
+			color: #1a2a4a;
+		}
+
+		.nav {
+			display: flex;
+			gap: 20px;
+		}
+
+		.nav a {
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+
+		.right-area {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.icon-box {
+			display: flex;
+			gap: 15px;
+			align-items: center;
+		}
+
+		.icon-btn {
+			font-size: 26px;
+			text-decoration: none;
+			color: #333;
+			transition: 0.2s;
+		}
+
+		.icon-btn:hover {
+			transform: scale(1.2);
+			color: #1a2a4a;
+		}
+
+		footer {
+			background: white;
+			padding: 25px;
+			border-radius: 20px;
+			text-align: center;
+			margin-top: 30px;
+		}
+
+		footer a {
+			text-decoration: none;
+			color: #333;
+			margin: 0 10px;
+		}
+
+		/* ===== body ===== */
+
 		body {
 			margin: 0;
 			padding: 0;
@@ -46,8 +108,6 @@
 			padding: 25px 35px;
 		}
 
-		/* 戻る */
-
 		.back-link {
 			text-decoration: none;
 			color: #333;
@@ -59,42 +119,38 @@
 		/* 上段 */
 
 		.item-top {
-		  display: flex;
-		  gap: 40px;
-		  margin-bottom: 50px;
-		  align-items: stretch; /* ←ここ変更 */
+			display: flex;
+			gap: 40px;
+			margin-bottom: 50px;
+			align-items: stretch;
 		}
+
 		/* 左画像 */
 
 		.item-image {
-		  width: 640px;
-		  flex-shrink: 0;
-		  display: flex;
-		  align-items: stretch;
+			width: 640px;
+			flex-shrink: 0;
+			display: flex;
+			align-items: stretch;
 		}
 
 		.item-image img {
 			width: 100%;
-
-			aspect-ratio: 16 /11 ;
-
+			aspect-ratio: 16 / 11;
 			object-fit: cover;
-
 			border-radius: 24px;
 			background: #eee;
 			border: 3px solid #ddd;
-
 			display: block;
 		}
+
 		/* 右情報 */
 
 		.item-info {
-		  flex: 1;
-		  display: flex;
-		  flex-direction: column;
-
-		  /* これが重要 */
-		  height: 100%;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 		}
 
 		/* 商品名 */
@@ -116,21 +172,19 @@
 			line-height: 2;
 			color: #555;
 			font-size: 16px;
-
 			padding: 5px 0;
-
 			min-height: 170px;
 		}
 
 		/* 価格 */
 
 		.price-box {
-		  margin-top: auto;
+			margin-top: auto;
 		}
-		-id {
+
+		.item-id {
 			color: #777;
 			margin-bottom: 10px;
-
 			font-size: 13px;
 		}
 
@@ -147,24 +201,17 @@
 			display: flex;
 			align-items: center;
 			gap: 14px;
-
 			margin-bottom: 18px;
 		}
 
 		.qty-btn {
 			width: 46px;
 			height: 46px;
-
 			border: none;
-
 			background: #d9d9d9;
-
 			border-radius: 10px;
-
 			font-size: 24px;
-
 			cursor: pointer;
-
 			transition: 0.2s;
 		}
 
@@ -182,25 +229,15 @@
 		/* ボタン */
 
 		.cart-btn {
-
 			width: 100%;
-
 			border: none;
-
 			background: #005b96;
-
 			color: white;
-
 			padding: 14px;
-
 			border-radius: 14px;
-
 			font-size: 17px;
-
 			font-weight: bold;
-
 			cursor: pointer;
-
 			transition: 0.2s;
 		}
 
@@ -218,32 +255,15 @@
 		}
 
 		.tab-btn {
-
 			flex: 1;
-
 			padding: 15px;
-
 			border: none;
-
 			background: transparent;
-
 			border-bottom: 2px solid #ddd;
-
 			cursor: pointer;
-
 			font-size: 16px;
-
 			font-weight: bold;
-
 			transition: 0.2s;
-		}
-
-		.tab-btn:first-child {
-			border-radius: 0;
-		}
-
-		.tab-btn:last-child {
-			border-radius: 0;
 		}
 
 		.tab-btn.active {
@@ -275,21 +295,46 @@
 		}
 
 		/* =========================
+		   動画
+		========================= */
+
+		.video-box {
+			margin-top: 40px;
+			width: 100%;
+		}
+
+		.video-title {
+			font-size: 24px;
+			margin-bottom: 15px;
+			color: #1a2a4a;
+		}
+
+		.video-wrapper {
+			width: 100%;
+			max-width: 900px;
+			height: 500px;
+			background: #000;
+			border-radius: 20px;
+			overflow: hidden;
+		}
+
+		.video-wrapper iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+			display: block;
+		}
+
+		/* =========================
 		   レビュー
 		========================= */
 
 		.review-top {
-
 			display: flex;
-
 			justify-content: space-between;
-
 			align-items: center;
-
 			flex-wrap: wrap;
-
 			gap: 20px;
-
 			margin-bottom: 30px;
 		}
 
@@ -325,29 +370,19 @@
 
 		.review-list,
 		.comment-list {
-
 			display: flex;
-
 			gap: 20px;
-
 			flex-wrap: wrap;
 		}
 
 		.review-card,
 		.comment-card {
-
 			width: 260px;
-
 			min-height: 180px;
-
 			background: #fafafa;
-
 			border: 1px solid #e5e5e5;
-
 			border-radius: 18px;
-
 			padding: 20px;
-
 			box-sizing: border-box;
 		}
 
@@ -389,6 +424,7 @@
 				width: 100%;
 			}
 		}
+
 	</style>
 
 </head>
@@ -398,6 +434,7 @@
 	<div class="container">
 
 		<div th:replace="~{layout/_header :: header}"></div>
+
 		<!-- 商品詳細 -->
 		<div class="item-wrapper">
 
@@ -410,9 +447,7 @@
 
 				<!-- 商品画像 -->
 				<div class="item-image">
-
 					<img th:src="${product.imageUrl}" th:alt="${product.name}">
-
 				</div>
 
 				<!-- 商品情報 -->
@@ -420,14 +455,10 @@
 
 					<!-- 商品名 -->
 					<div class="item-name-box">
-
 						<div class="item-name" th:text="${product.name}">
 							商品名
 						</div>
-
 					</div>
-
-					
 
 					<!-- 購入 -->
 					<div class="price-box">
@@ -438,26 +469,14 @@
 						</div>
 
 						<div class="price">
-
 							¥<span th:text="${product.price}"></span>
-
 						</div>
 
 						<!-- 数量 -->
 						<div class="quantity-area">
-
-							<button class="qty-btn" onclick="decreaseQty()">
-								−
-							</button>
-
-							<div class="qty-number" id="qty">
-								1
-							</div>
-
-							<button class="qty-btn" onclick="increaseQty()">
-								＋
-							</button>
-
+							<button class="qty-btn" onclick="decreaseQty()">−</button>
+							<div class="qty-number" id="qty">1</div>
+							<button class="qty-btn" onclick="increaseQty()">＋</button>
 						</div>
 
 						<!-- カート -->
@@ -470,33 +489,39 @@
 				</div>
 
 			</div>
+			<!-- /item-top -->
 
 			<!-- タブ -->
 			<div class="tab-menu">
-
 				<button class="tab-btn active" onclick="showTab('description', this)">
 					商品説明
 				</button>
-
 				<button class="tab-btn" onclick="showTab('review', this)">
 					レビュー
 				</button>
-
 				<button class="tab-btn" onclick="showTab('comment', this)">
 					コメント
 				</button>
-
 			</div>
 
-			<!-- 商品説明 -->
+			<!-- 商品説明タブ -->
 			<div id="description" class="tab-content active">
 
 				<div class="description-box" th:text="${product.description}">
 				</div>
 
-			</div>
+				
 
-			<!-- レビュー -->
+					
+					</div>
+
+				</div>
+				<!-- /video-box -->
+
+			</div>
+			<!-- /description -->
+
+			<!-- レビュータブ -->
 			<div id="review" class="tab-content">
 
 				<div class="review-top">
@@ -510,41 +535,25 @@
 					</button>
 
 					<div class="review-note">
-
 						レビューは購入者のみ投稿できます。<br>
 						ログイン後に購入履歴が確認できる場合のみ投稿可能です。
-
 					</div>
 
 				</div>
 
 				<div class="review-list">
-
 					<div class="review-card">
-
-						<div class="user-name">
-							ユーザー名
-						</div>
-
-						<div class="post-date">
-							投稿日 2026/5/13
-						</div>
-
-						<div class="star">
-							★★★★★
-						</div>
-
-						<div>
-							とても美味しかったです！
-						</div>
-
+						<div class="user-name">ユーザー名</div>
+						<div class="post-date">投稿日 2026/5/13</div>
+						<div class="star">★★★★★</div>
+						<div>とても美味しかったです！</div>
 					</div>
-
 				</div>
 
 			</div>
+			<!-- /review -->
 
-			<!-- コメント -->
+			<!-- コメントタブ -->
 			<div id="comment" class="tab-content">
 
 				<div class="review-top">
@@ -564,69 +573,46 @@
 				</div>
 
 				<div class="comment-list">
-
 					<div class="comment-card">
-
-						<div class="user-name">
-							ユーザー名
-						</div>
-
-						<div class="post-date">
-							投稿日 2026/5/13
-						</div>
-
-						<div>
-							食べてみたい！
-						</div>
-
+						<div class="user-name">ユーザー名</div>
+						<div class="post-date">投稿日 2026/5/13</div>
+						<div>食べてみたい！</div>
 					</div>
-
 				</div>
 
 			</div>
+			<!-- /comment -->
 
 		</div>
+		<!-- /item-wrapper -->
 
 		<div th:replace="~{layout/_footer :: footer}"></div>
 
 	</div>
+	<!-- /container -->
 
 	<script>
 
 		let qty = 1;
 
 		function increaseQty() {
-
 			qty++;
-
 			document.getElementById("qty").textContent = qty;
 		}
 
 		function decreaseQty() {
-
 			if (qty > 1) {
-
 				qty--;
-
 				document.getElementById("qty").textContent = qty;
 			}
 		}
 
 		function showTab(tabId, btn) {
-
 			document.querySelectorAll(".tab-content")
-				.forEach(tab => {
-					tab.classList.remove("active");
-				});
-
+				.forEach(tab => { tab.classList.remove("active"); });
 			document.querySelectorAll(".tab-btn")
-				.forEach(button => {
-					button.classList.remove("active");
-				});
-
-			document.getElementById(tabId)
-				.classList.add("active");
-
+				.forEach(button => { button.classList.remove("active"); });
+			document.getElementById(tabId).classList.add("active");
 			btn.classList.add("active");
 		}
 

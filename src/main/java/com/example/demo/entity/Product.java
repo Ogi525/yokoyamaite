@@ -9,6 +9,7 @@ public class Product {
 	private String name;
 	private Integer price;
 	private Integer stock;
+	private String videoUrl;
 
 	private String origin;
 	private String imageUrl;
@@ -86,5 +87,14 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+
+	}
+
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
 }
