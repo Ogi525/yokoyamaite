@@ -559,7 +559,7 @@
 						</div>
 
 						<!-- 数量 -->
-						<div class="quantity-area">
+						<div class="quantity-area" th:if="${!product.hidden}">
 
 							<button type="button" class="qty-btn" onclick="decreaseQty()">
 								−

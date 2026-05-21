@@ -50,7 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		stock,
 		origin,
 		image_url AS imageUrl,
-		description
+		description,
+		hidden
 	FROM products
 	WHERE id = #{id}
 
