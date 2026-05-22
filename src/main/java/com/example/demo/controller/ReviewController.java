@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +36,6 @@ public class ReviewController {
 			@Valid @ModelAttribute("reviewForm") ReviewForm form,
 			BindingResult bindingResult,
 			HttpSession session,
-			Model model,
 			RedirectAttributes redirectAttributes) {
 
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -52,6 +50,10 @@ public class ReviewController {
 		}
 
 		if (bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute(
+					"reviewError",
+					"評価とコメントを正しく入力してください");
+
 			return "redirect:/item/" + productId + "?tab=review";
 		}
 
@@ -59,8 +61,11 @@ public class ReviewController {
 				loginUser.getId(),
 				productId);
 
-		if (!reviewService.hasPurchased(loginUser.getId(), productId)) {
-			session.setAttribute("reviewError", "購入済み商品のみレビューできます");
+		if (!purchased) {
+			redirectAttributes.addFlashAttribute(
+					"reviewError",
+					"購入していない商品はレビューできません");
+
 			return "redirect:/item/" + productId + "?tab=review";
 		}
 
@@ -68,8 +73,11 @@ public class ReviewController {
 				loginUser.getId(),
 				productId);
 
-		if (reviewService.hasReviewed(loginUser.getId(), productId)) {
-			session.setAttribute("reviewError", "すでにレビュー済みです");
+		if (reviewed) {
+			redirectAttributes.addFlashAttribute(
+					"reviewError",
+					"すでにレビュー済みです");
+
 			return "redirect:/item/" + productId + "?tab=review";
 		}
 
@@ -90,6 +98,10 @@ public class ReviewController {
 					"couponMessage",
 					"100文字以上のレビュー投稿ありがとうございます。500円クーポンを発行しました！");
 		}
+
+		redirectAttributes.addFlashAttribute(
+				"reviewSuccess",
+				"レビューを投稿しました。");
 
 		return "redirect:/item/" + productId + "?tab=review";
 	}

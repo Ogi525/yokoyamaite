@@ -15,11 +15,22 @@ public interface UserMapper {
 
 	/** ユーザを登録する */
 	@Insert("""
-			INSERT INTO users
-			(name, email, password, postal_code, address)
-			VALUES
-			(#{name}, #{email}, #{password}, #{postalCode}, #{address})
+				INSERT INTO users (
+					name,
+					email,
+					password,
+					postal_code,
+					address
+				)
+				VALUES (
+					#{name},
+					#{email},
+					#{password},
+					#{postalCode},
+					#{address}
+				)
 			""")
+
 	void insert(User user);
 
 	//	void update(User user);

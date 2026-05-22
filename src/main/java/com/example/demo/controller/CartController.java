@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.CartItem;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.service.CartService;
 
@@ -32,15 +33,16 @@ public class CartController {
 	/** カート一覧を表示する */
 	@GetMapping
 	public String showCart(HttpSession session, Model model) {
+
+		User loginUser = (User) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			session.setAttribute("redirectAfterLogin", "/cart");
+			return "redirect:/login";
+		}
+
 		List<CartItem> cart = cartService.getCart(session);
 		int total = cart.stream().mapToInt(CartItem::getSubtotal).sum();
-
-		/**カートがカラかどうかを判定する*/
-		//		あとではずす
-		//		boolean cartEmpty = cartService.isCartEmpty(session);
-		//		model.addAttribute("cartEmpty", cart.isEmpty());
-
-		//合計の計算
 
 		int totalPrice = 0;
 
@@ -53,6 +55,7 @@ public class CartController {
 		model.addAttribute("finalTotalPrice", totalPrice);
 
 		session.setAttribute("totalPrice", total);
+
 		return "cart/index";
 	}
 

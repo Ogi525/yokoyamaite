@@ -9,16 +9,16 @@ public class User {
 
 	private String address;
 
-	private String postalcode;
+	private String postalCode;
 
 	private String password;
 
 	public String getPostalCode() {
-		return postalcode;
+		return postalCode;
 	}
 
-	public void setPostalCode(String postalcode) {
-		this.postalcode = postalcode;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 
 	public int getId() {

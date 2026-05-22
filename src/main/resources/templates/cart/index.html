@@ -319,7 +319,7 @@
 					</div>
 
 					<div class="item-price">
-						¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')}"></span>
 					</div>
 
 					<div class="item-stock">
@@ -366,7 +366,7 @@
 				<div class="subtotal-area">
 
 					<div class="subtotal">
-						¥<span th:text="${#numbers.formatInteger(item.subtotal, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(item.subtotal, 1, 'COMMA')}"></span>
 					</div>
 
 					<form th:action="@{/cart/remove}" method="post">
@@ -425,7 +425,7 @@
 			<div class="summary-row">
 				<span>商品合計</span>
 				<span>
-					¥<span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>
+					¥<span th:text="${#numbers.formatInteger(totalPrice, 1, 'COMMA')}"></span>
 				</span>
 			</div>
 
@@ -433,7 +433,7 @@
 			<div class="summary-row total">
 				<span>合計</span>
 				<span>
-					¥<span th:text="${#numbers.formatInteger(finalTotalPrice, 3, 'COMMA')}"></span>
+					¥<span th:text="${#numbers.formatInteger(finalTotalPrice, 1, 'COMMA')}"></span>
 				</span>
 			</div>
 
