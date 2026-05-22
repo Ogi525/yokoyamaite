@@ -4,8 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.UserForm;
 import com.example.demo.entity.User;
+import com.example.demo.form.UserForm;
 import com.example.demo.mapper.UserMapper;
 
 @Service
