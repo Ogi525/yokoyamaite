@@ -13,9 +13,9 @@ INSERT INTO areas (id, name) VALUES
 ON CONFLICT DO NOTHING;
 
 
--- =========================
--- PRODUCTS
--- =========================
+---- =========================
+---- PRODUCTS
+---- =========================
 INSERT INTO products (
     area_id,
     category_id,
@@ -36,7 +36,7 @@ VALUES
     0,
     10,
     '北海道',
-    '/images/rin_clock.png',
+    'images/rin_clock.png',
     'ゴールデンりんざらしのアイテム',
     null
     ),
@@ -577,7 +577,8 @@ VALUES
     '/images/products_sumple/category_6/6_10.png',
     '登別温泉をイメージしたコク深い地ビールです。芳醇な香りとしっかりした苦味が特徴で、肉料理との相性も抜群。観光土産としても人気の高いクラフトビールです。',
     NULL
-);
+)
+ON CONFLICT (name) DO NOTHING;
 
 
 -- =========================
@@ -592,4 +593,4 @@ ON CONFLICT (code) DO NOTHING;
 UPDATE products
 SET hidden = TRUE
 WHERE id=1;
- 
+-- 

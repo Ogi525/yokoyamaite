@@ -138,7 +138,7 @@
 		.item-image img {
 			width: 100%;
 			aspect-ratio: 4 / 3;
-			object-fit: contain;object-fit: contain;
+			object-fit: contain;
 			border-radius: 24px;
 			border: 3px solid #ddd;
 			background: #eee;
@@ -559,7 +559,7 @@
 						</div>
 
 						<div class="price">
-							¥<span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></span>
+							¥<span th:text="${#numbers.formatInteger(product.price, 1, 'COMMA')}"></span>
 						</div>
 
 						<!-- 数量 -->
@@ -654,7 +654,7 @@
 				<div style="margin-top:40px;">
 
 					<div th:if="${session.loginUser == null}">
-						<p><a th:href="@{/login}">ログイン</a>して購入済みの場合はレビューを投稿できます。</p>
+						<p><a th:href="@{/login(redirectUrl='/item/' + ${product.id} + '?tab=review')}">ログイン</a>して購入済みの場合はレビューを投稿できます。</p>
 					</div>
 
 					<div th:if="${session.loginUser != null}">

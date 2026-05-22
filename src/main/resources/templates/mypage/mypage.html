@@ -201,10 +201,10 @@
 			<h2>プロフィール</h2>
 
 			<div class="avatar"
-			     th:text="${#strings.substring(user.name,0,1)}">
+			     th:text="${#strings.isEmpty(user.name) ? 'U' : #strings.substring(user.name,0,1)}">
 				U
 			</div>
-
+			
 			<p th:text="${user.name}">
 				ユーザー名
 			</p>

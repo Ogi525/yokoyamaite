@@ -241,7 +241,7 @@
 					<span>商品合計</span>
 
 					<span>
-						¥<span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(totalPrice, 1, 'COMMA')}"></span>
 					</span>
 
 				</div>
@@ -251,7 +251,7 @@
 					<span>クーポン割引</span>
 
 					<span>
-						-¥<span th:text="${#numbers.formatInteger(discountAmount, 3, 'COMMA')}"></span>
+						-¥<span th:text="${#numbers.formatInteger(discountAmount, 1, 'COMMA')}"></span>
 					</span>
 
 				</div>
@@ -261,7 +261,7 @@
 					<span>送料</span>
 
 					<span>
-						¥<span th:text="${#numbers.formatInteger(shippingFee, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(shippingFee, 1, 'COMMA')}"></span>
 					</span>
 
 				</div>
@@ -271,7 +271,7 @@
 					<span>合計金額</span>
 
 					<span>
-						¥<span th:text="${#numbers.formatInteger(finalPrice, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(finalPrice, 1, 'COMMA')}"></span>
 					</span>
 
 				</div>

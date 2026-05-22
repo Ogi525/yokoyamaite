@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
 import com.example.demo.form.LoginForm;
@@ -28,8 +29,17 @@ public class AuthController {
 
 	/** ログイン画面を表示する */
 	@GetMapping("/login")
-	public String showLoginForm(Model model) {
+	public String showLoginForm(
+			@RequestParam(required = false) String redirectUrl,
+			HttpSession session,
+			Model model) {
+
+		if (redirectUrl != null && !redirectUrl.isBlank()) {
+			session.setAttribute("redirectAfterLogin", redirectUrl);
+		}
+
 		model.addAttribute("form", new LoginForm());
+
 		return "auth/login";
 	}
 
